@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { Note } from '@/lib/database';
+import type { Note } from '@/types/database';
 
 const API_BASE = '/api';
 

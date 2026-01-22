@@ -11,8 +11,7 @@ import { useProjects } from "@/hooks/useProjects";
 import { useArticles } from "@/hooks/useArticles";
 import { useNotes } from "@/hooks/useNotes";
 import type { Project } from "@/data/projects";
-import type { Article } from "@/data/database";
-import type { Note } from "@/data/database";
+import type { Article, Note } from "@/types/database";
 
 interface AdminClientProps {
   initialProjects: Project[];

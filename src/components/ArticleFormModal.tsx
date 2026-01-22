@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Plus, Trash } from "lucide-react";
-import { Article } from "@/lib/database";
+import type { Article } from "@/types/database";
 
 interface BlogFormModalProps {
   isOpen: boolean;
