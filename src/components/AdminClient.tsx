@@ -246,7 +246,9 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
   const filteredNotes = displayNotes.filter((note) => {
     return searchQuery === "" ||
       note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      note.content.toLowerCase().includes(searchQuery.toLowerCase());
+      note.blocks.some(block =>
+        block.content.toLowerCase().includes(searchQuery.toLowerCase())
+      );
   });
 
   const filteredArticles = displayArticles.filter((article) => {

@@ -31,10 +31,21 @@ export interface Article {
   }>;
 }
 
+export interface NoteBlock {
+  id: string;
+  type: 'paragraph' | 'title' | 'image' | 'code' | 'quote';
+  content: string;
+  metadata?: {
+    alt?: string;
+    caption?: string;
+    language?: string;
+  };
+}
+
 export interface Note {
   id: string;
   title: string;
-  content: string;
+  blocks: NoteBlock[];
   createdAt: Date;
   updatedAt: Date;
 }
