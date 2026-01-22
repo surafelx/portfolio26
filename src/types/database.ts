@@ -29,8 +29,6 @@ export interface Article {
     alt: string;
     caption: string;
   }>;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export interface Note {

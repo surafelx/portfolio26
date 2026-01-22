@@ -4,7 +4,8 @@ export default async function Notes() {
   let articles: any[] = [];
 
   try {
-    const res = await fetch('/api/articles', { cache: 'no-store' });
+    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/articles`, { cache: 'no-store' });
     if (res.ok) {
       articles = await res.json();
     } else {
