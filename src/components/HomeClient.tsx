@@ -10,6 +10,7 @@ import { ProjectSearchAccordion } from "@/components/ProjectSearchAccordion";
 import { toast } from "sonner";
 import { Download, Github, Linkedin, Twitter, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useProjects } from "@/hooks/useProjects";
 
 interface HomeClientProps {
   initialProjects: Project[];
@@ -20,9 +21,15 @@ export default function HomeClient({ initialProjects, modules }: HomeClientProps
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showContent, setShowContent] = useState(false);
-  const [filteredProjects, setFilteredProjects] = useState<Project[]>(initialProjects);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedModule, setSelectedModule] = useState("all");
+
+  // Use hooks for data management
+  const { projects, loading: projectsLoading } = useProjects();
+
+  // Use hook data if available, otherwise initial data
+  const displayProjects = projects.length > 0 ? projects : initialProjects;
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>(displayProjects);
 
   useEffect(() => {
     // Brief delay for staggered animation effect
@@ -37,10 +44,8 @@ export default function HomeClient({ initialProjects, modules }: HomeClientProps
   }, []);
 
   useEffect(() => {
-    if (initialProjects.length > 0) {
-      setFilteredProjects(initialProjects);
-    }
-  }, [initialProjects]);
+    setFilteredProjects(displayProjects);
+  }, [displayProjects]);
 
   const handleMessageSubmit = (message: string) => {
     toast.success("Message sent!", {
@@ -64,7 +69,7 @@ export default function HomeClient({ initialProjects, modules }: HomeClientProps
     setSearchQuery(query);
     setSelectedModule(module);
 
-    const filtered = initialProjects.filter((project) => {
+    const filtered = displayProjects.filter((project) => {
       const matchesSearch = query === "" ||
         project.title.toLowerCase().includes(query.toLowerCase()) ||
         project.brief.toLowerCase().includes(query.toLowerCase()) ||
@@ -236,7 +241,7 @@ export default function HomeClient({ initialProjects, modules }: HomeClientProps
           variants={itemVariants}
           className="mt-6 text-sm text-muted-foreground flex items-center gap-2"
         >
-          <span className="text-primary">{initialProjects.length}</span> projects •{" "}
+          <span className="text-primary">{displayProjects.length}</span> projects •{" "}
           <span className="text-terminal-cyan">click to view details</span>
         </motion.div>
       </motion.div>
