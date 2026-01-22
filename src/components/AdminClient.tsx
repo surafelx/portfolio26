@@ -1,11 +1,13 @@
 "use client";
 import { motion } from "framer-motion";
-import { FileText, BookOpen, Contact, BarChart2, Plus, Edit, Trash, ChevronLeft, ChevronRight, Book } from "lucide-react";
+import { FileText, BookOpen, Contact, BarChart2, Plus, Edit, Trash, ChevronLeft, ChevronRight, Book, User } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { ProjectFormModal } from "@/components/ProjectFormModal";
 import { ArticleFormModal } from "@/components/ArticleFormModal";
+import { AboutFormModal } from "@/components/AboutFormModal";
+import { NoteFormModal } from "@/components/NoteFormModal";
 import { AdminSearchFilter } from "@/components/AdminSearchFilter";
 import { useProjects } from "@/hooks/useProjects";
 import { useArticles } from "@/hooks/useArticles";
@@ -17,14 +19,19 @@ interface AdminClientProps {
   initialProjects: Project[];
   initialArticles: Article[];
   initialNotes: Note[];
+  initialAbout: any;
 }
 
-export default function AdminClient({ initialProjects, initialArticles, initialNotes }: AdminClientProps) {
+export default function AdminClient({ initialProjects, initialArticles, initialNotes, initialAbout }: AdminClientProps) {
   const [activeTab, setActiveTab] = useState("projects");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBlogModalOpen, setIsBlogModalOpen] = useState(false);
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+  const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
   const [editingBlogPost, setEditingBlogPost] = useState(null);
+  const [editingAbout, setEditingAbout] = useState(null);
+  const [editingNote, setEditingNote] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterValue, setFilterValue] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,7 +46,8 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
     projectsViewed: 0,
     uniqueVisitors: 0,
     projectStats: [],
-    articleStats: []
+    articleStats: [],
+    noteStats: []
   });
 
   // Use hooks for data management and mutations
@@ -47,10 +55,14 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
   const { articles, loading: articlesLoading, error: articlesError, addArticle, editArticle, removeArticle } = useArticles();
   const { notes, loading: notesLoading, error: notesError, addNote, editNote, removeNote } = useNotes();
 
+  // About state
+  const [about, setAbout] = useState(initialAbout);
+
   // Use initial data if hooks haven't loaded yet
   const displayProjects = projects.length > 0 ? projects : initialProjects;
   const displayArticles = articles.length > 0 ? articles : initialArticles;
   const displayNotes = notes.length > 0 ? notes : initialNotes;
+  const displayAbout = about || initialAbout;
 
   // Fetch analytics
   useEffect(() => {
@@ -147,6 +159,79 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
     }
   };
 
+  const handleEditAbout = () => {
+    setEditingAbout(displayAbout);
+    setIsAboutModalOpen(true);
+  };
+
+  const handleSubmitAbout = async (aboutData) => {
+    setActionLoading("edit-about");
+    try {
+      const response = await fetch('/api/about', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(aboutData)
+      });
+      if (response.ok) {
+        const updatedAbout = await response.json();
+        setAbout(updatedAbout);
+        toast.success("About updated successfully");
+      } else {
+        throw new Error('Failed to update about');
+      }
+      setIsAboutModalOpen(false);
+      setEditingAbout(null);
+    } catch (error) {
+      console.error("Failed to submit about:", error);
+      toast.error("Failed to save about");
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const handleAddNote = () => {
+    setEditingNote(null);
+    setIsNoteModalOpen(true);
+  };
+
+  const handleEditNote = (note) => {
+    setEditingNote(note);
+    setIsNoteModalOpen(true);
+  };
+
+  const handleDeleteNote = async (noteId) => {
+    setActionLoading(`delete-note-${noteId}`);
+    try {
+      await removeNote(noteId);
+      toast.success("Note deleted successfully");
+    } catch (error) {
+      console.error("Failed to delete note:", error);
+      toast.error("Failed to delete note");
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const handleSubmitNote = async (note) => {
+    setActionLoading(editingNote ? "edit-note" : "add-note");
+    try {
+      if (editingNote) {
+        await editNote(editingNote.id, note);
+        toast.success("Note updated successfully");
+      } else {
+        await addNote(note);
+        toast.success("Note added successfully");
+      }
+      setIsNoteModalOpen(false);
+      setEditingNote(null);
+    } catch (error) {
+      console.error("Failed to submit note:", error);
+      toast.error("Failed to save note");
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
   // Filter and search logic
   const filteredProjects = displayProjects.filter((project) => {
     const matchesSearch = searchQuery === "" ||
@@ -173,6 +258,8 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
   // Pagination logic
   const getCurrentData = () => {
     switch (activeTab) {
+      case "about":
+        return displayAbout ? [displayAbout] : [];
       case "projects":
         return filteredProjects;
       case "articles":
@@ -194,6 +281,8 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
 
   const getTabLabel = (tab: string) => {
     switch (tab) {
+      case "about":
+        return "about";
       case "projects":
         return "projects";
       case "articles":
@@ -206,6 +295,7 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
   };
 
   const adminTabs = [
+    { id: "about", name: "About", icon: User },
     { id: "projects", name: "Projects", icon: FileText },
     { id: "articles", name: "Articles", icon: Book },
     { id: "notes", name: "Notes", icon: BookOpen },
@@ -296,6 +386,73 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
 
       {/* Tab Content */}
       <div className="space-y-8">
+        {activeTab === "about" && (
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-base text-primary flex items-center gap-2">
+                <User size={16} /> About Management
+              </h2>
+              <Button onClick={handleEditAbout} size="sm">
+                <Edit size={14} className="mr-2" /> Edit About
+              </Button>
+            </div>
+
+            {displayAbout ? (
+              <div className="space-y-4">
+                <div className="terminal-border bg-card/50 p-4">
+                  <h3 className="text-sm text-primary mb-2">Summary</h3>
+                  <p className="text-sm text-muted-foreground">{displayAbout.summary}</p>
+                </div>
+
+                <div className="terminal-border bg-card/50 p-4">
+                  <h3 className="text-sm text-primary mb-2">Skills</h3>
+                  <div className="space-y-2">
+                    {Object.entries(displayAbout.skills).map(([category, skills]: [string, any]) => (
+                      <div key={category}>
+                        <span className="text-xs text-primary capitalize">{category.replace(/([A-Z])/g, ' $1').trim()}:</span>
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {skills.map((skill: string) => (
+                            <span key={skill} className="text-xs px-2 py-1 bg-secondary text-foreground border border-border">
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="terminal-border bg-card/50 p-4">
+                  <h3 className="text-sm text-primary mb-2">Experience ({displayAbout.experience.length} entries)</h3>
+                  <div className="space-y-2">
+                    {displayAbout.experience.map((exp: any, index: number) => (
+                      <div key={index} className="border-l-2 border-primary/30 pl-3">
+                        <p className="text-xs text-primary">{exp.position} at {exp.company} ({exp.dates})</p>
+                        <ul className="text-xs text-muted-foreground mt-1">
+                          {exp.description.map((desc: string, i: number) => (
+                            <li key={i}>• {desc}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="terminal-border bg-card/50 p-4">
+                  <h3 className="text-sm text-primary mb-2">Education</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {displayAbout.education.degree} from {displayAbout.education.institution} ({displayAbout.education.graduation})
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="terminal-border bg-card/50 p-4 text-center text-muted-foreground">
+                No about data found. Click "Edit About" to add content.
+              </div>
+            )}
+          </div>
+        )}
+
         {activeTab === "projects" && (
           <div>
             <div className="flex items-center justify-between mb-3">
@@ -475,7 +632,7 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
               <h2 className="text-base text-primary flex items-center gap-2">
                 <BookOpen size={16} /> Notes Management
               </h2>
-              <Button size="sm">
+              <Button onClick={handleAddNote} size="sm">
                 <Plus size={14} className="mr-2" /> Add Note
               </Button>
             </div>
@@ -505,14 +662,27 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
                         <h4 className="text-primary font-medium mb-1 text-sm">{note.title}</h4>
-                        <p className="text-sm text-muted-foreground mb-2">{note.content}</p>
+                        <p className="text-sm text-muted-foreground mb-2">
+                          {note.blocks?.length || 0} blocks
+                        </p>
                         <p className="text-xs text-muted-foreground/70">{new Date(note.createdAt).toLocaleDateString()}</p>
                       </div>
                       <div className="flex gap-1">
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleEditNote(note)}
+                          className="h-8 w-8 p-0"
+                        >
                           <Edit size={16} />
                         </Button>
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-destructive hover:text-destructive">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDeleteNote(note.id)}
+                          className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                          disabled={actionLoading === `delete-note-${note.id}`}
+                        >
                           <Trash size={16} />
                         </Button>
                       </div>
@@ -612,6 +782,30 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
                   )}
                 </div>
               </div>
+
+              {/* Top Notes */}
+              <div>
+                <h3 className="text-sm text-primary mb-3">Most Viewed Notes</h3>
+                <div className="space-y-2">
+                  {analytics.noteStats.slice(0, 10).map((stat, index) => {
+                    const note = displayNotes.find(n => n.id === stat.noteId);
+                    return (
+                      <div key={stat.noteId} className="terminal-border bg-card/50 p-3 flex justify-between items-center">
+                        <div className="flex items-center gap-3">
+                          <span className="text-sm text-muted-foreground w-6">#{index + 1}</span>
+                          <span className="text-sm">{note?.title || stat.noteId}</span>
+                        </div>
+                        <span className="text-sm text-primary">{stat.views} views</span>
+                      </div>
+                    );
+                  })}
+                  {analytics.noteStats.length === 0 && (
+                    <div className="terminal-border bg-card/50 p-4 text-center text-muted-foreground">
+                      No note views recorded yet.
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         )}
@@ -644,6 +838,24 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
         onSubmit={handleSubmitBlogPost}
         initialData={editingBlogPost}
         isEditing={!!editingBlogPost}
+      />
+
+      {/* About Form Modal */}
+      <AboutFormModal
+        isOpen={isAboutModalOpen}
+        onClose={() => setIsAboutModalOpen(false)}
+        onSubmit={handleSubmitAbout}
+        initialData={editingAbout}
+        isEditing={!!editingAbout}
+      />
+
+      {/* Note Form Modal */}
+      <NoteFormModal
+        isOpen={isNoteModalOpen}
+        onClose={() => setIsNoteModalOpen(false)}
+        onSubmit={handleSubmitNote}
+        initialData={editingNote}
+        isEditing={!!editingNote}
       />
     </motion.div>
   );

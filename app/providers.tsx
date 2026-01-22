@@ -13,12 +13,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <TooltipProvider>
         <Toaster />
         <Sonner
-          theme="dark"
           toastOptions={{
             style: {
-              background: "hsl(220 13% 13%)",
-              border: "1px solid hsl(120 30% 25%)",
-              color: "hsl(220 15% 85%)",
+              background: "hsl(var(--card))",
+              border: "1px solid hsl(var(--border))",
+              color: "hsl(var(--foreground))",
             },
           }}
         />

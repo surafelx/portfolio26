@@ -9,7 +9,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Project ID required' }, { status: 400 });
     }
 
-    const view = await recordProjectView(projectId);
+    const clientIP = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+    const userAgent = request.headers.get('user-agent') || 'unknown';
+
+    const view = await recordProjectView(projectId, clientIP, userAgent);
     return NextResponse.json(view, { status: 201 });
   } catch (error) {
     console.error('API Error:', error);

@@ -1,18 +1,18 @@
-import { recordArticleView } from '@/lib/database';
+import { recordNoteView } from '@/lib/database';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const { articleId } = await request.json();
+    const { noteId } = await request.json();
 
-    if (!articleId) {
-      return NextResponse.json({ error: 'Article ID required' }, { status: 400 });
+    if (!noteId) {
+      return NextResponse.json({ error: 'Note ID required' }, { status: 400 });
     }
 
     const clientIP = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
     const userAgent = request.headers.get('user-agent') || 'unknown';
 
-    const view = await recordArticleView(articleId, clientIP, userAgent);
+    const view = await recordNoteView(noteId, clientIP, userAgent);
     return NextResponse.json(view, { status: 201 });
   } catch (error) {
     console.error('API Error:', error);

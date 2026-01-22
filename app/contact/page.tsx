@@ -64,7 +64,7 @@ export default function Contact() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
-          className="terminal-border bg-card/50 p-6"
+          className="terminal-border bg-card/50 p-4"
         >
           <div className="space-y-4">
             <div>
@@ -103,7 +103,7 @@ export default function Contact() {
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 required
-                rows={5}
+                rows={3}
                 className="w-full bg-secondary border border-border px-4 py-2 text-foreground focus:outline-none focus:border-primary transition-colors resize-none"
                 placeholder="Your message..."
               />

@@ -6,11 +6,14 @@ import { useArticles } from "@/hooks/useArticles";
 
 interface NotesClientProps {
   initialArticles: any[];
+  initialNotes: any[];
 }
 
-export default function NotesClient({ initialArticles }: NotesClientProps) {
+export default function NotesClient({ initialArticles, initialNotes }: NotesClientProps) {
   const { articles } = useArticles();
   const displayArticles = articles.length > 0 ? articles : initialArticles;
+  // For now, just use initialNotes since there's no hook for notes in this component
+  const displayNotes = initialNotes;
   return (
     <div>
       {/* Header */}
@@ -88,6 +91,53 @@ export default function NotesClient({ initialArticles }: NotesClientProps) {
                   <span>Read</span>
                   <ArrowRight size={12} />
                 </Link>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Notes Section */}
+      <div className="mb-8">
+        <h2 className="text-base text-primary terminal-glow mb-4 flex items-center gap-2">
+          <Notebook size={18} /> Personal Notes
+        </h2>
+        <div className="space-y-3">
+          {displayNotes.map((note) => (
+            <motion.div
+              key={note.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="terminal-border bg-card/30 p-4 hover:bg-card/40 transition-colors"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1">
+                  <h3 className="text-base text-primary terminal-glow mb-2">
+                    {note.title}
+                  </h3>
+                  <div className="text-foreground/80 text-sm space-y-2">
+                    {note.blocks?.slice(0, 2).map((block: any) => {
+                      if (block.type === 'paragraph' || block.type === 'title') {
+                        return <p key={block.id}>{block.content}</p>;
+                      }
+                      return null;
+                    })}
+                    {note.blocks?.length > 2 && (
+                      <p className="text-muted-foreground">...and {note.blocks.length - 2} more blocks</p>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-3 text-xs text-muted-foreground mt-2">
+                    <span className="flex items-center gap-1">
+                      <Calendar size={12} />
+                      {new Date(note.createdAt).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                      })}
+                    </span>
+                    <span>{note.blocks?.length || 0} blocks</span>
+                  </div>
+                </div>
               </div>
             </motion.div>
           ))}

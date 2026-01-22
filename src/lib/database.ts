@@ -35,10 +35,21 @@ export interface Article {
   updatedAt: Date;
 }
 
+export interface NoteBlock {
+  id: string;
+  type: 'paragraph' | 'title' | 'image' | 'code' | 'quote';
+  content: string;
+  metadata?: {
+    alt?: string;
+    caption?: string;
+    language?: string;
+  };
+}
+
 export interface Note {
   id: string;
   title: string;
-  content: string;
+  blocks: NoteBlock[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -53,13 +64,52 @@ export interface Visit {
 export interface ProjectView {
   id: string;
   projectId: string;
+  ip: string;
+  userAgent: string;
   timestamp: Date;
 }
 
 export interface ArticleView {
   id: string;
   articleId: string;
+  ip: string;
+  userAgent: string;
   timestamp: Date;
+}
+
+export interface NoteView {
+  id: string;
+  noteId: string;
+  ip: string;
+  userAgent: string;
+  timestamp: Date;
+}
+
+export interface About {
+  id: string;
+  summary: string;
+  skills: {
+    programming: string[];
+    tools: string[];
+    databases: string[];
+    ai: string[];
+    testing: string[];
+    devops: string[];
+    other: string[];
+  };
+  experience: Array<{
+    company: string;
+    position: string;
+    dates: string;
+    description: string[];
+  }>;
+  education: {
+    institution: string;
+    degree: string;
+    graduation: string;
+  };
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 // Global variable to cache the database connection
@@ -150,9 +200,18 @@ export async function createArticle(articleData: Omit<Article, 'id' | 'createdAt
   const db = await connectToDatabase();
   const articlesCollection = db.collection('articles');
 
+  // Generate a URL-friendly slug from the title
+  const slug = articleData.title
+    .toLowerCase()
+    .split(':')[0] // Take only the part before the first colon
+    .replace(/[^a-z0-9\s-]/g, '') // Remove special characters except spaces and hyphens
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-') // Replace multiple hyphens with single
+    .trim();
+
   const newArticle: Article = {
     ...articleData,
-    id: articleData.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+    id: slug,
     createdAt: new Date(),
     updatedAt: new Date()
   };
@@ -192,7 +251,23 @@ export async function getNotes(): Promise<Note[]> {
   const db = await connectToDatabase();
   const notesCollection = db.collection('notes');
   const notes = await notesCollection.find({}).sort({ createdAt: -1 }).toArray();
-  return notes;
+
+  // Migrate legacy notes with content to blocks
+  const migratedNotes = notes.map(note => {
+    if (note.content && (!note.blocks || note.blocks.length === 0)) {
+      return {
+        ...note,
+        blocks: [{
+          id: `block-${Date.now()}`,
+          type: 'paragraph',
+          content: note.content
+        }]
+      };
+    }
+    return note;
+  });
+
+  return migratedNotes;
 }
 
 export async function createNote(noteData: Omit<Note, 'id' | 'createdAt' | 'updatedAt'>): Promise<Note> {
@@ -236,6 +311,32 @@ export async function deleteNote(id: string): Promise<boolean> {
   return result.deletedCount > 0;
 }
 
+// CRUD Operations for About
+export async function getAbout(): Promise<About | null> {
+  const db = await connectToDatabase();
+  const aboutCollection = db.collection('about');
+  const about = await aboutCollection.findOne({ id: 'about' });
+  return about;
+}
+
+export async function updateAbout(aboutData: Partial<Omit<About, 'id' | 'createdAt'>>): Promise<About | null> {
+  const db = await connectToDatabase();
+  const aboutCollection = db.collection('about');
+
+  const result = await aboutCollection.findOneAndUpdate(
+    { id: 'about' },
+    {
+      $set: {
+        ...aboutData,
+        updatedAt: new Date()
+      }
+    },
+    { returnDocument: 'after', upsert: true }
+  );
+
+  return result;
+}
+
 // Analytics Functions
 export async function recordVisit(visitData: Omit<Visit, 'id'>): Promise<Visit> {
   const db = await connectToDatabase();
@@ -260,13 +361,15 @@ export async function getVisitStats(): Promise<{ total: number; uniqueIPs: numbe
   return { total, uniqueIPs };
 }
 
-export async function recordProjectView(projectId: string): Promise<ProjectView> {
+export async function recordProjectView(projectId: string, ip: string, userAgent: string): Promise<ProjectView> {
   const db = await connectToDatabase();
   const projectViewsCollection = db.collection('project_views');
 
   const newView: ProjectView = {
     id: `view-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
     projectId,
+    ip,
+    userAgent,
     timestamp: new Date(),
   };
 
@@ -287,18 +390,49 @@ export async function getProjectViewStats(): Promise<Array<{ projectId: string; 
   return results.map(r => ({ projectId: r._id, views: r.views }));
 }
 
-export async function recordArticleView(articleId: string): Promise<ArticleView> {
+export async function recordArticleView(articleId: string, ip: string, userAgent: string): Promise<ArticleView> {
   const db = await connectToDatabase();
   const articleViewsCollection = db.collection('article_views');
 
   const newView: ArticleView = {
     id: `view-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
     articleId,
+    ip,
+    userAgent,
     timestamp: new Date(),
   };
 
   await articleViewsCollection.insertOne(newView);
   return newView;
+}
+
+export async function recordNoteView(noteId: string, ip: string, userAgent: string): Promise<NoteView> {
+  const db = await connectToDatabase();
+  const noteViewsCollection = db.collection('note_views');
+
+  const newView: NoteView = {
+    id: `view-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+    noteId,
+    ip,
+    userAgent,
+    timestamp: new Date(),
+  };
+
+  await noteViewsCollection.insertOne(newView);
+  return newView;
+}
+
+export async function getNoteViewStats(): Promise<Array<{ noteId: string; views: number }>> {
+  const db = await connectToDatabase();
+  const noteViewsCollection = db.collection('note_views');
+
+  const pipeline = [
+    { $group: { _id: '$noteId', views: { $sum: 1 } } },
+    { $sort: { views: -1 } },
+  ];
+
+  const results = await noteViewsCollection.aggregate(pipeline).toArray();
+  return results.map(r => ({ noteId: r._id, views: r.views }));
 }
 
 export async function getArticleViewStats(): Promise<Array<{ articleId: string; views: number }>> {

@@ -49,7 +49,7 @@ export const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) =>
                 Brief
               </h3>
               <p
-                className="text-foreground leading-relaxed"
+                className="text-sm text-foreground leading-relaxed"
                 dangerouslySetInnerHTML={{
                   __html: highlightText(project.brief, project.keywords),
                 }}
@@ -111,7 +111,7 @@ export const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) =>
                 Full Description
               </h3>
               <p
-                className="text-foreground/80 leading-relaxed"
+                className="text-sm text-foreground/80 leading-relaxed"
                 dangerouslySetInnerHTML={{
                   __html: highlightText(project.description, project.keywords),
                 }}
@@ -327,7 +327,7 @@ export const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) =>
                 </div>
 
                 {/* Content Area - scrollable */}
-                <div className="flex-1 overflow-y-auto p-6">
+                <div className="flex-1 overflow-y-auto p-4">
                   {/* Mobile tab selector */}
                   <div className="flex gap-2 mb-6 overflow-x-auto pb-2 sm:hidden">
                     {tabs.map((tab) => (
@@ -347,7 +347,7 @@ export const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) =>
                   </div>
 
                   {/* Tab Title */}
-                  <h3 className="text-lg font-medium text-foreground mb-6 flex items-center gap-2">
+                  <h3 className="text-base font-medium text-foreground mb-6 flex items-center gap-2">
                     <span className="w-6 h-px bg-primary" />
                     {tabs.find(t => t.id === activeTab)?.label}
                   </h3>
@@ -380,7 +380,7 @@ export const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) =>
             className="bg-card border border-border rounded-lg p-6 max-w-md w-full mx-4"
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-primary">Demo: {project.title}</h3>
+              <h3 className="text-base font-semibold text-primary">Demo: {project.title}</h3>
               <button
                 onClick={() => setShowDemo(false)}
                 className="text-muted-foreground hover:text-foreground"
