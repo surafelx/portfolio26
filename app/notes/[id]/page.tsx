@@ -5,7 +5,8 @@ import { ArticleTracker } from "@/components/ArticleTracker";
 
 export default async function Article({ params }: { params: { id: string } }) {
   const { id } = params;
-  const res = await fetch(`http://localhost:3000/api/articles/${id}`, { cache: 'no-store' });
+  const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
+  const res = await fetch(`${baseUrl}/api/articles/${id}`, { cache: 'no-store' });
 
   if (!res.ok) {
     notFound();

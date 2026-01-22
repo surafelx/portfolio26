@@ -1,10 +1,11 @@
 import AdminClient from "@/components/AdminClient";
 
 export default async function Admin() {
+  const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
   const [projectsRes, articlesRes, notesRes] = await Promise.all([
-    fetch('http://localhost:3000/api/projects', { cache: 'no-store' }),
-    fetch('http://localhost:3000/api/articles', { cache: 'no-store' }),
-    fetch('http://localhost:3000/api/notes', { cache: 'no-store' }),
+    fetch(`${baseUrl}/api/projects`, { cache: 'no-store' }),
+    fetch(`${baseUrl}/api/articles`, { cache: 'no-store' }),
+    fetch(`${baseUrl}/api/notes`, { cache: 'no-store' }),
   ]);
 
   const [projectsData, articlesData, notesData] = await Promise.all([
