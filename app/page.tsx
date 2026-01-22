@@ -5,8 +5,7 @@ export default async function Home() {
   let modules: string[] = [];
 
   try {
-    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/projects`, { cache: 'no-store' });
+    const res = await fetch('/api/projects', { cache: 'no-store' });
 
     if (res.ok) {
       const projects = await res.json();

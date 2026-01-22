@@ -8,8 +8,7 @@ export default async function Article({ params }: { params: { id: string } }) {
 
   let post: any = null;
   try {
-    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/articles/${id}`, { cache: 'no-store' });
+    const res = await fetch(`/api/articles/${id}`, { cache: 'no-store' });
 
     if (res.ok) {
       post = await res.json();

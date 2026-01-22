@@ -6,11 +6,10 @@ export default async function Admin() {
   let serializedNotes: any[] = [];
 
   try {
-    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
     const [projectsRes, articlesRes, notesRes] = await Promise.all([
-      fetch(`${baseUrl}/api/projects`, { cache: 'no-store' }),
-      fetch(`${baseUrl}/api/articles`, { cache: 'no-store' }),
-      fetch(`${baseUrl}/api/notes`, { cache: 'no-store' }),
+      fetch('/api/projects', { cache: 'no-store' }),
+      fetch('/api/articles', { cache: 'no-store' }),
+      fetch('/api/notes', { cache: 'no-store' }),
     ]);
 
     if (projectsRes.ok && articlesRes.ok && notesRes.ok) {
