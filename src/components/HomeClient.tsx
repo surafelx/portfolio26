@@ -32,7 +32,8 @@ export default function HomeClient({ initialProjects, modules }: HomeClientProps
 
   useEffect(() => {
     // Record page visit
-    fetch('/api/analytics/visits', { method: 'POST' }).catch(console.error);
+    const baseUrl = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
+    fetch(`${baseUrl}/api/analytics/visits`, { method: 'POST' }).catch(console.error);
   }, []);
 
   useEffect(() => {
@@ -51,7 +52,8 @@ export default function HomeClient({ initialProjects, modules }: HomeClientProps
     setSelectedProject(project);
     setIsModalOpen(true);
     // Record project view
-    fetch('/api/analytics/project-views', {
+    const baseUrl = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
+    fetch(`${baseUrl}/api/analytics/project-views`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ projectId: project.id }),

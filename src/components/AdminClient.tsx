@@ -54,7 +54,8 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
 
   // Fetch analytics
   useEffect(() => {
-    fetch('/api/analytics')
+    const baseUrl = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
+    fetch(`${baseUrl}/api/analytics`)
       .then(res => res.json())
       .then(data => setAnalytics(data))
       .catch(console.error);

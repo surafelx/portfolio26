@@ -8,7 +8,8 @@ interface ArticleTrackerProps {
 
 export function ArticleTracker({ articleId }: ArticleTrackerProps) {
   useEffect(() => {
-    fetch('/api/analytics/article-views', {
+    const baseUrl = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
+    fetch(`${baseUrl}/api/analytics/article-views`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ articleId }),
