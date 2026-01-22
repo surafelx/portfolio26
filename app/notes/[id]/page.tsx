@@ -5,14 +5,24 @@ import { ArticleTracker } from "@/components/ArticleTracker";
 
 export default async function Article({ params }: { params: { id: string } }) {
   const { id } = params;
-  const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
-  const res = await fetch(`${baseUrl}/api/articles/${id}`, { cache: 'no-store' });
 
-  if (!res.ok) {
-    notFound();
+  let post: any = null;
+  try {
+    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/articles/${id}`, { cache: 'no-store' });
+
+    if (res.ok) {
+      post = await res.json();
+    } else {
+      console.error(`Failed to fetch article: ${res.status}`);
+    }
+  } catch (error) {
+    console.error('Error fetching article:', error);
   }
 
-  const post = await res.json();
+  if (!post) {
+    notFound();
+  }
 
   return (
     <div>
