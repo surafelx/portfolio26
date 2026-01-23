@@ -6,16 +6,34 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
+    console.log('API: Fetching article with ID:', params.id);
+
     const articles = await getArticles();
+    console.log('API: Found', articles.length, 'total articles');
+
     const article = articles.find(a => a.id === params.id);
+
     if (article) {
+      console.log('API: Article found:', article.title);
       return NextResponse.json(article);
     } else {
-      return NextResponse.json({ error: 'Article not found' }, { status: 404 });
+      console.log('API: Article not found with ID:', params.id);
+      return NextResponse.json({
+        error: 'Article not found',
+        requestedId: params.id,
+        availableArticles: articles.map(a => ({ id: a.id, title: a.title }))
+      }, { status: 404 });
     }
   } catch (error) {
-    console.error('API Error:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    console.error('API Error fetching article:', error);
+
+    // Provide more specific error information
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    return NextResponse.json({
+      error: 'Internal Server Error',
+      message: errorMessage,
+      requestedId: params.id
+    }, { status: 500 });
   }
 }
 
