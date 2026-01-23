@@ -1,4 +1,5 @@
 import HomeClient from "@/components/HomeClient";
+import { getProjects, getArticles } from "@/lib/database";
 
 export default async function Home() {
   let serializedProjects: any[] = [];
@@ -6,40 +7,31 @@ export default async function Home() {
   let modules: string[] = [];
 
   try {
-    // Fetch projects and articles in parallel
-    const [projectsRes, articlesRes] = await Promise.all([
-      fetch('/api/projects', { cache: 'no-store' }),
-      fetch('/api/articles', { cache: 'no-store' })
+    console.log('Fetching projects and articles from database');
+
+    // Fetch directly from database on server side
+    const [projects, articles] = await Promise.all([
+      getProjects(),
+      getArticles()
     ]);
 
-    if (projectsRes.ok) {
-      const projects = await projectsRes.json();
+    // Omit MongoDB-specific fields and dates since client doesn't need them
+    serializedProjects = projects.map((project: any) => {
+      const { _id, createdAt, updatedAt, ...rest } = project;
+      return rest;
+    });
 
-      // Omit MongoDB-specific fields and dates since client doesn't need them
-      serializedProjects = projects.map((project: any) => {
-        const { _id, createdAt, updatedAt, ...rest } = project;
-        return rest;
-      });
+    serializedArticles = articles.map((article: any) => {
+      const { _id, createdAt, updatedAt, ...rest } = article;
+      return rest;
+    });
 
-      // Extract unique modules from projects for filtering
-      modules = Array.from(new Set(projects.flatMap(project => project.tags))) as string[];
-    } else {
-      console.error(`Failed to fetch projects: ${projectsRes.status}`);
-    }
+    // Extract unique modules from projects for filtering
+    modules = Array.from(new Set(projects.flatMap(project => project.tags))) as string[];
 
-    if (articlesRes.ok) {
-      const articles = await articlesRes.json();
-
-      // Omit MongoDB-specific fields and dates since client doesn't need them
-      serializedArticles = articles.map((article: any) => {
-        const { _id, createdAt, updatedAt, ...rest } = article;
-        return rest;
-      });
-    } else {
-      console.error(`Failed to fetch articles: ${articlesRes.status}`);
-    }
+    console.log(`Fetched ${projects.length} projects and ${articles.length} articles`);
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error('Error fetching data from database:', error);
   }
 
   return <HomeClient initialProjects={serializedProjects} initialArticles={serializedArticles} modules={modules} />;

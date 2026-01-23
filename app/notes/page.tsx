@@ -1,29 +1,25 @@
 import NotesClient from "@/components/NotesClient";
+import { getArticles, getNotes } from "@/lib/database";
 
 export default async function Notes() {
   let articles: any[] = [];
   let notes: any[] = [];
 
   try {
-    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
-    const [articlesRes, notesRes] = await Promise.all([
-      fetch(`${baseUrl}/api/articles`, { cache: 'no-store' }),
-      fetch(`${baseUrl}/api/notes`, { cache: 'no-store' })
+    console.log('Fetching articles and notes from database');
+
+    // Fetch directly from database on server side
+    const [articlesData, notesData] = await Promise.all([
+      getArticles(),
+      getNotes()
     ]);
 
-    if (articlesRes.ok) {
-      articles = await articlesRes.json();
-    } else {
-      console.error(`Failed to fetch articles: ${articlesRes.status}`);
-    }
+    articles = articlesData;
+    notes = notesData;
 
-    if (notesRes.ok) {
-      notes = await notesRes.json();
-    } else {
-      console.error(`Failed to fetch notes: ${notesRes.status}`);
-    }
+    console.log(`Fetched ${articles.length} articles and ${notes.length} notes`);
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error('Error fetching data from database:', error);
   }
 
   return <NotesClient initialArticles={articles} initialNotes={notes} />;

@@ -2,6 +2,7 @@ import { Calendar, Clock, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArticleTracker } from "@/components/ArticleTracker";
+import { getArticles } from "@/lib/database";
 
 export default async function Article({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -9,36 +10,19 @@ export default async function Article({ params }: { params: { id: string } }) {
   let article: any = null;
 
   try {
-    // For production, use relative URL; for local, use localhost
-    const baseUrl = typeof window !== 'undefined' ? '' : (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
-    const apiUrl = `${baseUrl}/api/articles/${id}`;
+    console.log('Fetching article from database:', id);
 
-    console.log('Fetching article from:', apiUrl);
+    // Fetch directly from database on server side
+    const articles = await getArticles();
+    article = articles.find(a => a.id === id);
 
-    const res = await fetch(apiUrl, {
-      cache: 'no-store',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      // Add timeout for production
-      signal: AbortSignal.timeout(10000) // 10 second timeout
-    });
-
-    if (res.ok) {
-      article = await res.json();
+    if (article) {
       console.log('Article fetched successfully:', article.title);
     } else {
-      console.error(`Failed to fetch article: ${res.status} - ${res.statusText}`);
-      // Try to get error details
-      try {
-        const errorData = await res.text();
-        console.error('Error response:', errorData);
-      } catch (e) {
-        console.error('Could not read error response');
-      }
+      console.log('Article not found in database:', id);
     }
   } catch (error) {
-    console.error('Error fetching article:', error);
+    console.error('Error fetching article from database:', error);
     // In production, provide a fallback or better error
     if (process.env.NODE_ENV === 'production') {
       console.error('Production article fetch failed, check database connection');

@@ -1,6 +1,7 @@
 import { Calendar, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getNotes } from "@/lib/database";
 
 export default async function Note({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -8,29 +9,19 @@ export default async function Note({ params }: { params: { id: string } }) {
   let note: any = null;
 
   try {
-    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
+    console.log('Fetching note from database:', id);
 
-    const res = await fetch(`${baseUrl}/api/notes/${id}`, {
-      cache: 'no-store',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    });
+    // Fetch directly from database on server side
+    const notes = await getNotes();
+    note = notes.find(n => n.id === id);
 
-    if (res.ok) {
-      note = await res.json();
+    if (note) {
+      console.log('Note fetched successfully:', note.title);
     } else {
-      console.error(`Failed to fetch note: ${res.status} - ${res.statusText}`);
-      // Try to get error details
-      try {
-        const errorData = await res.text();
-        console.error('Error response:', errorData);
-      } catch (e) {
-        // Ignore
-      }
+      console.log('Note not found in database:', id);
     }
   } catch (error) {
-    console.error('Error fetching note:', error);
+    console.error('Error fetching note from database:', error);
   }
 
   // If note not found, provide fallback content for production
