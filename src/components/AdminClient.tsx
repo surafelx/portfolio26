@@ -490,7 +490,12 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
                   <div key={project.id} className="terminal-border bg-card/50 p-4">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
-                        <h4 className="text-primary font-medium mb-1 text-sm">{project.title}</h4>
+                        <div className="flex items-center gap-2 mb-1">
+                          <h4 className="text-primary font-medium text-sm">{project.title}</h4>
+                          <span className="text-xs px-2 py-0.5 bg-primary/20 text-primary border border-primary/30 rounded">
+                            Priority: {project.priority}
+                          </span>
+                        </div>
                         <p className="text-sm text-muted-foreground mb-2">{project.brief}</p>
                         <div className="flex flex-wrap gap-1">
                           {project.tags.map((tag) => (

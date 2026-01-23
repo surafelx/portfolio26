@@ -23,6 +23,7 @@ export const AboutFormModal = ({
 }: AboutFormModalProps) => {
   const [about, setAbout] = useState<Omit<About, 'id' | 'createdAt' | 'updatedAt'>>({
     summary: "",
+    qualifications: [],
     skills: {
       programming: [],
       tools: [],
@@ -36,7 +37,8 @@ export const AboutFormModal = ({
     education: {
       institution: "",
       degree: "",
-      graduation: ""
+      graduation: "",
+      gpa: ""
     }
   });
 
@@ -44,6 +46,7 @@ export const AboutFormModal = ({
     if (initialData) {
       setAbout({
         summary: initialData.summary || "",
+        qualifications: initialData.qualifications || [],
         skills: initialData.skills || {
           programming: [],
           tools: [],
@@ -57,7 +60,8 @@ export const AboutFormModal = ({
         education: initialData.education || {
           institution: "",
           degree: "",
-          graduation: ""
+          graduation: "",
+          gpa: ""
         }
       });
     }
@@ -115,6 +119,18 @@ export const AboutFormModal = ({
               onChange={(e) => setAbout({...about, summary: e.target.value})}
               className="min-h-[100px]"
               required
+            />
+          </div>
+
+          {/* Qualifications */}
+          <div className="space-y-2">
+            <Label htmlFor="qualifications">Qualifications & Certifications (one per line)</Label>
+            <Textarea
+              id="qualifications"
+              value={about.qualifications.join('\n')}
+              onChange={(e) => setAbout({...about, qualifications: e.target.value.split('\n').filter(s => s.trim())})}
+              className="min-h-[80px]"
+              placeholder="AWS Certified Solutions Architect&#10;Google Cloud Professional Developer&#10;Certified Scrum Master"
             />
           </div>
 
@@ -197,7 +213,7 @@ export const AboutFormModal = ({
           {/* Education */}
           <div className="space-y-4">
             <Label>Education</Label>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="institution">Institution</Label>
                 <Input
@@ -223,6 +239,15 @@ export const AboutFormModal = ({
                   value={about.education.graduation}
                   onChange={(e) => setAbout({...about, education: {...about.education, graduation: e.target.value}})}
                   required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="gpa">GPA (optional)</Label>
+                <Input
+                  id="gpa"
+                  value={about.education.gpa || ''}
+                  onChange={(e) => setAbout({...about, education: {...about.education, gpa: e.target.value}})}
+                  placeholder="3.6"
                 />
               </div>
             </div>

@@ -99,59 +99,71 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 18px;
     background-image:
-      /* Animated particle dots */
-      radial-gradient(circle at 25% 25%, hsl(var(--primary) / 0.08) 3px, transparent 3px),
-      radial-gradient(circle at 75% 25%, hsl(var(--terminal-cyan) / 0.08) 3px, transparent 3px),
-      radial-gradient(circle at 25% 75%, hsl(var(--terminal-amber) / 0.08) 3px, transparent 3px),
-      radial-gradient(circle at 75% 75%, hsl(var(--terminal-pink) / 0.08) 3px, transparent 3px),
-      radial-gradient(circle at 50% 50%, hsl(var(--terminal-green) / 0.08) 2px, transparent 2px),
-      radial-gradient(circle at 10% 90%, hsl(var(--primary) / 0.06) 2px, transparent 2px),
-      radial-gradient(circle at 90% 10%, hsl(var(--terminal-cyan) / 0.06) 2px, transparent 2px),
-      radial-gradient(circle at 10% 10%, hsl(var(--terminal-amber) / 0.06) 2px, transparent 2px),
-      radial-gradient(circle at 90% 90%, hsl(var(--terminal-pink) / 0.06) 2px, transparent 2px),
+      /* Circuit-like patterns */
+      radial-gradient(circle at 20% 20%, hsl(var(--terminal-cyan) / 0.03) 1px, transparent 1px),
+      radial-gradient(circle at 80% 20%, hsl(var(--terminal-pink) / 0.03) 1px, transparent 1px),
+      radial-gradient(circle at 20% 80%, hsl(var(--terminal-amber) / 0.03) 1px, transparent 1px),
+      radial-gradient(circle at 80% 80%, hsl(var(--primary) / 0.03) 1px, transparent 1px),
+      radial-gradient(circle at 50% 50%, hsl(var(--terminal-green) / 0.03) 1px, transparent 1px),
 
-      /* Subtle grid lines */
+      /* Hexagonal grid pattern */
+      repeating-linear-gradient(
+        60deg,
+        transparent,
+        transparent 15px,
+        hsl(var(--border) / 0.04) 15px,
+        hsl(var(--border) / 0.04) 16px
+      ),
+      repeating-linear-gradient(
+        -60deg,
+        transparent,
+        transparent 15px,
+        hsl(var(--border) / 0.04) 15px,
+        hsl(var(--border) / 0.04) 16px
+      ),
+
+      /* Vertical circuit lines */
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        hsl(var(--terminal-cyan) / 0.02) 2px,
+        hsl(var(--terminal-cyan) / 0.02) 4px,
+        transparent 4px,
+        transparent 20px
+      ),
+
+      /* Horizontal data streams */
       repeating-linear-gradient(
         0deg,
         transparent,
         transparent 1px,
-        hsl(var(--border) / 0.08) 1px,
-        hsl(var(--border) / 0.08) 2px
-      ),
-      repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 1px,
-        hsl(var(--border) / 0.06) 1px,
-        hsl(var(--border) / 0.06) 2px
+        hsl(var(--terminal-green) / 0.02) 1px,
+        hsl(var(--terminal-green) / 0.02) 2px,
+        transparent 2px,
+        transparent 25px
       );
     background-size:
-      150px 150px,  /* dot 1 */
-      180px 180px,  /* dot 2 */
-      120px 120px,  /* dot 3 */
-      160px 160px,  /* dot 4 */
-      200px 200px,  /* dot 5 */
-      140px 140px,  /* dot 6 */
-      170px 170px,  /* dot 7 */
-      130px 130px,  /* dot 8 */
-      190px 190px,  /* dot 9 */
-      8px 8px,      /* vertical lines */
-      8px 8px;      /* horizontal lines */
+      200px 200px,  /* circuit node 1 */
+      250px 250px,  /* circuit node 2 */
+      180px 180px,  /* circuit node 3 */
+      220px 220px,  /* circuit node 4 */
+      300px 300px,  /* circuit node 5 */
+      30px 52px,    /* hex grid 1 */
+      30px 52px,    /* hex grid 2 */
+      25px 25px,    /* vertical circuits */
+      20px 20px;    /* horizontal streams */
     background-position:
-      var(--mouse-x, 0) var(--mouse-y, 0),
-      calc(var(--mouse-x, 100px) + 100px) calc(var(--mouse-y, 100px) + 100px),
-      calc(var(--mouse-x, 200px) + 200px) calc(var(--mouse-y, 200px) + 200px),
-      calc(var(--mouse-x, 300px) + 300px) calc(var(--mouse-y, 300px) + 300px),
-      calc(var(--mouse-x, 150px) + 150px) calc(var(--mouse-y, 50px) + 50px),
-      calc(var(--mouse-x, 250px) + 250px) calc(var(--mouse-y, 150px) + 150px),
-      calc(var(--mouse-x, 50px) + 50px) calc(var(--mouse-y, 250px) + 250px),
-      calc(var(--mouse-x, 350px) + 350px) calc(var(--mouse-y, 350px) + 350px),
-      calc(var(--mouse-x, 75px) + 75px) calc(var(--mouse-y, 75px) + 75px),
-      0 0, 0 0;
+      var(--mouse-x, 50%) var(--mouse-y, 50%),
+      calc(var(--mouse-x, 50%) + 100px) calc(var(--mouse-y, 50%) + 100px),
+      calc(var(--mouse-x, 50%) + 200px) calc(var(--mouse-y, 50%) + 200px),
+      calc(var(--mouse-x, 50%) + 300px) calc(var(--mouse-y, 50%) + 300px),
+      calc(var(--mouse-x, 50%) + 150px) calc(var(--mouse-y, 50%) + 150px),
+      0 0, 15px 26px, 0 0, 0 0;
     animation:
-      particle-drift 20s ease-in-out infinite,
-      grid-shift 12s linear infinite,
-      subtle-pulse 6s ease-in-out infinite;
+      circuit-flow 15s ease-in-out infinite,
+      data-stream 8s linear infinite,
+      matrix-glow 10s ease-in-out infinite;
   }
 
   /* Subtle accent dots */
@@ -174,30 +186,29 @@
     z-index: -1;
   }
 
-  @keyframes particle-drift {
+  @keyframes circuit-flow {
     0%, 100% {
       background-position:
-        0 0, 100px 100px, 200px 200px, 300px 300px, 150px 50px,
-        250px 150px, 50px 250px, 350px 350px, 75px 75px,
-        0 0, 0 0;
+        0% 0%, 100px 100px, 200px 200px, 300px 300px, 150px 150px,
+        0 0, 15px 26px, 0 0, 0 0;
     }
-    33% {
+    50% {
       background-position:
-        50px 30px, 150px 130px, 250px 230px, 350px 330px, 200px 80px,
-        300px 180px, 100px 280px, 400px 380px, 125px 125px,
-        1px 1px, 1px 1px;
-    }
-    66% {
-      background-position:
-        100px 60px, 200px 160px, 300px 260px, 400px 360px, 250px 110px,
-        350px 210px, 150px 310px, 50px 10px, 175px 175px,
-        2px 2px, 2px 2px;
+        50px 50px, 150px 150px, 250px 250px, 350px 350px, 200px 200px,
+        2px 2px, 17px 28px, 1px 1px, 1px 1px;
     }
   }
 
-  @keyframes grid-shift {
-    0% { background-position: 0 0, 100px 100px, 200px 200px, 300px 300px, 150px 50px, 250px 150px, 50px 250px, 350px 350px, 75px 75px, 0 0, 0 0; }
-    100% { background-position: 0 0, 100px 100px, 200px 200px, 300px 300px, 150px 50px, 250px 150px, 50px 250px, 350px 350px, 75px 75px, 4px 4px, 2px 2px; }
+  @keyframes data-stream {
+    0% { background-position: 0% 0%, 100px 100px, 200px 200px, 300px 300px, 150px 150px, 0 0, 15px 26px, 0 0, 0 0; }
+    100% { background-position: 0% 100%, 100px 200px, 200px 300px, 300px 400px, 150px 250px, 0 0, 15px 26px, 0 0, 5px 5px; }
+  }
+
+  @keyframes matrix-glow {
+    0%, 100% { filter: brightness(1) contrast(1) hue-rotate(0deg); }
+    25% { filter: brightness(1.1) contrast(1.05) hue-rotate(5deg); }
+    50% { filter: brightness(1.05) contrast(1.02) hue-rotate(0deg); }
+    75% { filter: brightness(1.1) contrast(1.05) hue-rotate(-5deg); }
   }
 
   @keyframes subtle-pulse {

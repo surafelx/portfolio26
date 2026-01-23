@@ -10,7 +10,9 @@
     "lint": "next lint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "populate-db": "tsx scripts/populate-db.ts"
+    "populate-db": "tsx scripts/populate-db.ts",
+    "populate-about": "tsx scripts/populate-about.ts",
+    "migrate-notes": "tsx scripts/migrate-notes.ts"
   },
   "dependencies": {
     "@fontsource/jetbrains-mono": "^5.2.8",

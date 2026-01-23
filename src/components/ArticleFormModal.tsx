@@ -5,6 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Plus, Trash } from "lucide-react";
+import { ImageUpload } from "@/components/ImageUpload";
+import { ArticleBlockEditor, ArticleBlock } from "@/components/ArticleBlockEditor";
 import type { Article } from "@/types/database";
 
 interface BlogFormModalProps {
@@ -25,12 +27,11 @@ export const ArticleFormModal = ({
   const [post, setPost] = useState<Omit<Article, 'id' | 'createdAt' | 'updatedAt'>>({
     title: "",
     excerpt: "",
-    content: "",
+    blocks: [],
     tags: [],
     publishedAt: new Date().toISOString().split('T')[0],
     readingTime: "5 min",
-    author: "Surafel Yimam",
-    images: []
+    author: "Surafel Yimam"
   });
 
   useEffect(() => {
@@ -38,12 +39,11 @@ export const ArticleFormModal = ({
       setPost({
         title: initialData.title || "",
         excerpt: initialData.excerpt || "",
-        content: initialData.content || "",
+        blocks: initialData.blocks || [],
         tags: initialData.tags || [],
         publishedAt: initialData.publishedAt || new Date().toISOString().split('T')[0],
         readingTime: initialData.readingTime || "5 min",
-        author: initialData.author || "Surafel Yimam",
-        images: initialData.images || []
+        author: initialData.author || "Surafel Yimam"
       });
     }
   }, [initialData]);
@@ -84,14 +84,10 @@ export const ArticleFormModal = ({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="content">Content (Markdown)</Label>
-              <Textarea
-                id="content"
-                value={post.content}
-                onChange={(e) => setPost({...post, content: e.target.value})}
-                className="min-h-[200px]"
-                placeholder="# Title\n\n## Subtitle\n\nContent here..."
-                required
+              <Label>Content Blocks</Label>
+              <ArticleBlockEditor
+                blocks={post.blocks}
+                onChange={(blocks) => setPost({...post, blocks})}
               />
             </div>
 
@@ -136,62 +132,6 @@ export const ArticleFormModal = ({
               />
             </div>
 
-            {/* Images Section */}
-            <div className="space-y-2">
-              <Label>Images</Label>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => setPost({...post, images: [...post.images, { url: "", alt: "", caption: "" }]})}
-              >
-                <Plus size={16} className="mr-2" /> Add Image
-              </Button>
-              <div className="space-y-2 mt-2">
-                {post.images.map((image, index) => (
-                  <div key={index} className="border border-border p-3 rounded space-y-2">
-                    <div className="flex justify-between items-center">
-                      <Label className="text-sm font-medium">Image {index + 1}</Label>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setPost({...post, images: post.images.filter((_, i) => i !== index)})}
-                      >
-                        <Trash size={14} />
-                      </Button>
-                    </div>
-                    <Input
-                      placeholder="Image URL"
-                      value={image.url}
-                      onChange={(e) => {
-                        const newImages = [...post.images];
-                        newImages[index].url = e.target.value;
-                        setPost({...post, images: newImages});
-                      }}
-                    />
-                    <Input
-                      placeholder="Alt text"
-                      value={image.alt}
-                      onChange={(e) => {
-                        const newImages = [...post.images];
-                        newImages[index].alt = e.target.value;
-                        setPost({...post, images: newImages});
-                      }}
-                    />
-                    <Input
-                      placeholder="Caption"
-                      value={image.caption}
-                      onChange={(e) => {
-                        const newImages = [...post.images];
-                        newImages[index].caption = e.target.value;
-                        setPost({...post, images: newImages});
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
           <div className="flex justify-end gap-2 pt-4">

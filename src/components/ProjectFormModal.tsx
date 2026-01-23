@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { ImageUpload } from "@/components/ImageUpload";
 import type { Project } from "@/data/projects";
 
 interface ProjectFormModalProps {
@@ -33,7 +34,8 @@ export const ProjectFormModal = ({
     liveUrl: "",
     githubUrl: "",
     videoUrl: "",
-    year: new Date().getFullYear().toString()
+    year: new Date().getFullYear().toString(),
+    priority: 5
   } as Omit<Project, 'id'>);
 
   useEffect(() => {
@@ -49,7 +51,8 @@ export const ProjectFormModal = ({
         liveUrl: initialData.liveUrl || "",
         githubUrl: initialData.githubUrl || "",
         videoUrl: initialData.videoUrl || "",
-        year: initialData.year || new Date().getFullYear().toString()
+        year: initialData.year || new Date().getFullYear().toString(),
+        priority: initialData.priority || 5
       } as Omit<Project, 'id'>);
     }
   }, [initialData]);
@@ -131,14 +134,12 @@ export const ProjectFormModal = ({
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="imageUrl">Image URL</Label>
-              <Input
-                id="imageUrl"
-                value={project.imageUrl}
-                onChange={(e) => setProject({...project, imageUrl: e.target.value})}
-              />
-            </div>
+            <ImageUpload
+              value={project.imageUrl}
+              onChange={(url) => setProject({...project, imageUrl: url})}
+              label="Project Image"
+              placeholder="Upload project image or enter URL"
+            />
 
             <div className="space-y-2">
               <Label htmlFor="liveUrl">Live URL</Label>
@@ -178,6 +179,21 @@ export const ProjectFormModal = ({
                 value={project.year}
                 onChange={(e) => setProject({...project, year: e.target.value})}
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="priority">Priority Score (1-10)</Label>
+              <Input
+                id="priority"
+                type="number"
+                min="1"
+                max="10"
+                value={project.priority}
+                onChange={(e) => setProject({...project, priority: parseInt(e.target.value) || 5})}
+              />
+              <p className="text-xs text-muted-foreground">
+                Higher scores appear first on the main site (10 = highest priority)
+              </p>
             </div>
           </div>
 

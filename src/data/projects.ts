@@ -11,5 +11,8 @@ export interface Project {
   liveUrl?: string;
   githubUrl?: string;
   year: string;
+  priority: number; // For admin hierarchy scoring (1-10, higher = more important)
+  createdAt: Date;
+  updatedAt: Date;
 }
 

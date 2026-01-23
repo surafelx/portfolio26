@@ -13,24 +13,37 @@ export interface Project {
   githubUrl?: string;
   videoUrl?: string;
   year: string;
+  priority: number; // For admin hierarchy scoring (1-10, higher = more important)
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface ArticleBlock {
+  id: string;
+  type: 'title' | 'paragraph' | 'image' | 'code' | 'quote' | 'image-grid' | 'two-column';
+  content: string;
+  metadata?: {
+    alt?: string;
+    caption?: string;
+    language?: string;
+    images?: Array<{
+      url: string;
+      alt: string;
+      caption: string;
+    }>;
+    layout?: 'single' | 'grid-2' | 'grid-3' | 'grid-4';
+  };
 }
 
 export interface Article {
   id: string;
   title: string;
   excerpt: string;
-  content: string;
+  blocks: ArticleBlock[];
   tags: string[];
   publishedAt: string;
   readingTime: string;
   author: string;
-  images?: Array<{
-    url: string;
-    alt: string;
-    caption: string;
-  }>;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -88,6 +101,7 @@ export interface NoteView {
 export interface About {
   id: string;
   summary: string;
+  qualifications?: string[];
   skills: {
     programming: string[];
     tools: string[];
@@ -102,11 +116,13 @@ export interface About {
     position: string;
     dates: string;
     description: string[];
+    location?: string;
   }>;
   education: {
     institution: string;
     degree: string;
     graduation: string;
+    gpa?: string;
   };
   createdAt: Date;
   updatedAt: Date;
@@ -143,7 +159,7 @@ export async function connectToDatabase(): Promise<any> {
 export async function getProjects(): Promise<Project[]> {
   const db = await connectToDatabase();
   const projectsCollection = db.collection('projects');
-  const projects = await projectsCollection.find({}).sort({ createdAt: -1 }).toArray();
+  const projects = await projectsCollection.find({}).sort({ priority: -1, createdAt: -1 }).toArray();
   return projects;
 }
 
