@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ChevronUp, Search, Filter, X } from "lucide-react";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
 
 interface ProjectSearchFilterProps {
   modules: string[];
@@ -36,7 +37,14 @@ export const ProjectSearchFilter = ({
         <div className="flex items-center gap-4">
           {photoUrl && (
             <div className="w-10 h-10 rounded-full overflow-hidden">
-              <img src={photoUrl} alt="Module" className="w-full h-full object-cover" />
+              <ImageWithFallback
+                src={photoUrl}
+                alt="Module"
+                className="w-full h-full object-cover"
+                fallbackText=""
+                showIcon={false}
+                iconSize={16}
+              />
             </div>
           )}
           <div>

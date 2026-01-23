@@ -4,6 +4,20 @@ async function populateAbout() {
   try {
     const aboutData = {
       summary: "Full-Stack Software Engineer with 8+ years of experience. Ex-CTO at Budera. I've been building and creating since I was a kid, driven by a passion for solving problems and turning ideas into innovative, user-friendly and fun products. Currently, exploring AI agent development to combine full-stack expertise with intelligent automation.",
+      contact: {
+        email: "hello@example.dev",
+        location: "San Francisco, CA",
+        responseTime: "Usually responds within 24h"
+      },
+      socialLinks: {
+        github: "https://github.com/username",
+        linkedin: "https://linkedin.com/in/username",
+        twitter: "https://twitter.com/username",
+        instagram: "https://instagram.com/username",
+        youtube: "https://youtube.com/@username",
+        website: "https://yourwebsite.com"
+      },
+      resumeUrl: "/resume.pdf",
       qualifications: [
         "TECHNICAL SKILLS",
         "PROGRAMMING & FRAMEWORKS",

@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Maximize2, Minimize2, ExternalLink, Github, Play, Info, Layout, Code, Video, Mail, MapPin } from "lucide-react";
-import type { Project } from "@/data/projects";
+import { X, Maximize2, Minimize2, ExternalLink, Github, Play, Info, Layout, Code, Video, Mail, MapPin, Network } from "lucide-react";
+import { ProjectNodeGraph } from "@/components/ProjectNodeGraph";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
+import type { Project } from "@/lib/database";
 
 interface ProjectModalProps {
   project: Project | null;
@@ -9,12 +11,13 @@ interface ProjectModalProps {
   onClose: () => void;
 }
 
-type TabType = "overview" | "details" | "tech" | "demo";
+type TabType = "overview" | "details" | "tech" | "structure" | "demo";
 
 const tabs = [
   { id: "overview" as TabType, label: "Overview", icon: Layout },
   { id: "details" as TabType, label: "Details", icon: Info },
   { id: "tech" as TabType, label: "Tech Stack", icon: Code },
+  { id: "structure" as TabType, label: "Structure", icon: Network },
   { id: "demo" as TabType, label: "Demo", icon: Play },
 ];
 
@@ -158,6 +161,34 @@ export const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) =>
           </div>
         );
 
+      case "structure":
+        return (
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm text-muted-foreground mb-3 flex items-center gap-2">
+                <span className="w-4 h-px bg-primary" />
+                Project Architecture
+              </h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                Visual representation of the project structure and component relationships.
+              </p>
+
+              {project.nodeGraph && project.nodeGraph.nodes.length > 0 ? (
+                <ProjectNodeGraph
+                  nodes={project.nodeGraph.nodes}
+                  edges={project.nodeGraph.edges}
+                  readOnly={true}
+                />
+              ) : (
+                <div className="terminal-border bg-secondary/30 p-8 text-center">
+                  <Network size={48} className="mx-auto text-muted-foreground mb-4 opacity-30" />
+                  <p className="text-muted-foreground">No project structure defined yet.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+
       case "demo":
         return (
           <div className="space-y-6">
@@ -269,10 +300,12 @@ export const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) =>
                   {/* Project Identity */}
                   <div className="mb-6 pb-4 border-b border-border">
                     <div className="w-16 h-16 terminal-border overflow-hidden mb-3">
-                      <img
+                      <ImageWithFallback
                         src={project.imageUrl}
                         alt={project.title}
                         className="w-full h-full object-cover"
+                        fallbackText="Coming Soon"
+                        iconSize={24}
                       />
                     </div>
                     <h2 className="text-primary font-medium terminal-glow text-sm">

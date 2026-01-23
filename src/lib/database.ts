@@ -1,5 +1,24 @@
 import { MongoClient } from 'mongodb';
 
+export interface ProjectNode {
+  id: string;
+  type: 'input' | 'default' | 'output';
+  position: { x: number; y: number };
+  data: {
+    label: string;
+    description?: string;
+    tech?: string[];
+  };
+}
+
+export interface ProjectEdge {
+  id: string;
+  source: string;
+  target: string;
+  type?: string;
+  animated?: boolean;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -14,6 +33,10 @@ export interface Project {
   videoUrl?: string;
   year: string;
   priority: number; // For admin hierarchy scoring (1-10, higher = more important)
+  nodeGraph?: {
+    nodes: ProjectNode[];
+    edges: ProjectEdge[];
+  };
   createdAt: Date;
   updatedAt: Date;
 }
@@ -130,6 +153,20 @@ export interface About {
     gamingAndStrategy?: string;
     photographyAndTech?: string;
   };
+  contact?: {
+    email?: string;
+    location?: string;
+    responseTime?: string;
+  };
+  socialLinks?: {
+    github?: string;
+    linkedin?: string;
+    twitter?: string;
+    instagram?: string;
+    youtube?: string;
+    website?: string;
+  };
+  resumeUrl?: string;
   createdAt: Date;
   updatedAt: Date;
 }

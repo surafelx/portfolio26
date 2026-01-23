@@ -3,6 +3,7 @@ import { Upload, X, Image as ImageIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { ImageWithFallback } from '@/components/ImageWithFallback';
 
 interface ImageUploadProps {
   value: string;
@@ -24,24 +25,72 @@ export const ImageUpload = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const uploadToCloudinary = async (file: File): Promise<string> => {
+    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+    const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || 'portfolio26';
+
+    if (!cloudName) {
+      throw new Error('Cloudinary cloud name not configured. Please set NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME environment variable.');
+    }
+
+    console.log('Cloudinary upload attempt:', {
+      cloudName,
+      uploadPreset,
+      fileName: file.name,
+      fileSize: file.size,
+      fileType: file.type
+    });
+
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || 'portfolio26');
+    formData.append('upload_preset', uploadPreset);
 
     const response = await fetch(
-      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
       {
         method: 'POST',
         body: formData,
       }
     );
 
-    if (!response.ok) {
-      throw new Error('Upload failed');
+    let errorMessage = 'Upload failed';
+    let responseData = null;
+
+    try {
+      responseData = await response.json();
+    } catch (e) {
+      // If we can't parse JSON, use the response status text
+      errorMessage = `Upload failed: ${response.status} ${response.statusText}`;
     }
 
-    const data = await response.json();
-    return data.secure_url;
+    if (!response.ok) {
+      if (responseData && responseData.error) {
+        errorMessage = `Cloudinary Error: ${responseData.error.message || responseData.error}`;
+      } else if (response.status === 400) {
+        errorMessage = 'Bad Request: Please check your Cloudinary configuration (cloud name, upload preset)';
+      } else if (response.status === 401) {
+        errorMessage = 'Unauthorized: Invalid upload preset or cloud name';
+      } else if (response.status === 403) {
+        errorMessage = 'Forbidden: Upload preset does not allow unsigned uploads';
+      } else {
+        errorMessage = `Upload failed: ${response.status} ${response.statusText}`;
+      }
+
+      console.error('Cloudinary API Error:', {
+        status: response.status,
+        statusText: response.statusText,
+        responseData,
+        cloudName,
+        uploadPreset
+      });
+
+      throw new Error(errorMessage);
+    }
+
+    if (!responseData || !responseData.secure_url) {
+      throw new Error('Upload succeeded but no image URL returned from Cloudinary');
+    }
+
+    return responseData.secure_url;
   };
 
   const handleFileUpload = async (file: File) => {
@@ -61,7 +110,8 @@ export const ImageUpload = ({
       onChange(url);
     } catch (error) {
       console.error('Upload error:', error);
-      alert('Failed to upload image. Please try again.');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to upload image. Please try again.';
+      alert(errorMessage);
     } finally {
       setIsUploading(false);
     }
@@ -133,10 +183,12 @@ export const ImageUpload = ({
         {value ? (
           <div className="space-y-3">
             <div className="relative inline-block">
-              <img
+              <ImageWithFallback
                 src={value}
                 alt="Preview"
                 className="max-w-full h-32 object-cover rounded border"
+                fallbackText="Image not available"
+                iconSize={32}
               />
               <Button
                 type="button"

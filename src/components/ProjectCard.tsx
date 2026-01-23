@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
-import type { Project } from "@/data/projects";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
+import type { Project } from "@/lib/database";
 
 interface ProjectCardProps {
   project: Project;
@@ -31,10 +32,12 @@ export const ProjectCard = ({ project, index, onClick }: ProjectCardProps) => {
     >
       {/* Hover Image Overlay */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-        <img
+        <ImageWithFallback
           src={project.imageUrl}
           alt={project.title}
           className="w-full h-full object-cover"
+          fallbackText="Coming Soon"
+          showIcon={false}
         />
         <div className="absolute inset-0 bg-black/40" />
 

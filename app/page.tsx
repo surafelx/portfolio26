@@ -1,4 +1,4 @@
-import HomeClient from "@/components/HomeClient";
+ import HomeClient from "@/components/HomeClient";
 import { getProjects, getArticles } from "@/lib/database";
 
 export default async function Home() {

@@ -1,22 +1,67 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Send, Clock } from "lucide-react";
 import { toast } from "sonner";
+import type { About } from "@/lib/database";
 
 export default function Contact() {
+  const [contactInfo, setContactInfo] = useState<About['contact']>({
+    email: "hello@example.dev",
+    location: "San Francisco, CA",
+    responseTime: "Usually responds within 24h"
+  });
+
+  useEffect(() => {
+    // Fetch about data to get contact information
+    fetch('/api/about')
+      .then(res => res.json())
+      .then((about: About) => {
+        if (about?.contact) {
+          setContactInfo({
+            email: about.contact.email || "hello@example.dev",
+            location: about.contact.location || "San Francisco, CA",
+            responseTime: about.contact.responseTime || "Usually responds within 24h"
+          });
+        }
+      })
+      .catch(console.error);
+  }, []);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Message sent!", {
-      description: "Thanks for reaching out. I'll get back to you soon.",
-    });
-    setFormData({ name: "", email: "", message: "" });
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        toast.success("Message sent!", {
+          description: "Thanks for reaching out. I'll get back to you soon.",
+        });
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        const errorData = await response.json();
+        toast.error("Failed to send message", {
+          description: errorData.error || "Please try again later.",
+        });
+      }
+    } catch (error) {
+      console.error('Contact form error:', error);
+      toast.error("Failed to send message", {
+        description: "Please try again later.",
+      });
+    }
   };
 
   return (
@@ -42,19 +87,19 @@ export default function Contact() {
             </p>
 
             <div className="space-y-4">
-              <div className="flex items-center gap-3 text-foreground/80">
-                <Mail size={16} className="text-primary" />
-                <span>hello@example.dev</span>
-              </div>
-              <div className="flex items-center gap-3 text-foreground/80">
-                <MapPin size={16} className="text-terminal-cyan" />
-                <span>San Francisco, CA</span>
-              </div>
-              <div className="flex items-center gap-3 text-foreground/80">
-                <Clock size={16} className="text-terminal-amber" />
-                <span>Usually responds within 24h</span>
-              </div>
-            </div>
+               <div className="flex items-center gap-3 text-foreground/80">
+                 <Mail size={16} className="text-primary" />
+                 <span>{contactInfo.email}</span>
+               </div>
+               <div className="flex items-center gap-3 text-foreground/80">
+                 <MapPin size={16} className="text-terminal-cyan" />
+                 <span>{contactInfo.location}</span>
+               </div>
+               <div className="flex items-center gap-3 text-foreground/80">
+                 <Clock size={16} className="text-terminal-amber" />
+                 <span>{contactInfo.responseTime}</span>
+               </div>
+             </div>
           </div>
         </div>
 

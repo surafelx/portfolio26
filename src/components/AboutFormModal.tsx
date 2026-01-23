@@ -45,7 +45,21 @@ export const AboutFormModal = ({
       liveCodingMusic: "",
       gamingAndStrategy: "",
       photographyAndTech: ""
-    }
+    },
+    contact: {
+      email: "",
+      location: "",
+      responseTime: ""
+    },
+    socialLinks: {
+      github: "",
+      linkedin: "",
+      twitter: "",
+      instagram: "",
+      youtube: "",
+      website: ""
+    },
+    resumeUrl: ""
   });
 
   useEffect(() => {
@@ -74,7 +88,21 @@ export const AboutFormModal = ({
           liveCodingMusic: "",
           gamingAndStrategy: "",
           photographyAndTech: ""
-        }
+        },
+        contact: initialData.contact || {
+          email: "",
+          location: "",
+          responseTime: ""
+        },
+        socialLinks: initialData.socialLinks || {
+          github: "",
+          linkedin: "",
+          twitter: "",
+          instagram: "",
+          youtube: "",
+          website: ""
+        },
+        resumeUrl: initialData.resumeUrl || ""
       });
     }
   }, [initialData]);
@@ -310,6 +338,115 @@ export const AboutFormModal = ({
                 />
               </div>
             </div>
+          </div>
+
+          {/* Contact Information */}
+          <div className="space-y-4">
+            <Label>Contact Information</Label>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="contact-email">Email</Label>
+                <Input
+                  id="contact-email"
+                  value={about.contact?.email || ''}
+                  onChange={(e) => setAbout({...about, contact: {...about.contact, email: e.target.value}})}
+                  placeholder="hello@example.dev"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="contact-location">Location</Label>
+                <Input
+                  id="contact-location"
+                  value={about.contact?.location || ''}
+                  onChange={(e) => setAbout({...about, contact: {...about.contact, location: e.target.value}})}
+                  placeholder="San Francisco, CA"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="contact-response-time">Response Time</Label>
+                <Input
+                  id="contact-response-time"
+                  value={about.contact?.responseTime || ''}
+                  onChange={(e) => setAbout({...about, contact: {...about.contact, responseTime: e.target.value}})}
+                  placeholder="Usually responds within 24h"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Social Links */}
+          <div className="space-y-4">
+            <Label>Social Links</Label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="social-github">GitHub</Label>
+                <Input
+                  id="social-github"
+                  value={about.socialLinks?.github || ''}
+                  onChange={(e) => setAbout({...about, socialLinks: {...about.socialLinks, github: e.target.value}})}
+                  placeholder="https://github.com/username"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="social-linkedin">LinkedIn</Label>
+                <Input
+                  id="social-linkedin"
+                  value={about.socialLinks?.linkedin || ''}
+                  onChange={(e) => setAbout({...about, socialLinks: {...about.socialLinks, linkedin: e.target.value}})}
+                  placeholder="https://linkedin.com/in/username"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="social-twitter">Twitter</Label>
+                <Input
+                  id="social-twitter"
+                  value={about.socialLinks?.twitter || ''}
+                  onChange={(e) => setAbout({...about, socialLinks: {...about.socialLinks, twitter: e.target.value}})}
+                  placeholder="https://twitter.com/username"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="social-instagram">Instagram</Label>
+                <Input
+                  id="social-instagram"
+                  value={about.socialLinks?.instagram || ''}
+                  onChange={(e) => setAbout({...about, socialLinks: {...about.socialLinks, instagram: e.target.value}})}
+                  placeholder="https://instagram.com/username"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="social-youtube">YouTube</Label>
+                <Input
+                  id="social-youtube"
+                  value={about.socialLinks?.youtube || ''}
+                  onChange={(e) => setAbout({...about, socialLinks: {...about.socialLinks, youtube: e.target.value}})}
+                  placeholder="https://youtube.com/@username"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="social-website">Website</Label>
+                <Input
+                  id="social-website"
+                  value={about.socialLinks?.website || ''}
+                  onChange={(e) => setAbout({...about, socialLinks: {...about.socialLinks, website: e.target.value}})}
+                  placeholder="https://yourwebsite.com"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Resume */}
+          <div className="space-y-2">
+            <Label htmlFor="resume-url">Resume URL</Label>
+            <Input
+              id="resume-url"
+              value={about.resumeUrl || ''}
+              onChange={(e) => setAbout({...about, resumeUrl: e.target.value})}
+              placeholder="https://example.com/resume.pdf or /resume.pdf"
+            />
+            <p className="text-xs text-muted-foreground">
+              Upload your resume to the public folder and enter the path here (e.g., /resume.pdf)
+            </p>
           </div>
 
           <div className="flex justify-end gap-2 pt-4">

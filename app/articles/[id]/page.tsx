@@ -2,6 +2,7 @@ import { Calendar, Clock, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArticleTracker } from "@/components/ArticleTracker";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { getArticles } from "@/lib/database";
 
 export default async function Article({ params }: { params: { id: string } }) {
@@ -177,10 +178,11 @@ export default async function Article({ params }: { params: { id: string } }) {
       case 'image':
         return (
           <div key={block.id} className="terminal-border bg-secondary/30 p-4 mb-6">
-            <img
+            <ImageWithFallback
               src={block.content}
               alt={block.metadata?.alt || ''}
               className="w-full max-h-96 object-cover rounded mb-3"
+              fallbackText="Image not available"
             />
             {block.metadata?.caption && (
               <p className="text-sm text-muted-foreground text-center">
@@ -200,10 +202,12 @@ export default async function Article({ params }: { params: { id: string } }) {
           <div key={block.id} className={`grid ${gridClass} gap-4 mb-6`}>
             {block.metadata?.images?.map((image: any, index: number) => (
               <div key={index} className="terminal-border bg-secondary/30 p-3">
-                <img
+                <ImageWithFallback
                   src={image.url}
                   alt={image.alt}
                   className="w-full h-48 object-cover rounded mb-2"
+                  fallbackText="Image not available"
+                  iconSize={24}
                 />
                 {image.caption && (
                   <p className="text-xs text-muted-foreground text-center">

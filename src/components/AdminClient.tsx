@@ -446,6 +446,45 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
                     {displayAbout.education.degree} from {displayAbout.education.institution} ({displayAbout.education.graduation})
                   </p>
                 </div>
+
+                {displayAbout.contact && (
+                  <div className="terminal-border bg-card/50 p-4">
+                    <h3 className="text-sm text-primary mb-2">Contact Information</h3>
+                    <div className="space-y-1 text-sm text-muted-foreground">
+                      {displayAbout.contact.email && <p>Email: {displayAbout.contact.email}</p>}
+                      {displayAbout.contact.location && <p>Location: {displayAbout.contact.location}</p>}
+                      {displayAbout.contact.responseTime && <p>Response Time: {displayAbout.contact.responseTime}</p>}
+                    </div>
+                  </div>
+                )}
+
+                {displayAbout.socialLinks && (
+                  <div className="terminal-border bg-card/50 p-4">
+                    <h3 className="text-sm text-primary mb-2">Social Links</h3>
+                    <div className="space-y-1 text-sm text-muted-foreground">
+                      {displayAbout.socialLinks.github && <p>GitHub: {displayAbout.socialLinks.github}</p>}
+                      {displayAbout.socialLinks.linkedin && <p>LinkedIn: {displayAbout.socialLinks.linkedin}</p>}
+                      {displayAbout.socialLinks.twitter && <p>Twitter: {displayAbout.socialLinks.twitter}</p>}
+                      {displayAbout.socialLinks.instagram && <p>Instagram: {displayAbout.socialLinks.instagram}</p>}
+                      {displayAbout.socialLinks.youtube && <p>YouTube: {displayAbout.socialLinks.youtube}</p>}
+                      {displayAbout.socialLinks.website && <p>Website: {displayAbout.socialLinks.website}</p>}
+                    </div>
+                  </div>
+                )}
+
+                {displayAbout.resumeUrl && (
+                  <div className="terminal-border bg-card/50 p-4">
+                    <h3 className="text-sm text-primary mb-2">Resume</h3>
+                    <a
+                      href={displayAbout.resumeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-primary hover:underline"
+                    >
+                      View Resume
+                    </a>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="terminal-border bg-card/50 p-4 text-center text-muted-foreground">
