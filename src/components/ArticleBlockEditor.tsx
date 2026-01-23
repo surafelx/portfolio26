@@ -9,7 +9,7 @@ import { ImageUpload } from "@/components/ImageUpload";
 
 export interface ArticleBlock {
   id: string;
-  type: 'title' | 'paragraph' | 'image' | 'code' | 'quote' | 'image-grid' | 'two-column';
+  type: 'h1' | 'h2' | 'h3' | 'h4' | 'paragraph' | 'image' | 'code' | 'quote' | 'image-grid' | 'two-column';
   content: string;
   metadata?: {
     alt?: string;
@@ -97,13 +97,40 @@ export const ArticleBlockEditor = ({ blocks, onChange }: ArticleBlockEditorProps
 
   const renderBlockEditor = (block: ArticleBlock) => {
     switch (block.type) {
-      case 'title':
+      case 'h1':
         return (
           <Input
             value={block.content}
             onChange={(e) => updateBlock(block.id, { content: e.target.value })}
-            placeholder="Enter title..."
-            className="text-lg font-semibold"
+            placeholder="Enter H1 heading..."
+            className="text-2xl font-bold"
+          />
+        );
+      case 'h2':
+        return (
+          <Input
+            value={block.content}
+            onChange={(e) => updateBlock(block.id, { content: e.target.value })}
+            placeholder="Enter H2 heading..."
+            className="text-xl font-semibold"
+          />
+        );
+      case 'h3':
+        return (
+          <Input
+            value={block.content}
+            onChange={(e) => updateBlock(block.id, { content: e.target.value })}
+            placeholder="Enter H3 heading..."
+            className="text-lg font-medium"
+          />
+        );
+      case 'h4':
+        return (
+          <Input
+            value={block.content}
+            onChange={(e) => updateBlock(block.id, { content: e.target.value })}
+            placeholder="Enter H4 heading..."
+            className="text-base font-medium"
           />
         );
       case 'paragraph':
@@ -281,7 +308,10 @@ export const ArticleBlockEditor = ({ blocks, onChange }: ArticleBlockEditorProps
 
   const getBlockIcon = (type: ArticleBlock['type']) => {
     switch (type) {
-      case 'title': return <Type size={16} />;
+      case 'h1': return <Type size={16} />;
+      case 'h2': return <Type size={16} />;
+      case 'h3': return <Type size={16} />;
+      case 'h4': return <Type size={16} />;
       case 'paragraph': return <Type size={16} />;
       case 'image': return <Image size={16} />;
       case 'image-grid': return <Grid size={16} />;
@@ -300,9 +330,33 @@ export const ArticleBlockEditor = ({ blocks, onChange }: ArticleBlockEditorProps
           type="button"
           variant="outline"
           size="sm"
-          onClick={() => addBlock('title')}
+          onClick={() => addBlock('h1')}
         >
-          <Type size={14} className="mr-2" /> Title
+          <Type size={14} className="mr-2" /> H1
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => addBlock('h2')}
+        >
+          <Type size={14} className="mr-2" /> H2
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => addBlock('h3')}
+        >
+          <Type size={14} className="mr-2" /> H3
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => addBlock('h4')}
+        >
+          <Type size={14} className="mr-2" /> H4
         </Button>
         <Button
           type="button"

@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { Notebook, BookOpen, Calendar, Clock, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useArticles } from "@/hooks/useArticles";
+import { useNotes } from "@/hooks/useNotes";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 interface NotesClientProps {
   initialArticles: any[];
@@ -10,10 +12,10 @@ interface NotesClientProps {
 }
 
 export default function NotesClient({ initialArticles, initialNotes }: NotesClientProps) {
-  const { articles } = useArticles();
+  const { articles, loading: articlesLoading } = useArticles();
+  const { notes, loading: notesLoading } = useNotes();
   const displayArticles = articles.length > 0 ? articles : initialArticles;
-  // For now, just use initialNotes since there's no hook for notes in this component
-  const displayNotes = initialNotes;
+  const displayNotes = notes.length > 0 ? notes : initialNotes;
   return (
     <div>
       {/* Header */}
@@ -41,17 +43,23 @@ export default function NotesClient({ initialArticles, initialNotes }: NotesClie
         <h2 className="text-base text-primary terminal-glow mb-4 flex items-center gap-2">
           <BookOpen size={18} /> Featured Articles
         </h2>
-        <div className="space-y-3">
-          {displayArticles.map((article) => (
-            <motion.div
-              key={article.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="terminal-border bg-card/30 p-4 hover:bg-card/40 transition-colors"
-            >
+        {articlesLoading ? (
+          <div className="flex justify-center py-4">
+            <LoadingSpinner message="Loading articles..." />
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {displayArticles.map((article) => (
+              <motion.div
+                key={article.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="terminal-border bg-card/30 p-4 hover:bg-card/50 hover:scale-[1.01] transition-all duration-200 cursor-pointer"
+                onClick={() => window.location.href = `/articles/${article.id}`}
+              >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
-                  <Link href={`/notes/${article.id}`}>
+                  <Link href={`/articles/${article.id}`}>
                     <h3 className="text-base text-primary terminal-glow mb-2 hover:text-primary/80 transition-colors cursor-pointer">
                       {article.title}
                     </h3>
@@ -85,16 +93,17 @@ export default function NotesClient({ initialArticles, initialNotes }: NotesClie
                   </div>
                 </div>
                 <Link
-                  href={`/notes/${article.id}`}
+                  href={`/articles/${article.id}`}
                   className="flex items-center gap-1 text-primary hover:text-primary/80 transition-colors text-xs"
                 >
                   <span>Read</span>
                   <ArrowRight size={12} />
                 </Link>
               </div>
-            </motion.div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Notes Section */}
@@ -102,19 +111,27 @@ export default function NotesClient({ initialArticles, initialNotes }: NotesClie
         <h2 className="text-base text-primary terminal-glow mb-4 flex items-center gap-2">
           <Notebook size={18} /> Personal Notes
         </h2>
-        <div className="space-y-3">
-          {displayNotes.map((note) => (
-            <motion.div
-              key={note.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="terminal-border bg-card/30 p-4 hover:bg-card/40 transition-colors"
-            >
+        {notesLoading ? (
+          <div className="flex justify-center py-4">
+            <LoadingSpinner message="Loading notes..." />
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {displayNotes.map((note) => (
+              <motion.div
+                key={note.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="terminal-border bg-card/30 p-4 hover:bg-card/50 hover:scale-[1.01] transition-all duration-200 cursor-pointer"
+                onClick={() => window.location.href = `/notes/${note.id}`}
+              >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
-                  <h3 className="text-base text-primary terminal-glow mb-2">
-                    {note.title}
-                  </h3>
+                  <Link href={`/notes/${note.id}`}>
+                    <h3 className="text-base text-primary terminal-glow mb-2 hover:text-primary/80 transition-colors cursor-pointer">
+                      {note.title}
+                    </h3>
+                  </Link>
                   <div className="text-foreground/80 text-sm space-y-2">
                     {note.blocks?.slice(0, 2).map((block: any) => {
                       if (block.type === 'paragraph' || block.type === 'title') {
@@ -138,10 +155,18 @@ export default function NotesClient({ initialArticles, initialNotes }: NotesClie
                     <span>{note.blocks?.length || 0} blocks</span>
                   </div>
                 </div>
+                <Link
+                  href={`/notes/${note.id}`}
+                  className="flex items-center gap-1 text-primary hover:text-primary/80 transition-colors text-xs"
+                >
+                  <span>View</span>
+                  <ArrowRight size={12} />
+                </Link>
               </div>
-            </motion.div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
 
     </div>

@@ -20,7 +20,7 @@ export interface Project {
 
 export interface ArticleBlock {
   id: string;
-  type: 'title' | 'paragraph' | 'image' | 'code' | 'quote' | 'image-grid' | 'two-column';
+  type: 'h1' | 'h2' | 'h3' | 'h4' | 'paragraph' | 'image' | 'code' | 'quote' | 'image-grid' | 'two-column';
   content: string;
   metadata?: {
     alt?: string;
@@ -123,6 +123,12 @@ export interface About {
     degree: string;
     graduation: string;
     gpa?: string;
+  };
+  personalInterests?: {
+    coffeeAndLateNights?: string;
+    liveCodingMusic?: string;
+    gamingAndStrategy?: string;
+    photographyAndTech?: string;
   };
   createdAt: Date;
   updatedAt: Date;

@@ -13,7 +13,7 @@ import { useProjects } from "@/hooks/useProjects";
 import { useArticles } from "@/hooks/useArticles";
 import { useNotes } from "@/hooks/useNotes";
 import type { Project } from "@/data/projects";
-import type { Article, Note } from "@/types/database";
+import type { Article, Note } from "@/lib/database";
 
 interface AdminClientProps {
   initialProjects: Project[];

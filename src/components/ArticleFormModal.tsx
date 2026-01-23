@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Plus, Trash } from "lucide-react";
 import { ImageUpload } from "@/components/ImageUpload";
 import { ArticleBlockEditor, ArticleBlock } from "@/components/ArticleBlockEditor";
-import type { Article } from "@/types/database";
+import type { Article } from "@/lib/database";
 
 interface BlogFormModalProps {
   isOpen: boolean;

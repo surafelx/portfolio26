@@ -15,20 +15,34 @@ export interface Project {
   updatedAt: Date;
 }
 
+export interface ArticleBlock {
+  id: string;
+  type: 'h1' | 'h2' | 'h3' | 'h4' | 'paragraph' | 'image' | 'code' | 'quote' | 'image-grid' | 'two-column';
+  content: string;
+  metadata?: {
+    alt?: string;
+    caption?: string;
+    language?: string;
+    images?: Array<{
+      url: string;
+      alt: string;
+      caption: string;
+    }>;
+    layout?: 'single' | 'grid-2' | 'grid-3' | 'grid-4';
+  };
+}
+
 export interface Article {
   id: string;
   title: string;
   excerpt: string;
-  content: string;
+  blocks: ArticleBlock[];
   tags: string[];
   publishedAt: string;
   readingTime: string;
   author: string;
-  images?: Array<{
-    url: string;
-    alt: string;
-    caption: string;
-  }>;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface NoteBlock {

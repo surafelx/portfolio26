@@ -39,6 +39,12 @@ export const AboutFormModal = ({
       degree: "",
       graduation: "",
       gpa: ""
+    },
+    personalInterests: {
+      coffeeAndLateNights: "",
+      liveCodingMusic: "",
+      gamingAndStrategy: "",
+      photographyAndTech: ""
     }
   });
 
@@ -62,6 +68,12 @@ export const AboutFormModal = ({
           degree: "",
           graduation: "",
           gpa: ""
+        },
+        personalInterests: initialData.personalInterests || {
+          coffeeAndLateNights: "",
+          liveCodingMusic: "",
+          gamingAndStrategy: "",
+          photographyAndTech: ""
         }
       });
     }
@@ -208,6 +220,53 @@ export const AboutFormModal = ({
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Personal Interests */}
+          <div className="space-y-4">
+            <Label>Personal Interests</Label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="coffeeAndLateNights">Coffee & Late Nights</Label>
+                <Textarea
+                  id="coffeeAndLateNights"
+                  value={about.personalInterests?.coffeeAndLateNights || ''}
+                  onChange={(e) => setAbout({...about, personalInterests: {...about.personalInterests, coffeeAndLateNights: e.target.value}})}
+                  placeholder="Describe your coffee habits and late-night coding sessions..."
+                  className="min-h-[60px]"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="liveCodingMusic">Live Coding Music</Label>
+                <Textarea
+                  id="liveCodingMusic"
+                  value={about.personalInterests?.liveCodingMusic || ''}
+                  onChange={(e) => setAbout({...about, personalInterests: {...about.personalInterests, liveCodingMusic: e.target.value}})}
+                  placeholder="Tell about your live coding music performances..."
+                  className="min-h-[60px]"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="gamingAndStrategy">Gaming & Strategy</Label>
+                <Textarea
+                  id="gamingAndStrategy"
+                  value={about.personalInterests?.gamingAndStrategy || ''}
+                  onChange={(e) => setAbout({...about, personalInterests: {...about.personalInterests, gamingAndStrategy: e.target.value}})}
+                  placeholder="Share your gaming interests and strategic thinking..."
+                  className="min-h-[60px]"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="photographyAndTech">Photography & Tech</Label>
+                <Textarea
+                  id="photographyAndTech"
+                  value={about.personalInterests?.photographyAndTech || ''}
+                  onChange={(e) => setAbout({...about, personalInterests: {...about.personalInterests, photographyAndTech: e.target.value}})}
+                  placeholder="Describe your photography and tech intersection..."
+                  className="min-h-[60px]"
+                />
+              </div>
+            </div>
           </div>
 
           {/* Education */}

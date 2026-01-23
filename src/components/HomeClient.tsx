@@ -11,13 +11,16 @@ import { toast } from "sonner";
 import { Download, Github, Linkedin, Twitter, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useProjects } from "@/hooks/useProjects";
+import { useArticles } from "@/hooks/useArticles";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 interface HomeClientProps {
   initialProjects: Project[];
+  initialArticles: any[];
   modules: string[];
 }
 
-export default function HomeClient({ initialProjects, modules }: HomeClientProps) {
+export default function HomeClient({ initialProjects, initialArticles, modules }: HomeClientProps) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showContent, setShowContent] = useState(false);
@@ -26,9 +29,11 @@ export default function HomeClient({ initialProjects, modules }: HomeClientProps
 
   // Use hooks for data management
   const { projects, loading: projectsLoading } = useProjects();
+  const { articles, loading: articlesLoading } = useArticles();
 
   // Use hook data if available, otherwise initial data
   const displayProjects = projects.length > 0 ? projects : initialProjects;
+  const displayArticles = articles.length > 0 ? articles : initialArticles;
   const [filteredProjects, setFilteredProjects] = useState<Project[]>(displayProjects);
 
   useEffect(() => {
@@ -177,34 +182,59 @@ export default function HomeClient({ initialProjects, modules }: HomeClientProps
 
       {/* Latest Article */}
       <motion.div variants={itemVariants} className="mb-8">
-        <div className="terminal-border bg-card/30 p-4">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-medium text-primary flex items-center gap-2">
+        {articlesLoading ? (
+          <div className="terminal-border bg-card/30 p-4">
+            <LoadingSpinner message="Loading latest article..." />
+          </div>
+        ) : displayArticles.length > 0 ? (
+          <div className="terminal-border bg-card/30 p-4 hover:bg-card/40 transition-colors cursor-pointer group">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-medium text-primary flex items-center gap-2">
+                <span className="w-4 h-px bg-primary" />
+                Latest Article
+              </h3>
+              <div className="flex items-center gap-3">
+                <Link
+                  href="/notes"
+                  className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                >
+                  All Articles →
+                </Link>
+                <Link
+                  href={`/articles/${displayArticles[0].id}`}
+                  className="text-xs text-primary hover:text-primary/80 transition-colors"
+                >
+                  Read More →
+                </Link>
+              </div>
+            </div>
+            <Link href={`/articles/${displayArticles[0].id}`}>
+              <h4 className="text-base text-foreground mb-2 terminal-glow group-hover:text-primary/80 transition-colors">
+                {displayArticles[0].title}
+              </h4>
+            </Link>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {displayArticles[0].excerpt}
+            </p>
+            <div className="flex items-center gap-2 mt-3 text-xs text-muted-foreground">
+              <span>{new Date(displayArticles[0].publishedAt).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+              })}</span>
+              <span>•</span>
+              <span>{displayArticles[0].readingTime}</span>
+            </div>
+          </div>
+        ) : (
+          <div className="terminal-border bg-card/30 p-4">
+            <h3 className="text-sm font-medium text-primary flex items-center gap-2 mb-2">
               <span className="w-4 h-px bg-primary" />
               Latest Article
             </h3>
-            <div className="flex items-center gap-3">
-              <Link
-                href="/notes"
-                className="text-xs text-muted-foreground hover:text-primary transition-colors"
-              >
-                All Articles →
-              </Link>
-              <Link
-                href="/notes/using-code-for-expression"
-                className="text-xs text-primary hover:text-primary/80 transition-colors"
-              >
-                Read More →
-              </Link>
-            </div>
+            <p className="text-sm text-muted-foreground">No articles published yet.</p>
           </div>
-          <h4 className="text-base text-foreground mb-2 terminal-glow">
-            Using Code for Expression: My Journey as Ethiopia's First Live-Coding Music Performer
-          </h4>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            How discovering live-coding music transformed my creative journey and led to pioneering performances in Ethiopia, merging technology with artistic expression.
-          </p>
-        </div>
+        )}
       </motion.div>
 
     {/* Quick message input */}
@@ -226,16 +256,27 @@ export default function HomeClient({ initialProjects, modules }: HomeClientProps
           />
         </motion.div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {filteredProjects.map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              index={index}
-              onClick={() => handleProjectClick(project)}
-            />
-          ))}
-        </div>
+        {projectsLoading ? (
+          <div className="flex justify-center py-8">
+            <LoadingSpinner message="Loading projects..." />
+          </div>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2">
+            {filteredProjects.map((project, index) => (
+              <div
+                key={project.id}
+                className="cursor-pointer transform hover:scale-[1.02] transition-all duration-200"
+                onClick={() => handleProjectClick(project)}
+              >
+                <ProjectCard
+                  project={project}
+                  index={index}
+                  onClick={() => {}} // Handled by parent div
+                />
+              </div>
+            ))}
+          </div>
+        )}
 
         <motion.div
           variants={itemVariants}
