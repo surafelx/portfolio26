@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArticleTracker } from "@/components/ArticleTracker";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
+import { StrudelMusic } from "@/components/StrudelMusic";
 import { getArticles } from "@/lib/database";
 
 export default async function Article({ params }: { params: { id: string } }) {
@@ -176,6 +177,29 @@ export default async function Article({ params }: { params: { id: string } }) {
           </p>
         );
       case 'image':
+        // Handle multiple images in a single image block
+        if (block.metadata?.images && block.metadata.images.length > 0) {
+          return (
+            <div key={block.id} className="space-y-4 mb-6">
+              {block.metadata.images.map((image: any, index: number) => (
+                <div key={index} className="terminal-border bg-secondary/30 p-4">
+                  <ImageWithFallback
+                    src={image.url}
+                    alt={image.alt || ''}
+                    className="w-full max-h-96 object-cover rounded mb-3"
+                    fallbackText="Image not available"
+                  />
+                  {image.caption && (
+                    <p className="text-sm text-muted-foreground text-center">
+                      {image.caption}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          );
+        }
+        // Fallback for legacy single image blocks
         return (
           <div key={block.id} className="terminal-border bg-secondary/30 p-4 mb-6">
             <ImageWithFallback
@@ -246,6 +270,59 @@ export default async function Article({ params }: { params: { id: string } }) {
               ))}
             </div>
           </div>
+        );
+      case 'youtube-video':
+        const getYouTubeEmbedUrl = (url: string) => {
+          const videoId = url.includes('youtu.be/')
+            ? url.split('youtu.be/')[1].split('?')[0]
+            : url.includes('youtube.com/watch?v=')
+            ? url.split('v=')[1].split('&')[0]
+            : url;
+          return `https://www.youtube.com/embed/${videoId}`;
+        };
+
+        return (
+          <div key={block.id} className="terminal-border bg-secondary/30 p-4 mb-6">
+            {block.metadata?.title && (
+              <h3 className="text-lg font-medium mb-3 text-primary">{block.metadata.title}</h3>
+            )}
+            <div className="aspect-video">
+              <iframe
+                src={getYouTubeEmbedUrl(block.metadata?.videoUrl || '')}
+                title={block.metadata?.title || 'YouTube video'}
+                className="w-full h-full rounded"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        );
+      case 'video':
+        return (
+          <div key={block.id} className="terminal-border bg-secondary/30 p-4 mb-6">
+            {block.metadata?.title && (
+              <h3 className="text-lg font-medium mb-3 text-primary">{block.metadata.title}</h3>
+            )}
+            <div className="aspect-video">
+              <video
+                src={block.metadata?.videoUrl}
+                title={block.metadata?.title || 'Video'}
+                className="w-full h-full rounded"
+                controls
+                preload="metadata"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        );
+      case 'strudel-music':
+        return (
+          <StrudelMusic
+            key={block.id}
+            code={block.content}
+            title={block.metadata?.title}
+          />
         );
       default:
         return null;

@@ -11,9 +11,10 @@ interface ProjectNodeGraphProps {
   edges: ProjectEdge[];
   onChange?: (nodes: ProjectNode[], edges: ProjectEdge[]) => void;
   readOnly?: boolean;
+  height?: number;
 }
 
-export function ProjectNodeGraph({ nodes, edges, onChange, readOnly = false }: ProjectNodeGraphProps) {
+export function ProjectNodeGraph({ nodes, edges, onChange, readOnly = false, height = 500 }: ProjectNodeGraphProps) {
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [draggedNode, setDraggedNode] = useState<string | null>(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
@@ -81,17 +82,35 @@ export function ProjectNodeGraph({ nodes, edges, onChange, readOnly = false }: P
   return (
     <div className="space-y-4">
       {!readOnly && (
-        <div className="flex gap-2">
-          <Button onClick={addNode} size="sm">
-            <Plus size={16} className="mr-2" />
-            Add Node
-          </Button>
+        <div className="flex items-center justify-between">
+          <div className="flex gap-2">
+            <Button onClick={addNode} size="sm" variant="default">
+              <Plus size={16} className="mr-2" />
+              Add Component
+            </Button>
+          </div>
+          <div className="text-sm text-muted-foreground">
+            {nodes.length} components • Drag to move • Click to edit
+          </div>
         </div>
       )}
 
-      <div className="relative border border-border rounded-lg bg-card/50" style={{ height: '400px' }}>
+      <div className="relative border border-border rounded-lg bg-card/50 overflow-hidden" style={{ height: `${height}px` }}>
+        {/* Grid background */}
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
+              linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px)
+            `,
+            backgroundSize: '20px 20px'
+          }}
+        />
+
         <svg
-          className="w-full h-full cursor-crosshair"
+          className="w-full h-full relative z-10"
+          style={{ cursor: readOnly ? 'default' : 'crosshair' }}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
@@ -102,10 +121,10 @@ export function ProjectNodeGraph({ nodes, edges, onChange, readOnly = false }: P
             const targetNode = nodes.find(n => n.id === edge.target);
             if (!sourceNode || !targetNode) return null;
 
-            const sourceX = sourceNode.position.x + 100; // Node width / 2
-            const sourceY = sourceNode.position.y + 30;  // Node height / 2
-            const targetX = targetNode.position.x + 100;
-            const targetY = targetNode.position.y + 30;
+            const sourceX = sourceNode.position.x + 120; // Node width / 2 + padding
+            const sourceY = sourceNode.position.y + 40;  // Node height / 2 + padding
+            const targetX = targetNode.position.x + 120;
+            const targetY = targetNode.position.y + 40;
 
             return (
               <line
@@ -115,8 +134,9 @@ export function ProjectNodeGraph({ nodes, edges, onChange, readOnly = false }: P
                 x2={targetX}
                 y2={targetY}
                 stroke="hsl(var(--primary))"
-                strokeWidth="2"
+                strokeWidth="3"
                 markerEnd="url(#arrowhead)"
+                className="drop-shadow-sm"
               />
             );
           })}
@@ -125,115 +145,195 @@ export function ProjectNodeGraph({ nodes, edges, onChange, readOnly = false }: P
           <defs>
             <marker
               id="arrowhead"
-              markerWidth="10"
-              markerHeight="7"
-              refX="9"
-              refY="3.5"
+              markerWidth="12"
+              markerHeight="8"
+              refX="11"
+              refY="4"
               orient="auto"
             >
               <polygon
-                points="0 0, 10 3.5, 0 7"
+                points="0 0, 12 4, 0 8"
                 fill="hsl(var(--primary))"
               />
             </marker>
           </defs>
 
           {/* Nodes */}
-          {nodes.map(node => (
-            <g key={node.id}>
-              <rect
-                x={node.position.x}
-                y={node.position.y}
-                width="200"
-                height="60"
-                rx="8"
-                fill={selectedNode === node.id ? "hsl(var(--primary))" : "hsl(var(--card))"}
-                stroke={selectedNode === node.id ? "hsl(var(--primary))" : "hsl(var(--border))"}
-                strokeWidth="2"
-                className={`${!readOnly ? 'cursor-move' : ''} hover:stroke-primary transition-colors`}
-                onMouseDown={(e) => handleMouseDown(e, node.id)}
-                onClick={() => !readOnly && setSelectedNode(node.id)}
-              />
-              <text
-                x={node.position.x + 100}
-                y={node.position.y + 35}
-                textAnchor="middle"
-                className="text-sm font-medium fill-foreground pointer-events-none"
-              >
-                {node.data.label}
-              </text>
-              {node.data.tech && node.data.tech.length > 0 && (
+          {nodes.map(node => {
+            const isSelected = selectedNode === node.id;
+            const nodeColor = node.type === 'input' ? 'hsl(var(--terminal-cyan))' :
+                             node.type === 'output' ? 'hsl(var(--terminal-amber))' :
+                             'hsl(var(--primary))';
+
+            return (
+              <g key={node.id}>
+                {/* Node shadow */}
+                <rect
+                  x={node.position.x + 2}
+                  y={node.position.y + 2}
+                  width="240"
+                  height="80"
+                  rx="12"
+                  fill="rgba(0,0,0,0.1)"
+                  className="pointer-events-none"
+                />
+
+                {/* Main node */}
+                <rect
+                  x={node.position.x}
+                  y={node.position.y}
+                  width="240"
+                  height="80"
+                  rx="12"
+                  fill={isSelected ? nodeColor : "hsl(var(--card))"}
+                  stroke={isSelected ? nodeColor : "hsl(var(--border))"}
+                  strokeWidth={isSelected ? "3" : "2"}
+                  className={`${!readOnly ? 'cursor-move hover:stroke-primary' : ''} transition-all duration-200 drop-shadow-sm`}
+                  onMouseDown={(e) => handleMouseDown(e, node.id)}
+                  onClick={() => !readOnly && setSelectedNode(node.id)}
+                />
+
+                {/* Node type indicator */}
+                <circle
+                  cx={node.position.x + 20}
+                  cy={node.position.y + 20}
+                  r="6"
+                  fill={nodeColor}
+                  className="pointer-events-none"
+                />
+
+                {/* Node label */}
                 <text
-                  x={node.position.x + 100}
-                  y={node.position.y + 50}
+                  x={node.position.x + 120}
+                  y={node.position.y + 35}
                   textAnchor="middle"
-                  className="text-xs fill-muted-foreground pointer-events-none"
+                  className={`text-sm font-semibold pointer-events-none ${
+                    isSelected ? 'fill-white' : 'fill-foreground'
+                  }`}
                 >
-                  {node.data.tech.slice(0, 2).join(', ')}
-                  {node.data.tech.length > 2 && '...'}
+                  {node.data.label}
                 </text>
-              )}
-            </g>
-          ))}
+
+                {/* Node technologies */}
+                {node.data.tech && node.data.tech.length > 0 && (
+                  <text
+                    x={node.position.x + 120}
+                    y={node.position.y + 55}
+                    textAnchor="middle"
+                    className={`text-xs pointer-events-none ${
+                      isSelected ? 'fill-white/80' : 'fill-muted-foreground'
+                    }`}
+                  >
+                    {node.data.tech.slice(0, 3).join(' • ')}
+                    {node.data.tech.length > 3 && '...'}
+                  </text>
+                )}
+
+                {/* Node type label */}
+                <text
+                  x={node.position.x + 220}
+                  y={node.position.y + 20}
+                  textAnchor="end"
+                  className={`text-xs font-medium pointer-events-none ${
+                    isSelected ? 'fill-white/70' : 'fill-muted-foreground'
+                  }`}
+                >
+                  {node.type}
+                </text>
+              </g>
+            );
+          })}
         </svg>
+
+        {/* Instructions overlay for empty state */}
+        {nodes.length === 0 && !readOnly && (
+          <div className="absolute inset-0 flex items-center justify-center z-20">
+            <div className="text-center text-muted-foreground">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-secondary/50 flex items-center justify-center">
+                <Plus size={24} />
+              </div>
+              <h3 className="text-lg font-medium mb-2">No Components Yet</h3>
+              <p className="text-sm max-w-xs">
+                Click "Add Component" to start building your project architecture.
+                Drag components to position them and click to edit details.
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Node Editor */}
       {selectedNodeData && !readOnly && (
-        <div className="border border-border rounded-lg p-4 bg-card/50">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-medium">Edit Node</h3>
+        <div className="border border-border rounded-lg p-6 bg-card/50">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="text-lg font-medium text-primary">Edit Component</h3>
+              <p className="text-sm text-muted-foreground">Configure the selected component properties</p>
+            </div>
             <Button
               variant="destructive"
               size="sm"
               onClick={() => deleteNode(selectedNode!)}
+              className="hover:bg-destructive/90"
             >
-              <Trash2 size={16} />
+              <Trash2 size={16} className="mr-2" />
+              Delete
             </Button>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="node-label">Label</Label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <Label htmlFor="node-label" className="text-sm font-medium">
+                Component Name *
+              </Label>
               <Input
                 id="node-label"
                 value={selectedNodeData.data.label}
                 onChange={(e) => updateNode(selectedNode!, {
                   data: { ...selectedNodeData.data, label: e.target.value }
                 })}
+                placeholder="e.g., User Authentication, API Gateway"
+                className="text-sm"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="node-type">Type</Label>
+            <div className="space-y-3">
+              <Label htmlFor="node-type" className="text-sm font-medium">
+                Component Type
+              </Label>
               <select
                 id="node-type"
                 value={selectedNodeData.type}
                 onChange={(e) => updateNode(selectedNode!, {
                   type: e.target.value as ProjectNode['type']
                 })}
-                className="w-full bg-secondary border border-border px-3 py-2 text-foreground focus:outline-none focus:border-primary"
+                className="w-full bg-secondary border border-border px-3 py-2 text-foreground focus:outline-none focus:border-primary rounded-md text-sm"
               >
-                <option value="input">Input</option>
-                <option value="default">Default</option>
-                <option value="output">Output</option>
+                <option value="input">🔵 Input (Entry Point)</option>
+                <option value="default">⚪ Default (Core Component)</option>
+                <option value="output">🟡 Output (Result/Exit)</option>
               </select>
             </div>
 
-            <div className="space-y-2 col-span-2">
-              <Label htmlFor="node-description">Description</Label>
+            <div className="space-y-3 md:col-span-2">
+              <Label htmlFor="node-description" className="text-sm font-medium">
+                Description (Optional)
+              </Label>
               <Input
                 id="node-description"
                 value={selectedNodeData.data.description || ''}
                 onChange={(e) => updateNode(selectedNode!, {
                   data: { ...selectedNodeData.data, description: e.target.value }
                 })}
-                placeholder="Optional description"
+                placeholder="Brief description of this component's role"
+                className="text-sm"
               />
             </div>
 
-            <div className="space-y-2 col-span-2">
-              <Label htmlFor="node-tech">Technologies (comma-separated)</Label>
+            <div className="space-y-3 md:col-span-2">
+              <Label htmlFor="node-tech" className="text-sm font-medium">
+                Technologies Used
+              </Label>
               <Input
                 id="node-tech"
                 value={selectedNodeData.data.tech?.join(', ') || ''}
@@ -243,8 +343,18 @@ export function ProjectNodeGraph({ nodes, edges, onChange, readOnly = false }: P
                     tech: e.target.value.split(',').map(s => s.trim()).filter(s => s)
                   }
                 })}
-                placeholder="React, Node.js, MongoDB"
+                placeholder="React, Node.js, MongoDB, Docker"
+                className="text-sm"
               />
+              <p className="text-xs text-muted-foreground">
+                Separate technologies with commas. These will be displayed on the component.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6 pt-4 border-t border-border">
+            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <span>💡 Tip: Drag components to reposition them on the canvas</span>
             </div>
           </div>
         </div>

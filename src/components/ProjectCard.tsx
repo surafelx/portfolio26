@@ -39,18 +39,18 @@ export const ProjectCard = ({ project, index, onClick }: ProjectCardProps) => {
           fallbackText="Coming Soon"
           showIcon={false}
         />
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-black/60" />
 
-        {/* Minimal overlay on hover */}
+        {/* Terminal-themed overlay on hover */}
         <div className="absolute bottom-4 left-4 right-4">
-          <h3 className="text-white font-medium text-lg terminal-glow mb-2">
+          <h3 className="text-terminal-cyan font-medium text-lg terminal-glow mb-2">
             {project.title}
           </h3>
           <div className="flex flex-wrap gap-1">
             {project.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className="text-xs px-2 py-0.5 bg-white/20 text-white border border-white/30 rounded"
+                className="text-xs px-2 py-0.5 bg-primary/20 text-primary border border-primary/30 rounded"
               >
                 {tag}
               </span>

@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Maximize2, Minimize2 } from "lucide-react";
 import type { About } from "@/lib/database";
 
 interface AboutFormModalProps {
@@ -21,6 +22,7 @@ export const AboutFormModal = ({
   initialData = {},
   isEditing = false
 }: AboutFormModalProps) => {
+  const [isMaximized, setIsMaximized] = useState(false);
   const [about, setAbout] = useState<Omit<About, 'id' | 'createdAt' | 'updatedAt'>>({
     summary: "",
     qualifications: [],
@@ -145,9 +147,19 @@ export const AboutFormModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>{isEditing ? "Edit About" : "Add About"}</DialogTitle>
+      <DialogContent className={`${isMaximized ? 'max-w-[95vw] max-h-[95vh]' : 'max-w-4xl max-h-[90vh]'} overflow-y-auto`}>
+        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <DialogTitle className="text-lg font-semibold">
+            {isEditing ? "Edit About" : "Add About"}
+          </DialogTitle>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsMaximized(!isMaximized)}
+            className="h-8 w-8 p-0 hover:bg-secondary"
+          >
+            {isMaximized ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+          </Button>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-6 py-4">
           {/* Summary */}

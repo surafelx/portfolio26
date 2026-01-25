@@ -43,7 +43,7 @@ export interface Project {
 
 export interface ArticleBlock {
   id: string;
-  type: 'h1' | 'h2' | 'h3' | 'h4' | 'paragraph' | 'image' | 'code' | 'quote' | 'image-grid' | 'two-column';
+  type: 'h1' | 'h2' | 'h3' | 'h4' | 'paragraph' | 'image' | 'code' | 'quote' | 'image-grid' | 'two-column' | 'youtube-video' | 'video' | 'strudel-music';
   content: string;
   metadata?: {
     alt?: string;
@@ -55,6 +55,8 @@ export interface ArticleBlock {
       caption: string;
     }>;
     layout?: 'single' | 'grid-2' | 'grid-3' | 'grid-4';
+    videoUrl?: string;
+    title?: string;
   };
 }
 
@@ -67,6 +69,7 @@ export interface Article {
   publishedAt: string;
   readingTime: string;
   author: string;
+  imageUrl?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -180,7 +183,7 @@ export async function connectToDatabase(): Promise<any> {
     return cachedClient.db('portfolio26');
   }
 
-  const uri = process.env.MONGODB_URI;
+  const uri = "mongodb+srv://workwithsurafel:workwithsurafel@portfolio26.jnsnukz.mongodb.net/?appName=portfolio26";
   if (!uri) {
     throw new Error('MONGODB_URI environment variable is not set');
   }

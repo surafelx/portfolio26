@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Maximize2, Minimize2 } from "lucide-react";
 import { NoteBlockEditor } from "@/components/NoteBlockEditor";
 import type { Note, NoteBlock } from "@/lib/database";
 
@@ -21,6 +22,7 @@ export const NoteFormModal = ({
   initialData = {},
   isEditing = false
 }: NoteFormModalProps) => {
+  const [isMaximized, setIsMaximized] = useState(false);
   const [note, setNote] = useState<Omit<Note, 'id' | 'createdAt' | 'updatedAt'>>({
     title: "",
     blocks: []
@@ -43,9 +45,19 @@ export const NoteFormModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>{isEditing ? "Edit Note" : "Add New Note"}</DialogTitle>
+      <DialogContent className={`${isMaximized ? 'max-w-[95vw] max-h-[95vh]' : 'max-w-4xl max-h-[90vh]'} overflow-y-auto`}>
+        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <DialogTitle className="text-lg font-semibold">
+            {isEditing ? "Edit Note" : "Add New Note"}
+          </DialogTitle>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsMaximized(!isMaximized)}
+            className="h-8 w-8 p-0 hover:bg-secondary"
+          >
+            {isMaximized ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+          </Button>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-6 py-4">
           <div className="space-y-2">

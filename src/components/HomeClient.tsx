@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { useProjects } from "@/hooks/useProjects";
 import { useArticles } from "@/hooks/useArticles";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
 
 interface HomeClientProps {
   initialProjects: Project[];
@@ -124,10 +125,7 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
             Hi, I'm <span className="text-primary terminal-glow">Surafel Yimam</span>
           </h1>
           <p className="text-muted-foreground leading-relaxed max-w-2xl">
-            Building software that matters. Focused on{" "}
-            <span className="text-terminal-cyan">distributed systems</span>,{" "}
-            <span className="text-terminal-amber">developer tools</span>, and{" "}
-            <span className="text-terminal-pink">AI/ML</span> applications.
+            Building software that matters. Focused on distributed systems, developer tools, and AI/ML applications.
           </p>
 
           {/* Action buttons */}
@@ -187,43 +185,89 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
             <LoadingSpinner message="Loading latest article..." />
           </div>
         ) : displayArticles.length > 0 ? (
-          <div className="terminal-border bg-card/30 p-4 hover:bg-card/40 transition-colors cursor-pointer group">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-medium text-primary flex items-center gap-2">
-                <span className="w-4 h-px bg-primary" />
-                Latest Article
-              </h3>
-              <div className="flex items-center gap-3">
-                <Link
-                  href="/notes"
-                  className="text-xs text-muted-foreground hover:text-primary transition-colors"
-                >
-                  All Articles →
-                </Link>
-                <Link
-                  href={`/articles/${displayArticles[0].id}`}
-                  className="text-xs text-primary hover:text-primary/80 transition-colors"
-                >
-                  Read More →
-                </Link>
+          <div className="terminal-border bg-card/30 hover:bg-card/40 transition-all duration-300 cursor-pointer group overflow-hidden relative">
+            {/* Article Image Overlay */}
+            {displayArticles[0].imageUrl && (
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                <ImageWithFallback
+                  src={displayArticles[0].imageUrl}
+                  alt={displayArticles[0].title}
+                  className="w-full h-full object-cover"
+                  fallbackText="Article Image"
+                  showIcon={false}
+                />
+                <div className="absolute inset-0 bg-black/60" />
+
+                {/* Terminal-themed overlay content */}
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h4 className="text-terminal-cyan font-medium text-lg terminal-glow mb-2">
+                    {displayArticles[0].title}
+                  </h4>
+                  <p className="text-terminal-cyan/90 text-sm leading-relaxed line-clamp-2 mb-3">
+                    {displayArticles[0].excerpt}
+                  </p>
+                  <div className="flex flex-wrap gap-1 mb-2">
+                    {displayArticles[0].tags.slice(0, 3).map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs px-2 py-0.5 bg-primary/20 text-primary border border-primary/30 rounded"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-terminal-cyan/80">
+                    <span>{new Date(displayArticles[0].publishedAt).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric'
+                    })}</span>
+                    <span>•</span>
+                    <span>{displayArticles[0].readingTime}</span>
+                  </div>
+                </div>
               </div>
-            </div>
-            <Link href={`/articles/${displayArticles[0].id}`}>
-              <h4 className="text-base text-foreground mb-2 terminal-glow group-hover:text-primary/80 transition-colors">
-                {displayArticles[0].title}
-              </h4>
-            </Link>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {displayArticles[0].excerpt}
-            </p>
-            <div className="flex items-center gap-2 mt-3 text-xs text-muted-foreground">
-              <span>{new Date(displayArticles[0].publishedAt).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-              })}</span>
-              <span>•</span>
-              <span>{displayArticles[0].readingTime}</span>
+            )}
+
+            {/* Default Content */}
+            <div className={`p-4 ${displayArticles[0].imageUrl ? 'group-hover:opacity-0' : ''} transition-opacity duration-300`}>
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-sm font-medium text-primary flex items-center gap-2">
+                  <span className="w-4 h-px bg-primary" />
+                  Latest Article
+                </h3>
+                <div className="flex items-center gap-3">
+                  <Link
+                    href="/notes"
+                    className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    All Articles →
+                  </Link>
+                  <Link
+                    href={`/articles/${displayArticles[0].id}`}
+                    className="text-xs text-primary hover:text-primary/80 transition-colors"
+                  >
+                    Read More →
+                  </Link>
+                </div>
+              </div>
+              <Link href={`/articles/${displayArticles[0].id}`}>
+                <h4 className="text-base text-foreground mb-2 terminal-glow group-hover:text-primary/80 transition-colors">
+                  {displayArticles[0].title}
+                </h4>
+              </Link>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {displayArticles[0].excerpt}
+              </p>
+              <div className="flex items-center gap-2 mt-3 text-xs text-muted-foreground">
+                <span>{new Date(displayArticles[0].publishedAt).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
+                })}</span>
+                <span>•</span>
+                <span>{displayArticles[0].readingTime}</span>
+              </div>
             </div>
           </div>
         ) : (

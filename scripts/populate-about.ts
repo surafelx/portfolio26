@@ -1,4 +1,8 @@
+import { config } from 'dotenv';
 import { updateAbout } from '../src/lib/database';
+
+// Load environment variables
+config({ path: '../.env' });
 
 async function populateAbout() {
   try {

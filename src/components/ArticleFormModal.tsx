@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Plus, Trash } from "lucide-react";
+import { Plus, Trash, Maximize2, Minimize2 } from "lucide-react";
 import { ImageUpload } from "@/components/ImageUpload";
 import { ArticleBlockEditor, ArticleBlock } from "@/components/ArticleBlockEditor";
 import type { Article } from "@/lib/database";
@@ -24,6 +24,7 @@ export const ArticleFormModal = ({
   initialData = {},
   isEditing = false
 }: BlogFormModalProps) => {
+  const [isMaximized, setIsMaximized] = useState(false);
   const [post, setPost] = useState<Omit<Article, 'id' | 'createdAt' | 'updatedAt'>>({
     title: "",
     excerpt: "",
@@ -56,9 +57,19 @@ export const ArticleFormModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>{isEditing ? "Edit Article" : "Add New Article"}</DialogTitle>
+      <DialogContent className={`${isMaximized ? 'max-w-[95vw] max-h-[95vh]' : 'max-w-6xl max-h-[95vh]'} overflow-y-auto`}>
+        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <DialogTitle className="text-lg font-semibold">
+            {isEditing ? "Edit Article" : "Add New Article"}
+          </DialogTitle>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsMaximized(!isMaximized)}
+            className="h-8 w-8 p-0 hover:bg-secondary"
+          >
+            {isMaximized ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+          </Button>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-4">
           <div className="grid grid-cols-1 gap-4">

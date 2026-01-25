@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { ImageUpload } from "@/components/ImageUpload";
 import { ProjectNodeGraph } from "@/components/ProjectNodeGraph";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Maximize2, Minimize2 } from "lucide-react";
 import type { Project } from "@/lib/database";
 
 interface ProjectFormModalProps {
@@ -18,13 +19,14 @@ interface ProjectFormModalProps {
   isEditing?: boolean;
 }
 
-export const ProjectFormModal = ({ 
-  isOpen, 
-  onClose, 
-  onSubmit, 
-  initialData = {}, 
+export const ProjectFormModal = ({
+  isOpen,
+  onClose,
+  onSubmit,
+  initialData = {},
   isEditing = false
 }: ProjectFormModalProps) => {
+  const [isMaximized, setIsMaximized] = useState(false);
   const [project, setProject] = useState<Omit<Project, 'id'>>({
     title: "",
     brief: "",
@@ -77,9 +79,19 @@ export const ProjectFormModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>{isEditing ? "Edit Project" : "Add New Project"}</DialogTitle>
+      <DialogContent className={`${isMaximized ? 'max-w-[95vw] max-h-[95vh]' : 'max-w-6xl max-h-[85vh]'} overflow-y-auto`}>
+        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <DialogTitle className="text-lg font-semibold">
+            {isEditing ? "Edit Project" : "Add New Project"}
+          </DialogTitle>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsMaximized(!isMaximized)}
+            className="h-8 w-8 p-0 hover:bg-secondary"
+          >
+            {isMaximized ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+          </Button>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="py-4">
           <Tabs defaultValue="details" className="w-full">
@@ -89,7 +101,7 @@ export const ProjectFormModal = ({
             </TabsList>
 
             <TabsContent value="details" className="space-y-4 mt-4">
-              <div className="grid grid-cols-1 gap-4">
+              <div className={`grid gap-4 ${isMaximized ? 'grid-cols-2' : 'grid-cols-1'}`}>
                 <div className="space-y-2">
                   <Label htmlFor="title">Title</Label>
                   <Input
@@ -237,6 +249,7 @@ export const ProjectFormModal = ({
                     ...project,
                     nodeGraph: { nodes, edges }
                   })}
+                  height={isMaximized ? 600 : 400}
                 />
               </div>
             </TabsContent>

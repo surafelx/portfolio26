@@ -4,12 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { Plus, Trash, ArrowUp, ArrowDown, Type, Image, Code, Quote, Columns, Grid, Layout } from "lucide-react";
+import { Plus, Trash, ArrowUp, ArrowDown, Type, Image, Code, Quote, Columns, Grid, Layout, Video, Youtube, Music } from "lucide-react";
 import { ImageUpload } from "@/components/ImageUpload";
 
 export interface ArticleBlock {
   id: string;
-  type: 'h1' | 'h2' | 'h3' | 'h4' | 'paragraph' | 'image' | 'code' | 'quote' | 'image-grid' | 'two-column';
+  type: 'h1' | 'h2' | 'h3' | 'h4' | 'paragraph' | 'image' | 'code' | 'quote' | 'image-grid' | 'two-column' | 'youtube-video' | 'video' | 'strudel-music';
   content: string;
   metadata?: {
     alt?: string;
@@ -21,6 +21,8 @@ export interface ArticleBlock {
       caption: string;
     }>;
     layout?: 'single' | 'grid-2' | 'grid-3' | 'grid-4';
+    videoUrl?: string;
+    title?: string;
   };
 }
 
@@ -35,7 +37,8 @@ export const ArticleBlockEditor = ({ blocks, onChange }: ArticleBlockEditorProps
       id: `block-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       type,
       content: '',
-      metadata: type === 'image-grid' ? { images: [], layout: 'grid-2' } : {}
+      metadata: type === 'image' || type === 'image-grid' ? { images: [], layout: type === 'image-grid' ? 'grid-2' : undefined } :
+                type === 'youtube-video' || type === 'video' ? { videoUrl: '', title: '' } : {}
     };
     onChange([...blocks, newBlock]);
   };
@@ -61,6 +64,16 @@ export const ArticleBlockEditor = ({ blocks, onChange }: ArticleBlockEditorProps
     const newBlocks = [...blocks];
     [newBlocks[index], newBlocks[newIndex]] = [newBlocks[newIndex], newBlocks[index]];
     onChange(newBlocks);
+  };
+
+  const addImageToBlock = (blockId: string) => {
+    const block = blocks.find(b => b.id === blockId);
+    if (!block || !block.metadata) return;
+
+    const newImages = [...(block.metadata.images || []), { url: '', alt: '', caption: '' }];
+    updateBlock(blockId, {
+      metadata: { ...block.metadata, images: newImages }
+    });
   };
 
   const addImageToGrid = (blockId: string) => {
@@ -92,6 +105,22 @@ export const ArticleBlockEditor = ({ blocks, onChange }: ArticleBlockEditorProps
     const newImages = block.metadata.images.filter((_, i) => i !== imageIndex);
     updateBlock(blockId, {
       metadata: { ...block.metadata, images: newImages }
+    });
+  };
+
+  const moveImageInBlock = (blockId: string, imageIndex: number, direction: 'up' | 'down') => {
+    const block = blocks.find(b => b.id === blockId);
+    if (!block || !block.metadata?.images) return;
+
+    const images = [...block.metadata.images];
+    const newIndex = direction === 'up' ? imageIndex - 1 : imageIndex + 1;
+
+    if (newIndex < 0 || newIndex >= images.length) return;
+
+    [images[imageIndex], images[newIndex]] = [images[newIndex], images[imageIndex]];
+
+    updateBlock(blockId, {
+      metadata: { ...block.metadata, images }
     });
   };
 
@@ -144,27 +173,85 @@ export const ArticleBlockEditor = ({ blocks, onChange }: ArticleBlockEditorProps
         );
       case 'image':
         return (
-          <div className="space-y-3">
-            <ImageUpload
-              value={block.content}
-              onChange={(url) => updateBlock(block.id, { content: url })}
-              label=""
-              placeholder="Upload image"
-            />
-            <Input
-              value={block.metadata?.alt || ''}
-              onChange={(e) => updateBlock(block.id, {
-                metadata: { ...block.metadata, alt: e.target.value }
-              })}
-              placeholder="Alt text..."
-            />
-            <Input
-              value={block.metadata?.caption || ''}
-              onChange={(e) => updateBlock(block.id, {
-                metadata: { ...block.metadata, caption: e.target.value }
-              })}
-              placeholder="Caption..."
-            />
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <Label className="text-sm font-medium">Images</Label>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => addImageToBlock(block.id)}
+              >
+                <Plus size={14} className="mr-2" /> Add Image
+              </Button>
+            </div>
+            <div className="space-y-3">
+              {block.metadata?.images && block.metadata.images.length > 0 ? (
+                block.metadata.images.map((image, index) => (
+                  <div key={index} className="border border-border p-3 rounded space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium">Image {index + 1}</span>
+                      <div className="flex gap-1">
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => moveImageInBlock(block.id, index, 'up')}
+                          disabled={index === 0}
+                          className="h-6 w-6 p-0"
+                          title="Move up"
+                        >
+                          <ArrowUp size={12} />
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => moveImageInBlock(block.id, index, 'down')}
+                          disabled={index === block.metadata.images.length - 1}
+                          className="h-6 w-6 p-0"
+                          title="Move down"
+                        >
+                          <ArrowDown size={12} />
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeImageFromGrid(block.id, index)}
+                          className="h-6 w-6 p-0 text-destructive hover:text-destructive"
+                          title="Remove image"
+                        >
+                          <Trash size={12} />
+                        </Button>
+                      </div>
+                    </div>
+                    <ImageUpload
+                      value={image.url}
+                      onChange={(url) => updateGridImage(block.id, index, { url })}
+                      label=""
+                      placeholder="Upload image"
+                    />
+                    <Input
+                      value={image.alt}
+                      onChange={(e) => updateGridImage(block.id, index, { alt: e.target.value })}
+                      placeholder="Alt text..."
+                      className="text-sm"
+                    />
+                    <Input
+                      value={image.caption}
+                      onChange={(e) => updateGridImage(block.id, index, { caption: e.target.value })}
+                      placeholder="Caption..."
+                      className="text-sm"
+                    />
+                  </div>
+                ))
+              ) : (
+                <div className="text-center text-muted-foreground py-4">
+                  <p className="text-sm">No images added yet. Click "Add Image" to get started!</p>
+                </div>
+              )}
+            </div>
           </div>
         );
       case 'image-grid':
@@ -301,6 +388,66 @@ export const ArticleBlockEditor = ({ blocks, onChange }: ArticleBlockEditorProps
             />
           </div>
         );
+      case 'youtube-video':
+        return (
+          <div className="space-y-3">
+            <Input
+              value={block.metadata?.videoUrl || ''}
+              onChange={(e) => updateBlock(block.id, {
+                metadata: { ...block.metadata, videoUrl: e.target.value }
+              })}
+              placeholder="YouTube video URL or ID..."
+            />
+            <Input
+              value={block.metadata?.title || ''}
+              onChange={(e) => updateBlock(block.id, {
+                metadata: { ...block.metadata, title: e.target.value }
+              })}
+              placeholder="Video title..."
+            />
+          </div>
+        );
+      case 'video':
+        return (
+          <div className="space-y-3">
+            <ImageUpload
+              value={block.metadata?.videoUrl || ''}
+              onChange={(url) => updateBlock(block.id, {
+                metadata: { ...block.metadata, videoUrl: url }
+              })}
+              label=""
+              placeholder="Upload video file"
+            />
+            <Input
+              value={block.metadata?.title || ''}
+              onChange={(e) => updateBlock(block.id, {
+                metadata: { ...block.metadata, title: e.target.value }
+              })}
+              placeholder="Video title..."
+            />
+          </div>
+        );
+      case 'strudel-music':
+        return (
+          <div className="space-y-3">
+            <Input
+              value={block.metadata?.title || ''}
+              onChange={(e) => updateBlock(block.id, {
+                metadata: { ...block.metadata, title: e.target.value }
+              })}
+              placeholder="Music title..."
+            />
+            <Textarea
+              value={block.content}
+              onChange={(e) => updateBlock(block.id, { content: e.target.value })}
+              placeholder="Enter Strudel music code..."
+              className="min-h-[200px] font-mono text-sm"
+            />
+            <p className="text-xs text-muted-foreground">
+              Write Strudel code to create live music. The code will be executable in the article.
+            </p>
+          </div>
+        );
       default:
         return null;
     }
@@ -318,6 +465,9 @@ export const ArticleBlockEditor = ({ blocks, onChange }: ArticleBlockEditorProps
       case 'code': return <Code size={16} />;
       case 'quote': return <Quote size={16} />;
       case 'two-column': return <Columns size={16} />;
+      case 'youtube-video': return <Youtube size={16} />;
+      case 'video': return <Video size={16} />;
+      case 'strudel-music': return <Music size={16} />;
       default: return <Type size={16} />;
     }
   };
@@ -405,6 +555,30 @@ export const ArticleBlockEditor = ({ blocks, onChange }: ArticleBlockEditorProps
           onClick={() => addBlock('two-column')}
         >
           <Columns size={14} className="mr-2" /> Two Column
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => addBlock('youtube-video')}
+        >
+          <Youtube size={14} className="mr-2" /> YouTube Video
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => addBlock('video')}
+        >
+          <Video size={14} className="mr-2" /> Video
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => addBlock('strudel-music')}
+        >
+          <Music size={14} className="mr-2" /> Strudel Music
         </Button>
       </div>
 
