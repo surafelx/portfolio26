@@ -26,11 +26,11 @@ export const TerminalInput = ({ onSubmit }: TerminalInputProps) => {
       className="w-full"
     >
       <div
-        className={`flex items-center gap-2 bg-secondary/60 px-2 py-1.5 border border-border/50 transition-all duration-300 ${
-          isFocused ? "border-primary/50 bg-secondary/80" : ""
+        className={`flex items-center gap-1 bg-secondary/40 px-1 py-0.5 border border-border/30 transition-all duration-300 ${
+          isFocused ? "border-green-300/40 bg-secondary/60" : ""
         }`}
       >
-        <span className="text-muted-foreground select-none text-sm">{">"}</span>
+        <span className="text-muted-foreground select-none text-xs">{">"}</span>
         <input
           type="text"
           value={message}
@@ -38,18 +38,18 @@ export const TerminalInput = ({ onSubmit }: TerminalInputProps) => {
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           placeholder="send me a message..."
-          className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground/70 focus:outline-none text-sm"
+          className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground/60 focus:outline-none text-xs"
         />
         <motion.button
           type="submit"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="text-primary hover:text-primary/80 transition-all disabled:opacity-30"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="text-green-300 hover:text-green-200 transition-all disabled:opacity-20"
           disabled={!message.trim()}
         >
-          <Send size={14} />
+          <Send size={10} />
         </motion.button>
-        <span className="text-primary cursor-blink text-sm">▋</span>
+        <span className="text-green-300 cursor-blink text-xs">▋</span>
       </div>
     </motion.form>
   );

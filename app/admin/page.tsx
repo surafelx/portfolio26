@@ -1,6 +1,16 @@
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import AdminClient from "@/components/AdminClient";
 
 export default async function Admin() {
+  // Check for authentication
+  const cookieStore = await cookies();
+  const session = cookieStore.get('admin_session');
+  
+  if (!session) {
+    redirect('/admin/login');
+  }
+
   let serializedProjects: any[] = [];
   let serializedArticles: any[] = [];
   let serializedNotes: any[] = [];

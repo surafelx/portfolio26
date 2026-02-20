@@ -58,6 +58,52 @@
     --sidebar-ring: 207 100% 50%;
   }
 
+  .light {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 15%;
+
+    --primary: 207 100% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 15%;
+
+    --muted: 0 0% 90%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 207 100% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 85%;
+    --input: 0 0% 90%;
+    --ring: 207 100% 50%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 15%;
+    --sidebar-primary: 207 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 15%;
+    --sidebar-border: 0 0% 85%;
+    --sidebar-ring: 207 100% 50%;
+
+    --terminal-green: 120 60% 40%;
+    --terminal-cyan: 180 60% 40%;
+    --terminal-amber: 40 90% 50%;
+    --terminal-pink: 330 80% 50%;
+    --terminal-dim: 120 20% 60%;
+    --terminal-glow: 0 0 15px hsl(207 100% 50% / 0.3);
+  }
+
   .dark {
     --background: 0 0% 12%;
     --foreground: 0 0% 80%;
@@ -98,6 +144,77 @@
     @apply bg-background text-foreground font-mono antialiased;
     font-family: 'JetBrains Mono', monospace;
     font-size: 18px;
+  }
+
+  /* Light mode specific background */
+  .light body {
+    background-image:
+      /* Circuit-like patterns */
+      radial-gradient(circle at 20% 20%, hsl(var(--terminal-cyan) / 0.05) 1px, transparent 1px),
+      radial-gradient(circle at 80% 20%, hsl(var(--terminal-pink) / 0.05) 1px, transparent 1px),
+      radial-gradient(circle at 20% 80%, hsl(var(--terminal-amber) / 0.05) 1px, transparent 1px),
+      radial-gradient(circle at 80% 80%, hsl(var(--primary) / 0.05) 1px, transparent 1px),
+      radial-gradient(circle at 50% 50%, hsl(var(--terminal-green) / 0.05) 1px, transparent 1px),
+
+      /* Hexagonal grid pattern */
+      repeating-linear-gradient(
+        60deg,
+        transparent,
+        transparent 15px,
+        hsl(var(--border) / 0.08) 15px,
+        hsl(var(--border) / 0.08) 16px
+      ),
+      repeating-linear-gradient(
+        -60deg,
+        transparent,
+        transparent 15px,
+        hsl(var(--border) / 0.08) 15px,
+        hsl(var(--border) / 0.08) 16px
+      ),
+
+      /* Vertical circuit lines */
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        hsl(var(--terminal-cyan) / 0.03) 2px,
+        hsl(var(--terminal-cyan) / 0.03) 4px,
+        transparent 4px,
+        transparent 20px
+      ),
+
+      /* Horizontal data streams */
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 1px,
+        hsl(var(--terminal-green) / 0.03) 1px,
+        hsl(var(--terminal-green) / 0.03) 2px,
+        transparent 2px,
+        transparent 25px
+      );
+    background-size:
+      200px 200px,
+      250px 250px,
+      180px 180px,
+      220px 220px,
+      300px 300px,
+      30px 52px,
+      30px 52px,
+      25px 25px,
+      20px 20px;
+    background-position:
+      var(--mouse-x, 50%) var(--mouse-y, 50%),
+      calc(var(--mouse-x, 50%) + 100px) calc(var(--mouse-y, 50%) + 100px),
+      calc(var(--mouse-x, 50%) + 200px) calc(var(--mouse-y, 50%) + 200px),
+      calc(var(--mouse-x, 50%) + 300px) calc(var(--mouse-y, 50%) + 300px),
+      calc(var(--mouse-x, 50%) + 150px) calc(var(--mouse-y, 50%) + 150px),
+      0 0, 15px 26px, 0 0, 0 0;
+    background-color: hsl(var(--background));
+  }
+
+  /* Dark mode specific background */
+  .dark body {
     background-image:
       /* Circuit-like patterns */
       radial-gradient(circle at 20% 20%, hsl(var(--terminal-cyan) / 0.03) 1px, transparent 1px),

@@ -30,8 +30,8 @@ export const ProjectCard = ({ project, index, onClick }: ProjectCardProps) => {
       onClick={onClick}
       className="group terminal-border bg-card/50 cursor-pointer transition-all duration-300 hover:bg-card hover:border-primary hover:shadow-[0_0_20px_hsl(var(--primary)/0.15)] overflow-hidden relative"
     >
-      {/* Hover Image Overlay */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+      {/* Default Image with Overlay */}
+      <div className="relative h-48 overflow-hidden">
         <ImageWithFallback
           src={project.imageUrl}
           alt={project.title}
@@ -41,12 +41,25 @@ export const ProjectCard = ({ project, index, onClick }: ProjectCardProps) => {
         />
         <div className="absolute inset-0 bg-black/60" />
 
-        {/* Terminal-themed overlay on hover */}
+        {/* Terminal-themed overlay */}
         <div className="absolute bottom-4 left-4 right-4">
-          <h3 className="text-terminal-cyan font-medium text-lg terminal-glow mb-2">
-            {project.title}
-          </h3>
-          <div className="flex flex-wrap gap-1">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-muted-foreground text-xs">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <h3 className="text-terminal-cyan font-medium text-lg terminal-glow">
+              {project.title}
+            </h3>
+          </div>
+
+          <p
+            className="text-sm text-terminal-cyan/90 mb-3 leading-relaxed line-clamp-2"
+            dangerouslySetInnerHTML={{
+              __html: highlightText(project.brief, project.keywords),
+            }}
+          />
+
+          <div className="flex flex-wrap gap-1 mb-2">
             {project.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
@@ -56,9 +69,15 @@ export const ProjectCard = ({ project, index, onClick }: ProjectCardProps) => {
               </span>
             ))}
           </div>
+
+          <div className="flex items-center gap-2 text-xs text-terminal-cyan/80">
+            <span>{project.year}</span>
+            <span>•</span>
+            <span>{project.techStack.slice(0, 3).join(" / ")}</span>
+          </div>
         </div>
 
-        {/* Hover action icons */}
+        {/* Action icons */}
         <div className="absolute top-3 right-3 flex items-center gap-2">
           {project.githubUrl && (
             <a
@@ -82,42 +101,6 @@ export const ProjectCard = ({ project, index, onClick }: ProjectCardProps) => {
               <ExternalLink size={16} />
             </a>
           )}
-        </div>
-      </div>
-
-      {/* Default Content */}
-      <div className="p-4 group-hover:opacity-0 transition-opacity duration-300">
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-muted-foreground text-xs">
-            {String(index + 1).padStart(2, "0")}
-          </span>
-          <h3 className="text-sm text-primary font-medium terminal-glow">
-            {project.title}
-          </h3>
-        </div>
-
-        <p
-          className="text-sm text-foreground/80 mb-3 leading-relaxed line-clamp-2"
-          dangerouslySetInnerHTML={{
-            __html: highlightText(project.brief, project.keywords),
-          }}
-        />
-
-        <div className="flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-xs px-2 py-0.5 bg-secondary text-terminal-amber border border-terminal-amber/20"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <div className="mt-3 pt-3 border-t border-border/50 flex items-center gap-2 text-xs text-muted-foreground">
-          <span>{project.year}</span>
-          <span>•</span>
-          <span>{project.techStack.slice(0, 3).join(" / ")}</span>
         </div>
       </div>
     </motion.div>

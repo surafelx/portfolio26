@@ -1,7 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
-import { FileText, BookOpen, Contact, BarChart2, Plus, Edit, Trash, ChevronLeft, ChevronRight, Book, User } from "lucide-react";
+import { FileText, BookOpen, Contact, BarChart2, Plus, Edit, Trash, ChevronLeft, ChevronRight, Book, User, LogOut, Settings } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { ProjectFormModal } from "@/components/ProjectFormModal";
@@ -12,6 +13,7 @@ import { AdminSearchFilter } from "@/components/AdminSearchFilter";
 import { useProjects } from "@/hooks/useProjects";
 import { useArticles } from "@/hooks/useArticles";
 import { useNotes } from "@/hooks/useNotes";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
 import type { Project } from "@/data/projects";
 import type { Article, Note } from "@/lib/database";
 
@@ -23,6 +25,7 @@ interface AdminClientProps {
 }
 
 export default function AdminClient({ initialProjects, initialArticles, initialNotes, initialAbout }: AdminClientProps) {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState("projects");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBlogModalOpen, setIsBlogModalOpen] = useState(false);
@@ -57,6 +60,11 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
 
   // About state
   const [about, setAbout] = useState(initialAbout);
+
+  // Settings state
+  const [settingsUsername, setSettingsUsername] = useState("");
+  const [settingsPassword, setSettingsPassword] = useState("");
+  const [settingsLoading, setSettingsLoading] = useState(false);
 
   // Use initial data if hooks haven't loaded yet
   const displayProjects = projects.length > 0 ? projects : initialProjects;
@@ -232,6 +240,44 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth", {
+        method: "DELETE",
+        credentials: "include",
+      });
+      router.push("/admin/login");
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error("Failed to logout");
+    }
+  };
+
+  const handleUpdateSettings = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSettingsLoading(true);
+    try {
+      const response = await fetch('/api/auth/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: settingsUsername, password: settingsPassword })
+      });
+      const data = await response.json();
+      if (response.ok) {
+        toast.success(data.message || "Credentials updated successfully");
+        setSettingsUsername("");
+        setSettingsPassword("");
+      } else {
+        toast.error(data.error || "Failed to update credentials");
+      }
+    } catch (error) {
+      console.error("Settings update error:", error);
+      toast.error("Failed to update settings");
+    } finally {
+      setSettingsLoading(false);
+    }
+  };
+
   // Filter and search logic
   const filteredProjects = displayProjects.filter((project) => {
     const matchesSearch = searchQuery === "" ||
@@ -302,6 +348,7 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
     { id: "articles", name: "Articles", icon: Book },
     { id: "notes", name: "Notes", icon: BookOpen },
     { id: "analytics", name: "Analytics", icon: BarChart2 },
+    { id: "settings", name: "Settings", icon: Settings },
     { id: "contact", name: "Contact", icon: Contact }
   ];
 
@@ -326,10 +373,21 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
       className="overflow-x-hidden"
     >
       {/* Header */}
-      <div className="flex items-center gap-2 mb-6">
-        <span className="text-muted-foreground">$</span>
-        <span className="text-foreground">sudo</span>
-        <span className="text-terminal-cyan">admin</span>
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-2">
+          <span className="text-muted-foreground">$</span>
+          <span className="text-foreground">sudo</span>
+          <span className="text-terminal-cyan">admin</span>
+        </div>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleLogout}
+          className="flex items-center gap-2 text-muted-foreground hover:text-destructive"
+        >
+          <LogOut size={16} />
+          Logout
+        </Button>
       </div>
 
       {/* Analytics Dashboard - Moved to top */}
@@ -526,11 +584,37 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
                 </div>
               ) : paginatedData.length > 0 ? (
                 paginatedData.map((project) => (
-                  <div key={project.id} className="terminal-border bg-card/50 p-4">
+                  <div key={project.id} className="terminal-border bg-card/50 p-4 overflow-hidden relative">
+                    {/* Project Image with Overlay */}
+                    <div className="relative mb-4 h-32 rounded overflow-hidden">
+                      <ImageWithFallback
+                        src={project.imageUrl}
+                        alt={project.title}
+                        className="w-full h-full object-cover"
+                        fallbackText="No Image"
+                        showIcon={false}
+                      />
+                      <div className="absolute inset-0 bg-black/40" />
+                      <div className="absolute bottom-2 left-2 right-2">
+                        <h4 className="text-terminal-cyan font-medium text-sm terminal-glow mb-1">
+                          {project.title}
+                        </h4>
+                        <div className="flex flex-wrap gap-1">
+                          {project.tags.slice(0, 2).map((tag) => (
+                            <span
+                              key={tag}
+                              className="text-xs px-2 py-0.5 bg-primary/20 text-primary border border-primary/30 rounded"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <h4 className="text-primary font-medium text-sm">{project.title}</h4>
                           <span className="text-xs px-2 py-0.5 bg-primary/20 text-primary border border-primary/30 rounded">
                             Priority: {project.priority}
                           </span>
@@ -598,7 +682,36 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
                 </div>
               ) : paginatedData.length > 0 ? (
                 paginatedData.map((article) => (
-                  <div key={article.id} className="terminal-border bg-card/50 p-4">
+                  <div key={article.id} className="terminal-border bg-card/50 p-4 overflow-hidden relative">
+                    {/* Article Image with Overlay */}
+                    {article.imageUrl && (
+                      <div className="relative mb-4 h-32 rounded overflow-hidden">
+                        <ImageWithFallback
+                          src={article.imageUrl}
+                          alt={article.title}
+                          className="w-full h-full object-cover"
+                          fallbackText="No Image"
+                          showIcon={false}
+                        />
+                        <div className="absolute inset-0 bg-black/40" />
+                        <div className="absolute bottom-2 left-2 right-2">
+                          <h4 className="text-terminal-cyan font-medium text-sm terminal-glow mb-1">
+                            {article.title}
+                          </h4>
+                          <div className="flex flex-wrap gap-1">
+                            {article.tags.slice(0, 2).map((tag) => (
+                              <span
+                                key={tag}
+                                className="text-xs px-2 py-0.5 bg-primary/20 text-primary border border-primary/30 rounded"
+                              >
+                                #{tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
                         <h4 className="text-primary font-medium mb-1 text-sm">{article.title}</h4>
@@ -863,6 +976,57 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
             </h2>
             <div className="terminal-border bg-card/50 p-4">
               <p className="text-muted-foreground">Contact form submissions and messages management.</p>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "settings" && (
+          <div>
+            <h2 className="text-lg text-primary mb-4 flex items-center gap-2">
+              <Settings size={18} /> Settings
+            </h2>
+            <div className="terminal-border bg-card/50 p-6 max-w-md">
+              <h3 className="text-sm text-primary mb-4">Change Admin Credentials</h3>
+              <form onSubmit={handleUpdateSettings} className="space-y-4">
+                <div className="space-y-2">
+                  <label htmlFor="settings-username" className="text-sm text-muted-foreground">
+                    Username / Email
+                  </label>
+                  <input
+                    id="settings-username"
+                    type="text"
+                    value={settingsUsername}
+                    onChange={(e) => setSettingsUsername(e.target.value)}
+                    placeholder="Enter new username"
+                    className="w-full px-3 py-2 bg-background border border-border rounded-md text-foreground"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="settings-password" className="text-sm text-muted-foreground">
+                    Password
+                  </label>
+                  <input
+                    id="settings-password"
+                    type="password"
+                    value={settingsPassword}
+                    onChange={(e) => setSettingsPassword(e.target.value)}
+                    placeholder="Enter new password"
+                    className="w-full px-3 py-2 bg-background border border-border rounded-md text-foreground"
+                    required
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  disabled={settingsLoading}
+                  className="w-full"
+                >
+                  {settingsLoading ? "Updating..." : "Update Credentials"}
+                </Button>
+              </form>
+              <p className="text-xs text-muted-foreground mt-4">
+                Note: On Vercel, credentials must be updated via their Environment Variables dashboard.
+              </p>
             </div>
           </div>
         )}

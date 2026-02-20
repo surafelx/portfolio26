@@ -8,12 +8,14 @@ import { ProjectModal } from "@/components/ProjectModal";
 import type { Project } from "@/data/projects";
 import { ProjectSearchAccordion } from "@/components/ProjectSearchAccordion";
 import { toast } from "sonner";
-import { Download, Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { Download, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useProjects } from "@/hooks/useProjects";
 import { useArticles } from "@/hooks/useArticles";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 interface HomeClientProps {
   initialProjects: Project[];
@@ -36,6 +38,16 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
   const displayProjects = projects.length > 0 ? projects : initialProjects;
   const displayArticles = articles.length > 0 ? articles : initialArticles;
   const [filteredProjects, setFilteredProjects] = useState<Project[]>(displayProjects);
+
+  // Featured Apps data
+  const partners = [
+    { name: "TechCorp", logo: "/placeholder.svg", description: "Leading technology solutions" },
+    { name: "InnovateLab", logo: "/placeholder.svg", description: "AI research and development" },
+    { name: "DataFlow", logo: "/placeholder.svg", description: "Big data analytics platform" },
+    { name: "CloudSync", logo: "/placeholder.svg", description: "Cloud infrastructure services" },
+    { name: "CodeCraft", logo: "/placeholder.svg", description: "Software development agency" },
+    { name: "DevOps Pro", logo: "/placeholder.svg", description: "DevOps consulting and tools" },
+  ];
 
   useEffect(() => {
     // Brief delay for staggered animation effect
@@ -160,14 +172,6 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
                 <Linkedin size={18} />
               </a>
               <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors p-2 hover:bg-secondary/50 rounded"
-              >
-                <Twitter size={18} />
-              </a>
-              <a
                 href="mailto:hello@example.dev"
                 className="text-muted-foreground hover:text-primary transition-colors p-2 hover:bg-secondary/50 rounded"
               >
@@ -186,9 +190,9 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
           </div>
         ) : displayArticles.length > 0 ? (
           <div className="terminal-border bg-card/30 hover:bg-card/40 transition-all duration-300 cursor-pointer group overflow-hidden relative">
-            {/* Article Image Overlay */}
-            {displayArticles[0].imageUrl && (
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+            {/* Article Image with Default Overlay */}
+            {displayArticles[0].imageUrl ? (
+              <div className="relative h-48 overflow-hidden">
                 <ImageWithFallback
                   src={displayArticles[0].imageUrl}
                   alt={displayArticles[0].title}
@@ -200,12 +204,37 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
 
                 {/* Terminal-themed overlay content */}
                 <div className="absolute bottom-4 left-4 right-4">
-                  <h4 className="text-terminal-cyan font-medium text-lg terminal-glow mb-2">
-                    {displayArticles[0].title}
-                  </h4>
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-sm font-medium text-primary flex items-center gap-2">
+                      <span className="w-4 h-px bg-primary" />
+                      Latest Article
+                    </h3>
+                    <div className="flex items-center gap-3">
+                      <Link
+                        href="/notes"
+                        className="text-xs text-terminal-cyan/80 hover:text-terminal-cyan transition-colors"
+                      >
+                        All Articles →
+                      </Link>
+                      <Link
+                        href={`/articles/${displayArticles[0].id}`}
+                        className="text-xs text-terminal-cyan hover:text-terminal-cyan/80 transition-colors"
+                      >
+                        Read More →
+                      </Link>
+                    </div>
+                  </div>
+
+                  <Link href={`/articles/${displayArticles[0].id}`}>
+                    <h4 className="text-terminal-cyan font-medium text-lg terminal-glow mb-2">
+                      {displayArticles[0].title}
+                    </h4>
+                  </Link>
+
                   <p className="text-terminal-cyan/90 text-sm leading-relaxed line-clamp-2 mb-3">
                     {displayArticles[0].excerpt}
                   </p>
+
                   <div className="flex flex-wrap gap-1 mb-2">
                     {displayArticles[0].tags.slice(0, 3).map((tag) => (
                       <span
@@ -216,6 +245,7 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
                       </span>
                     ))}
                   </div>
+
                   <div className="flex items-center gap-2 text-xs text-terminal-cyan/80">
                     <span>{new Date(displayArticles[0].publishedAt).toLocaleDateString('en-US', {
                       year: 'numeric',
@@ -227,48 +257,48 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
                   </div>
                 </div>
               </div>
-            )}
-
-            {/* Default Content */}
-            <div className={`p-4 ${displayArticles[0].imageUrl ? 'group-hover:opacity-0' : ''} transition-opacity duration-300`}>
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-medium text-primary flex items-center gap-2">
-                  <span className="w-4 h-px bg-primary" />
-                  Latest Article
-                </h3>
-                <div className="flex items-center gap-3">
-                  <Link
-                    href="/notes"
-                    className="text-xs text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    All Articles →
-                  </Link>
-                  <Link
-                    href={`/articles/${displayArticles[0].id}`}
-                    className="text-xs text-primary hover:text-primary/80 transition-colors"
-                  >
-                    Read More →
-                  </Link>
+            ) : (
+              /* Default Content when no image */
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-medium text-primary flex items-center gap-2">
+                    <span className="w-4 h-px bg-primary" />
+                    Latest Article
+                  </h3>
+                  <div className="flex items-center gap-3">
+                    <Link
+                      href="/notes"
+                      className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      All Articles →
+                    </Link>
+                    <Link
+                      href={`/articles/${displayArticles[0].id}`}
+                      className="text-xs text-primary hover:text-primary/80 transition-colors"
+                    >
+                      Read More →
+                    </Link>
+                  </div>
+                </div>
+                <Link href={`/articles/${displayArticles[0].id}`}>
+                  <h4 className="text-base text-foreground mb-2 terminal-glow group-hover:text-primary/80 transition-colors">
+                    {displayArticles[0].title}
+                  </h4>
+                </Link>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {displayArticles[0].excerpt}
+                </p>
+                <div className="flex items-center gap-2 mt-3 text-xs text-muted-foreground">
+                  <span>{new Date(displayArticles[0].publishedAt).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                  })}</span>
+                  <span>•</span>
+                  <span>{displayArticles[0].readingTime}</span>
                 </div>
               </div>
-              <Link href={`/articles/${displayArticles[0].id}`}>
-                <h4 className="text-base text-foreground mb-2 terminal-glow group-hover:text-primary/80 transition-colors">
-                  {displayArticles[0].title}
-                </h4>
-              </Link>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {displayArticles[0].excerpt}
-              </p>
-              <div className="flex items-center gap-2 mt-3 text-xs text-muted-foreground">
-                <span>{new Date(displayArticles[0].publishedAt).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'short',
-                  day: 'numeric'
-                })}</span>
-                <span>•</span>
-                <span>{displayArticles[0].readingTime}</span>
-              </div>
-            </div>
+            )}
           </div>
         ) : (
           <div className="terminal-border bg-card/30 p-4">

@@ -30,7 +30,7 @@ async function populateHugArticle() {
         createBlock("showcase", "paragraph", "Here are some cool people, channels, and showcases from today's event—this is the kind of ecosystem that makes you want to keep showing up."),
         createBlock("closing-reflection", "paragraph", "After the event ended, after the running slowed down, after the noise settled—that hug stayed with me.\n\nThe hug of 2026 wasn't loud.\nIt wasn't dramatic.\nBut it meant everything."),
         createBlock("final-thoughts", "paragraph", "This was only my second live performance.\nBut it didn't feel like the beginning anymore."),
-        createBlock("sample-music", "strudel-music", "n('c3 e3 g3').s('piano').slow(2)", { title: "A Simple Melody" })
+        createBlock("sample-music", "strudel-music", "note('c3 e3 g3')", { title: "A Simple Melody" })
       ],
       tags: ["personal-reflection", "community", "performance", "live-coding", "connection", "2026"],
       publishedAt: "2026-01-24",

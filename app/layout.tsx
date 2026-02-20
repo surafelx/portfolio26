@@ -1,6 +1,7 @@
 import { Providers } from "./providers";
 import { MainLayout } from "@/layouts/MainLayout";
 import { MouseTracker } from "@/components/MouseTracker";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import "../src/index.css";
 
 export const metadata = {
@@ -30,6 +31,7 @@ export default function RootLayout({
       </head>
       <body>
         <MouseTracker />
+        <ScrollToTop />
         <Providers>
           <MainLayout>{children}</MainLayout>
         </Providers>

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Navigation } from "./Navigation";
 import { Terminal, Mail, FileText, User, Settings, BarChart2, BookOpen, Contact } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
 
 export const Header = () => {
   return (
@@ -18,6 +19,7 @@ export const Header = () => {
           <span className="text-muted-foreground">$</span>
         </div>
         <div className="flex items-center gap-4">
+          <ThemeToggle />
           <Navigation />
         </div>
       </div>
