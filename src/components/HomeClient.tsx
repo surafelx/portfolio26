@@ -8,14 +8,13 @@ import { ProjectModal } from "@/components/ProjectModal";
 import type { Project } from "@/data/projects";
 import { ProjectSearchAccordion } from "@/components/ProjectSearchAccordion";
 import { toast } from "sonner";
-import { Download, Github, Linkedin, Mail } from "lucide-react";
+import { Download, Github, Linkedin, Mail, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useProjects } from "@/hooks/useProjects";
 import { useArticles } from "@/hooks/useArticles";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
+import { SOCIAL_LINKS } from "@/lib/links";
 
 interface HomeClientProps {
   initialProjects: Project[];
@@ -38,16 +37,6 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
   const displayProjects = projects.length > 0 ? projects : initialProjects;
   const displayArticles = articles.length > 0 ? articles : initialArticles;
   const [filteredProjects, setFilteredProjects] = useState<Project[]>(displayProjects);
-
-  // Featured Apps data
-  const partners = [
-    { name: "TechCorp", logo: "/placeholder.svg", description: "Leading technology solutions" },
-    { name: "InnovateLab", logo: "/placeholder.svg", description: "AI research and development" },
-    { name: "DataFlow", logo: "/placeholder.svg", description: "Big data analytics platform" },
-    { name: "CloudSync", logo: "/placeholder.svg", description: "Cloud infrastructure services" },
-    { name: "CodeCraft", logo: "/placeholder.svg", description: "Software development agency" },
-    { name: "DevOps Pro", logo: "/placeholder.svg", description: "DevOps consulting and tools" },
-  ];
 
   useEffect(() => {
     // Brief delay for staggered animation effect
@@ -156,7 +145,7 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
 
             <div className="flex items-center gap-2">
               <a
-                href="https://github.com"
+                href={SOCIAL_LINKS.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors p-2 hover:bg-secondary/50 rounded"
@@ -164,7 +153,7 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
                 <Github size={18} />
               </a>
               <a
-                href="https://linkedin.com"
+                href={SOCIAL_LINKS.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors p-2 hover:bg-secondary/50 rounded"
@@ -172,7 +161,15 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
                 <Linkedin size={18} />
               </a>
               <a
-                href="mailto:hello@example.dev"
+                href={SOCIAL_LINKS.upwork}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors p-2 hover:bg-secondary/50 rounded"
+              >
+                <Briefcase size={18} />
+              </a>
+              <a
+                href={`mailto:${SOCIAL_LINKS.email}`}
                 className="text-muted-foreground hover:text-primary transition-colors p-2 hover:bg-secondary/50 rounded"
               >
                 <Mail size={18} />

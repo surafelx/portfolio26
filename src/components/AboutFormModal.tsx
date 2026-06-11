@@ -59,7 +59,8 @@ export const AboutFormModal = ({
       twitter: "",
       instagram: "",
       youtube: "",
-      website: ""
+      website: "",
+      upwork: ""
     },
     resumeUrl: ""
   });
@@ -102,7 +103,8 @@ export const AboutFormModal = ({
           twitter: "",
           instagram: "",
           youtube: "",
-          website: ""
+          website: "",
+          upwork: ""
         },
         resumeUrl: initialData.resumeUrl || ""
       });
@@ -442,6 +444,15 @@ export const AboutFormModal = ({
                   value={about.socialLinks?.website || ''}
                   onChange={(e) => setAbout({...about, socialLinks: {...about.socialLinks, website: e.target.value}})}
                   placeholder="https://yourwebsite.com"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="social-upwork">Upwork</Label>
+                <Input
+                  id="social-upwork"
+                  value={about.socialLinks?.upwork || ''}
+                  onChange={(e) => setAbout({...about, socialLinks: {...about.socialLinks, upwork: e.target.value}})}
+                  placeholder="https://upwork.com/freelancer/username"
                 />
               </div>
             </div>

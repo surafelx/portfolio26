@@ -526,6 +526,7 @@ export default function AdminClient({ initialProjects, initialArticles, initialN
                       {displayAbout.socialLinks.instagram && <p>Instagram: {displayAbout.socialLinks.instagram}</p>}
                       {displayAbout.socialLinks.youtube && <p>YouTube: {displayAbout.socialLinks.youtube}</p>}
                       {displayAbout.socialLinks.website && <p>Website: {displayAbout.socialLinks.website}</p>}
+                      {displayAbout.socialLinks.upwork && <p>Upwork: {displayAbout.socialLinks.upwork}</p>}
                     </div>
                   </div>
                 )}

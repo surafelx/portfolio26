@@ -15,6 +15,7 @@
     "migrate-notes": "tsx scripts/migrate-notes.ts"
   },
   "dependencies": {
+    "@calcom/embed-react": "^1.5.3",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "^1.2.11",

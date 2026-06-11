@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Twitter, Mail, Menu, X, Home, User, BookOpen, Users, Calendar } from "lucide-react";
+import { Github, Linkedin, Mail, Menu, X, Home, User, BookOpen, Users, Calendar, Briefcase } from "lucide-react";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { SOCIAL_LINKS } from "@/lib/links";
 
 export const Footer = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,9 +17,9 @@ export const Footer = () => {
   ];
 
   const socialLinks = [
-    { href: "https://github.com", icon: Github, label: "GitHub" },
-    { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
-    { href: "https://twitter.com", icon: Twitter, label: "Twitter" },
+    { href: SOCIAL_LINKS.github, icon: Github, label: "GitHub" },
+    { href: SOCIAL_LINKS.linkedin, icon: Linkedin, label: "LinkedIn" },
+    { href: SOCIAL_LINKS.upwork, icon: Briefcase, label: "Upwork" },
   ];
 
   return (

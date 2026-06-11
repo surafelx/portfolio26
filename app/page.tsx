@@ -7,8 +7,6 @@ export default async function Home() {
   let modules: string[] = [];
 
   try {
-    console.log('Fetching projects and articles from database');
-
     // Fetch directly from database on server side
     const [projects, articles] = await Promise.all([
       getProjects(),
@@ -28,8 +26,6 @@ export default async function Home() {
 
     // Extract unique modules from projects for filtering
     modules = Array.from(new Set(projects.flatMap(project => project.tags))) as string[];
-
-    console.log(`Fetched ${projects.length} projects and ${articles.length} articles`);
   } catch (error) {
     console.error('Error fetching data from database:', error);
   }

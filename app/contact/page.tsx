@@ -4,10 +4,12 @@ import { motion } from "framer-motion";
 import { Mail, MapPin, Send, Clock } from "lucide-react";
 import { toast } from "sonner";
 import type { About } from "@/lib/database";
+import { ScheduleCall } from "@/components/ScheduleCall";
+import { SOCIAL_LINKS } from "@/lib/links";
 
 export default function Contact() {
   const [contactInfo, setContactInfo] = useState<About['contact']>({
-    email: "hello@example.dev",
+    email: SOCIAL_LINKS.email,
     location: "San Francisco, CA",
     responseTime: "Usually responds within 24h"
   });
@@ -19,7 +21,7 @@ export default function Contact() {
       .then((about: About) => {
         if (about?.contact) {
           setContactInfo({
-            email: about.contact.email || "hello@example.dev",
+            email: about.contact.email || SOCIAL_LINKS.email,
             location: about.contact.location || "San Francisco, CA",
             responseTime: about.contact.responseTime || "Usually responds within 24h"
           });
@@ -101,6 +103,8 @@ export default function Contact() {
                </div>
              </div>
           </div>
+
+          <ScheduleCall />
         </div>
 
         {/* Contact Form */}
