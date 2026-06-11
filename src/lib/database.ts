@@ -168,6 +168,7 @@ export interface About {
     instagram?: string;
     youtube?: string;
     website?: string;
+    upwork?: string;
   };
   resumeUrl?: string;
   createdAt: Date;
