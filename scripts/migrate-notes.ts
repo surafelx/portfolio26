@@ -1,7 +1,10 @@
+import { config } from 'dotenv';
 import { MongoClient } from 'mongodb';
 
+config();
+
 async function migrateNotes() {
-    const uri = "mongodb+srv://workwithsurafel:workwithsurafel@portfolio26.jnsnukz.mongodb.net/?appName=portfolio26"
+  const uri = process.env.MONGODB_URI;
 
   if (!uri) {
     throw new Error('MONGODB_URI environment variable is not set');
