@@ -1,150 +1,24 @@
 import { Calendar, Clock, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArticleTracker } from "@/components/ArticleTracker";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { StrudelMusic } from "@/components/StrudelMusic";
-import { getArticles } from "@/lib/database";
+import { getArticleById, getArticles } from "@/data";
+import type { ArticleBlock } from "@/data";
 
-export default async function Article({ params }: { params: { id: string } }) {
+export function generateStaticParams() {
+  return getArticles().map((article) => ({ id: article.id }));
+}
+
+export default function Article({ params }: { params: { id: string } }) {
   const { id } = params;
+  const article = getArticleById(id);
 
-  let article: any = null;
-
-  try {
-    console.log('Fetching article from database:', id);
-
-    // Fetch directly from database on server side
-    const articles = await getArticles();
-    article = articles.find(a => a.id === id);
-
-    if (article) {
-      console.log('Article fetched successfully:', article.title);
-    } else {
-      console.log('Article not found in database:', id);
-    }
-  } catch (error) {
-    console.error('Error fetching article from database:', error);
-    // In production, provide a fallback or better error
-    if (process.env.NODE_ENV === 'production') {
-      console.error('Production article fetch failed, check database connection');
-    }
-  }
-
-  // If article not found, provide fallback content for production
   if (!article) {
-    console.error(`Article not found: ${id}`);
-
-    // In production, show sample content instead of 404
-    if (process.env.NODE_ENV === 'production') {
-      const sampleArticle = {
-        title: "Welcome to My Portfolio",
-        excerpt: "This is a sample article showcasing the portfolio's capabilities.",
-        publishedAt: new Date().toISOString().split('T')[0],
-        readingTime: "3 min",
-        author: "Surafel Yimam",
-        blocks: [
-          {
-            id: "sample-1",
-            type: "paragraph",
-            content: "Welcome to my portfolio! This article demonstrates the rich content editing capabilities of the platform."
-          },
-          {
-            id: "sample-2",
-            type: "h2",
-            content: "What You'll Find Here"
-          },
-          {
-            id: "sample-3",
-            type: "paragraph",
-            content: "This portfolio showcases my work in full-stack development, AI integration, and creative coding. You'll find projects, articles, and insights into my journey as a developer."
-          },
-          {
-            id: "sample-4",
-            type: "h2",
-            content: "Database Connection Status"
-          },
-          {
-            id: "sample-5",
-            type: "paragraph",
-            content: "If you're seeing this message, it means the database connection is currently unavailable. Please check back later when the full content will be loaded."
-          }
-        ]
-      };
-
-      return (
-        <div>
-          <div className="mb-6">
-            <Link href="/notes" className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors">
-              <ArrowLeft size={16} />
-              <span>Back to Articles</span>
-            </Link>
-          </div>
-
-          <div className="mb-8">
-            <h1 className="text-3xl text-primary terminal-glow mb-4">
-              {sampleArticle.title}
-            </h1>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-              <span className="flex items-center gap-1">
-                <Calendar size={14} />
-                {new Date().toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })}
-              </span>
-              <span className="flex items-center gap-1">
-                <Clock size={14} />
-                {sampleArticle.readingTime}
-              </span>
-              <span>By {sampleArticle.author}</span>
-            </div>
-            <p className="text-foreground/80 text-lg leading-relaxed">
-              {sampleArticle.excerpt}
-            </p>
-          </div>
-
-          <div className="space-y-6">
-            {sampleArticle.blocks.map((block) => {
-              switch (block.type) {
-                case 'h1':
-                  return (
-                    <h1 key={block.id} className="text-3xl text-primary terminal-glow mt-10 mb-6">
-                      {block.content}
-                    </h1>
-                  );
-                case 'h2':
-                  return (
-                    <h2 key={block.id} className="text-2xl text-primary mt-8 mb-4">
-                      {block.content}
-                    </h2>
-                  );
-                case 'paragraph':
-                  return (
-                    <p key={block.id} className="text-foreground/90 leading-relaxed mb-6">
-                      {block.content}
-                    </p>
-                  );
-                default:
-                  return null;
-              }
-            })}
-          </div>
-
-          <div className="mt-8 p-4 bg-secondary/20 rounded-lg">
-            <p className="text-sm text-muted-foreground text-center">
-              🔄 Database connection temporarily unavailable. Full content will be available soon.
-            </p>
-          </div>
-        </div>
-      );
-    }
-
     notFound();
   }
 
-  const renderBlock = (block: any) => {
+  const renderBlock = (block: ArticleBlock) => {
     switch (block.type) {
       case 'h1':
         return (
@@ -181,7 +55,7 @@ export default async function Article({ params }: { params: { id: string } }) {
         if (block.metadata?.images && block.metadata.images.length > 0) {
           return (
             <div key={block.id} className="space-y-4 mb-6">
-              {block.metadata.images.map((image: any, index: number) => (
+              {block.metadata.images.map((image, index) => (
                 <div key={index} className="terminal-border bg-secondary/30 p-4">
                   <ImageWithFallback
                     src={image.url}
@@ -215,7 +89,7 @@ export default async function Article({ params }: { params: { id: string } }) {
             )}
           </div>
         );
-      case 'image-grid':
+      case 'image-grid': {
         const layout = block.metadata?.layout || 'grid-2';
         const gridClass = layout === 'grid-2' ? 'grid-cols-1 md:grid-cols-2' :
                          layout === 'grid-3' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' :
@@ -224,7 +98,7 @@ export default async function Article({ params }: { params: { id: string } }) {
 
         return (
           <div key={block.id} className={`grid ${gridClass} gap-4 mb-6`}>
-            {block.metadata?.images?.map((image: any, index: number) => (
+            {block.metadata?.images?.map((image, index) => (
               <div key={index} className="terminal-border bg-secondary/30 p-3">
                 <ImageWithFallback
                   src={image.url}
@@ -242,6 +116,7 @@ export default async function Article({ params }: { params: { id: string } }) {
             ))}
           </div>
         );
+      }
       case 'code':
         return (
           <pre key={block.id} className="bg-secondary p-4 rounded text-sm overflow-x-auto mt-6 mb-6">
@@ -260,18 +135,18 @@ export default async function Article({ params }: { params: { id: string } }) {
         return (
           <div key={block.id} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div className="text-foreground/90 leading-relaxed">
-              {block.content.split('\n').map((line: string, i: number) => (
+              {block.content.split('\n').map((line, i) => (
                 <p key={i} className="mb-4">{line}</p>
               ))}
             </div>
             <div className="text-foreground/90 leading-relaxed">
-              {block.metadata?.caption?.split('\n').map((line: string, i: number) => (
+              {block.metadata?.caption?.split('\n').map((line, i) => (
                 <p key={i} className="mb-4">{line}</p>
               ))}
             </div>
           </div>
         );
-      case 'youtube-video':
+      case 'youtube-video': {
         const getYouTubeEmbedUrl = (url: string) => {
           const videoId = url.includes('youtu.be/')
             ? url.split('youtu.be/')[1].split('?')[0]
@@ -297,6 +172,7 @@ export default async function Article({ params }: { params: { id: string } }) {
             </div>
           </div>
         );
+      }
       case 'video':
         return (
           <div key={block.id} className="terminal-border bg-secondary/30 p-4 mb-6">
@@ -368,7 +244,7 @@ export default async function Article({ params }: { params: { id: string } }) {
       {/* Tags */}
       {article.tags && (
         <div className="flex flex-wrap gap-2 mb-6">
-          {article.tags.map((tag: string) => (
+          {article.tags.map((tag) => (
             <span
               key={tag}
               className="text-xs px-3 py-1 bg-primary/10 border border-primary/30 text-primary"
@@ -383,8 +259,6 @@ export default async function Article({ params }: { params: { id: string } }) {
       <div className="space-y-6">
         {article.blocks?.map(renderBlock)}
       </div>
-
-      <ArticleTracker articleId={id} />
     </div>
   );
 }

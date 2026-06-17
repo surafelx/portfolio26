@@ -1,46 +1,42 @@
 # portfolio26
 
-Personal portfolio site with an admin dashboard for managing projects, articles, notes, and an about page, plus basic visit/view analytics.
+Personal portfolio site — projects, articles, notes, and an about/resume page. All content is **static**: it lives in plain TypeScript files under [`src/data/`](src/data/), so there's no database to run or configure.
 
 ## Stack
 
 - **Next.js 14** (App Router) + React 18 + TypeScript
-- **MongoDB** (`mongodb` driver) for content storage
 - **Tailwind CSS** + **shadcn/ui** (Radix primitives) for UI
 - **Framer Motion** for animation
-- **Cloudinary** for image uploads
 - **Vitest** + Testing Library for tests
 
 ## Getting started
 
 ```bash
 npm install
-cp .env.example .env   # then fill in the values
-npm run dev            # http://localhost:3000
+npm run dev   # http://localhost:3000
 ```
 
-## Environment variables
+No environment variables are required. See [`.env.example`](.env.example) for notes on the optional contact-form integration.
 
-See [`.env.example`](.env.example):
+## Editing content
 
-| Variable         | Description                                |
-| ---------------- | ------------------------------------------ |
-| `MONGODB_URI`    | MongoDB connection string (local or Atlas) |
-| `VERCEL_URL`     | Public deployment URL (no protocol)        |
-| `ADMIN_USERNAME` | Admin dashboard login                      |
-| `ADMIN_PASSWORD` | Admin dashboard password                   |
+All content is data — edit these files and the pages update:
+
+| File | Powers |
+| ---- | ------ |
+| [`src/data/projects.ts`](src/data/projects.ts) | Home page project grid + modals |
+| [`src/data/articles.ts`](src/data/articles.ts) | Articles list and detail pages |
+| [`src/data/notes.ts`](src/data/notes.ts) | Notes list and detail pages |
+| [`src/data/about.ts`](src/data/about.ts) | About / resume page and contact info |
+| [`src/data/types.ts`](src/data/types.ts) | Shared content types |
 
 ## Scripts
 
-| Command                  | Description                    |
-| ------------------------ | ------------------------------ |
-| `npm run dev`            | Start the dev server           |
-| `npm run build`          | Production build               |
-| `npm run start`          | Serve the production build     |
-| `npm run lint`           | Lint with `eslint-config-next` |
-| `npm run test`           | Run the Vitest suite once      |
-| `npm run test:watch`     | Run Vitest in watch mode       |
-| `npm run populate-about` | Seed the about page            |
-| `npm run migrate-notes`  | One-off notes migration        |
-
-Data-seeding and migration scripts live in [`scripts/`](scripts/) and read `MONGODB_URI` from your environment.
+| Command              | Description                    |
+| -------------------- | ------------------------------ |
+| `npm run dev`        | Start the dev server           |
+| `npm run build`      | Production build               |
+| `npm run start`      | Serve the production build     |
+| `npm run lint`       | Lint with `eslint-config-next` |
+| `npm run test`       | Run the Vitest suite once      |
+| `npm run test:watch` | Run Vitest in watch mode       |

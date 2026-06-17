@@ -1,13 +1,11 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, Menu, X, Home, User, BookOpen, Users, Calendar, Briefcase } from "lucide-react";
-import { useAnalytics } from "@/hooks/useAnalytics";
+import { Github, Linkedin, Mail, Menu, X, Home, User, BookOpen, Calendar, Briefcase } from "lucide-react";
 import { SOCIAL_LINKS } from "@/lib/links";
 
 export const Footer = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { analytics, loading } = useAnalytics();
 
   const navigationLinks = [
     { href: "/", label: "home", icon: Home },
@@ -43,13 +41,6 @@ export const Footer = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            {!loading && (
-              <span className="text-muted-foreground/70 flex items-center gap-1">
-                <Users size={14} />
-                {analytics.uniqueVisitors} visitors
-              </span>
-            )}
-
             {/* Menu Button */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}

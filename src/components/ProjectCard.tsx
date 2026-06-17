@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
-import type { Project } from "@/lib/database";
+import type { Project } from "@/data/types";
 
 interface ProjectCardProps {
   project: Project;

@@ -9,11 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
-    "test:watch": "vitest",
-    "populate-about": "tsx scripts/populate-about.ts",
-    "populate-articles": "tsx scripts/populate-articles.ts",
-    "migrate-notes": "tsx scripts/migrate-notes.ts",
-    "migrate-articles": "tsx scripts/migrate-articles.ts"
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
@@ -23,28 +19,21 @@
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-select": "^2.2.5",
     "@radix-ui/react-slot": "^1.2.3",
-    "@radix-ui/react-tabs": "^1.1.12",
     "@radix-ui/react-toast": "^1.2.14",
     "@radix-ui/react-tooltip": "^1.2.7",
-    "@tanstack/react-query": "^5.83.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "dotenv": "^16.6.1",
     "framer-motion": "^12.27.1",
     "lucide-react": "^0.462.0",
-    "mongodb": "^6.21.0",
     "next": "^14.2.0",
     "next-themes": "^0.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sonner": "^1.7.4",
     "tailwind-merge": "^2.6.0",
-    "tailwindcss-animate": "^1.0.7",
-    "tsx": "^4.19.2"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.6.0",
-    "@testing-library/react": "^16.0.0",
     "@types/node": "^22.16.5",
     "@types/react": "^18.3.23",
     "@types/react-dom": "^18.3.7",

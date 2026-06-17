@@ -10,9 +10,6 @@ import { ProjectSearchAccordion } from "@/components/ProjectSearchAccordion";
 import { toast } from "sonner";
 import { Download, Github, Linkedin, Mail, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useProjects } from "@/hooks/useProjects";
-import { useArticles } from "@/hooks/useArticles";
-import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { SOCIAL_LINKS } from "@/lib/links";
 
@@ -29,25 +26,14 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedModule, setSelectedModule] = useState("all");
 
-  // Use hooks for data management
-  const { projects, loading: projectsLoading } = useProjects();
-  const { articles, loading: articlesLoading } = useArticles();
-
-  // Use hook data if available, otherwise initial data
-  const displayProjects = projects.length > 0 ? projects : initialProjects;
-  const displayArticles = articles.length > 0 ? articles : initialArticles;
+  const displayProjects = initialProjects;
+  const displayArticles = initialArticles;
   const [filteredProjects, setFilteredProjects] = useState<Project[]>(displayProjects);
 
   useEffect(() => {
     // Brief delay for staggered animation effect
     const timer = setTimeout(() => setShowContent(true), 50);
     return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    // Record page visit
-    const baseUrl = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
-    fetch(`${baseUrl}/api/analytics/visits`, { method: 'POST' }).catch(console.error);
   }, []);
 
   useEffect(() => {
@@ -63,13 +49,6 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
   const handleProjectClick = (project: Project) => {
     setSelectedProject(project);
     setIsModalOpen(true);
-    // Record project view
-    const baseUrl = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
-    fetch(`${baseUrl}/api/analytics/project-views`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ projectId: project.id }),
-    }).catch(console.error);
   };
 
   const handleSearch = (query: string, module: string) => {
@@ -181,11 +160,7 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
 
       {/* Latest Article */}
       <motion.div variants={itemVariants} className="mb-8">
-        {articlesLoading ? (
-          <div className="terminal-border bg-card/30 p-4">
-            <LoadingSpinner message="Loading latest article..." />
-          </div>
-        ) : displayArticles.length > 0 ? (
+        {displayArticles.length > 0 ? (
           <div className="terminal-border bg-card/30 hover:bg-card/40 transition-all duration-300 cursor-pointer group overflow-hidden relative">
             {/* Article Image with Default Overlay */}
             {displayArticles[0].imageUrl ? (
@@ -327,11 +302,7 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
           />
         </motion.div>
 
-        {projectsLoading ? (
-          <div className="flex justify-center py-8">
-            <LoadingSpinner message="Loading projects..." />
-          </div>
-        ) : (
+        {(
           <div className="grid gap-6 md:grid-cols-2">
             {filteredProjects.map((project, index) => (
               <div

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Download, FileText } from "lucide-react";
-import type { About } from "@/lib/database";
+import type { About } from "@/data/types";
 
 interface PDFResumeProps {
   about: About;

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Maximize2, Minimize2, ExternalLink, Github, Play, Info, Layout, Code, Video, Mail, MapPin, Network } from "lucide-react";
 import { ProjectNodeGraph } from "@/components/ProjectNodeGraph";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
-import type { Project } from "@/lib/database";
+import type { Project } from "@/data/types";
 
 interface ProjectModalProps {
   project: Project | null;

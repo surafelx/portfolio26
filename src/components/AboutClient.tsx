@@ -1,8 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import { User, Code, Briefcase, GraduationCap, ChevronDown, Award, Heart, Zap, Coffee, Gamepad2, Music, Camera, ExternalLink } from "lucide-react";
-import { useAbout } from "@/hooks/useAbout";
-import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { PDFResume } from "@/components/PDFResume";
 import {
   Accordion,
@@ -15,37 +13,7 @@ interface AboutClientProps {
   initialAbout: any;
 }
 export default function AboutClient({ initialAbout }: AboutClientProps) {
-  const { about, loading, error } = useAbout();
-  const displayAbout = about || initialAbout;
-
-  if (loading && !displayAbout) {
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center gap-2 mb-6">
-          <span className="text-muted-foreground">$</span>
-          <span className="text-foreground">cat</span>
-          <span className="text-terminal-cyan">about.md</span>
-        </div>
-        <LoadingSpinner message="Loading about information..." />
-      </div>
-    );
-  }
-
-  if (error && !displayAbout) {
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center gap-2 mb-6">
-          <span className="text-muted-foreground">$</span>
-          <span className="text-foreground">cat</span>
-          <span className="text-terminal-cyan">about.md</span>
-        </div>
-        <div className="terminal-border bg-card/50 p-8 text-center">
-          <p className="text-destructive">Error loading about information</p>
-          <p className="text-sm text-muted-foreground mt-2">{error}</p>
-        </div>
-      </div>
-    );
-  }
+  const displayAbout = initialAbout;
 
   if (!displayAbout) {
     return (

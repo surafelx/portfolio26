@@ -1,34 +1,20 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Send, Clock } from "lucide-react";
 import { toast } from "sonner";
-import type { About } from "@/lib/database";
 import { ScheduleCall } from "@/components/ScheduleCall";
+import { getAbout } from "@/data";
 import { SOCIAL_LINKS } from "@/lib/links";
 
-export default function Contact() {
-  const [contactInfo, setContactInfo] = useState<About['contact']>({
-    email: SOCIAL_LINKS.email,
-    location: "San Francisco, CA",
-    responseTime: "Usually responds within 24h"
-  });
+const aboutContact = getAbout().contact;
 
-  useEffect(() => {
-    // Fetch about data to get contact information
-    fetch('/api/about')
-      .then(res => res.json())
-      .then((about: About) => {
-        if (about?.contact) {
-          setContactInfo({
-            email: about.contact.email || SOCIAL_LINKS.email,
-            location: about.contact.location || "San Francisco, CA",
-            responseTime: about.contact.responseTime || "Usually responds within 24h"
-          });
-        }
-      })
-      .catch(console.error);
-  }, []);
+export default function Contact() {
+  const contactInfo = {
+    email: aboutContact?.email || SOCIAL_LINKS.email,
+    location: aboutContact?.location || "Remote",
+    responseTime: aboutContact?.responseTime || "Usually responds within 24h",
+  };
   const [formData, setFormData] = useState({
     name: "",
     email: "",
