@@ -163,7 +163,7 @@ export default function HomeClient() {
       </section>
 
       {/* CLIENT WORK — full-width carousel */}
-      <section id="work" className="scroll-mt-12 !mt-8">
+      <section id="work" className="scroll-mt-12">
         <SectionHeading
           icon={<Briefcase size={12} />}
           label="Client & Global Work"
