@@ -4,7 +4,6 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
-  Award,
   Briefcase,
   Building2,
   ChevronLeft,
@@ -31,7 +30,6 @@ import {
   getArticles,
   aboutParagraphs,
   stackList,
-  certifications,
   experience,
   education,
 } from "@/data";
@@ -314,19 +312,6 @@ export default function HomeClient() {
               <p className="font-medium">{education.institution}</p>
               <p className="text-sm text-muted-foreground">{education.degree}</p>
               <p className="text-sm text-muted-foreground">Graduated {education.graduation}</p>
-            </div>
-            <div className="terminal-border bg-card p-6">
-              <h3 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-                <Award size={14} /> Certifications
-              </h3>
-              <ul className="space-y-1.5">
-                {certifications.map((c) => (
-                  <li key={c} className="text-sm text-muted-foreground flex items-start gap-2">
-                    <span className="mt-1.5 w-1 h-1 rounded-full bg-primary shrink-0" />
-                    {c}
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </div>

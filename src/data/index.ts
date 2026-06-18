@@ -8,4 +8,4 @@ export {
 export { recommendations, getRecommendations } from "@/data/recommendations";
 export { articles, getArticles, getArticleById } from "@/data/articles";
 export { notes, getNotes, getNoteById } from "@/data/notes";
-export { about, aboutParagraphs, stackList, certifications, experience, education, getAbout } from "@/data/about";
+export { about, aboutParagraphs, stackList, experience, education, getAbout } from "@/data/about";

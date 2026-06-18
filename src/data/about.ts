@@ -22,8 +22,8 @@ export const stackList: string[] = [
   "Vibe-coding", "Code cleanup",
 ];
 
-// Certifications (from LinkedIn profile).
-export const certifications: string[] = [
+// Certifications (from LinkedIn profile) — used in the structured résumé data.
+const certifications: string[] = [
   "Introduction to Cloud Computing",
   "HTML, CSS, & JavaScript",
 ];
