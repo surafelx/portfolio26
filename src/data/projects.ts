@@ -57,6 +57,7 @@ export const clientProjects: PortfolioProject[] = [
     description:
       "Built the product vision and platform for a B2B marketplace connecting international specialty-coffee buyers with Ethiopian exporters. Revenue model: paid profiles + FOB commission + agent fees.",
     stack: ["Next.js", "PostgreSQL", "Prisma", "Brand positioning", "GTM"],
+    image: "/projects/ethiopian-coffee-guide.jpg",
   },
   {
     id: "nibret",
