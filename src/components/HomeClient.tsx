@@ -117,35 +117,38 @@ export default function HomeClient() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.02] mb-4 text-gradient pb-1">
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.02] mb-4 text-foreground">
             Surafel Yimam
           </h1>
-          <p className="text-xl md:text-2xl font-medium text-primary mb-5">
+          <p className="text-xl md:text-2xl font-medium text-foreground/80 mb-4">
             Full-Stack Engineer &amp; AI Systems Builder
           </p>
-          <p className="text-lg text-muted-foreground max-w-xl leading-relaxed mb-6">
+
+          {/* Small icons below role */}
+          <div className="flex items-center gap-1 mb-7">
+            <HeroIcon href={`mailto:${SOCIAL_LINKS.email}`} label="Email">
+              <Mail size={18} />
+            </HeroIcon>
+            <HeroIcon href={SOCIAL_LINKS.github} label="GitHub" external>
+              <Github size={18} />
+            </HeroIcon>
+            <HeroIcon href={SOCIAL_LINKS.linkedin} label="LinkedIn" external>
+              <Linkedin size={18} />
+            </HeroIcon>
+            <HeroIcon href={SOCIAL_LINKS.telegram} label="Telegram" external>
+              <Send size={18} />
+            </HeroIcon>
+          </div>
+
+          <p className="text-lg text-muted-foreground max-w-xl leading-relaxed mb-5">
             I build production software: AI agents that think, full-stack apps
             that scale, and the integrations that make businesses actually run
             without manual chasing.
           </p>
-          <p className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
+          <p className="flex items-center gap-2 text-sm text-muted-foreground">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
             Available for roles worldwide
           </p>
-          <div className="flex flex-wrap gap-3">
-            <a
-              href="#work"
-              className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-medium px-5 py-2.5 rounded-lg hover:brightness-110 transition"
-            >
-              View my work <ArrowRight size={16} />
-            </a>
-            <a
-              href={`mailto:${SOCIAL_LINKS.email}`}
-              className="inline-flex items-center gap-2 border border-border text-foreground font-medium px-5 py-2.5 rounded-lg hover:bg-secondary transition"
-            >
-              <Mail size={16} /> {SOCIAL_LINKS.email}
-            </a>
-          </div>
         </motion.div>
       </section>
 
@@ -486,6 +489,30 @@ function ProjectModal({
         </div>
       </motion.div>
     </motion.div>
+  );
+}
+
+function HeroIcon({
+  href,
+  label,
+  external,
+  children,
+}: {
+  href: string;
+  label: string;
+  external?: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      aria-label={label}
+      title={label}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      className="inline-flex items-center justify-center w-9 h-9 rounded-lg text-muted-foreground hover:text-primary hover:bg-secondary transition"
+    >
+      {children}
+    </a>
   );
 }
 

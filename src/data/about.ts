@@ -6,6 +6,7 @@ export type { About } from "@/data/types";
 export const aboutParagraphs: string[] = [
   "I'm a full-stack engineer based in Addis Ababa, Ethiopia who builds production software — AI agents, full-stack applications, and the integrations that connect everything together.",
   "I work across the full stack: React and Next.js on the frontend, Node.js APIs on the backend, PostgreSQL and Prisma for data, and OpenAI's API stack for AI features. I deploy, I debug, I ship.",
+  "I'm a big believer in vibe-coding — moving fast with AI to prototype and ship ideas in hours, not weeks. But the real value is in the cleanup: years of experience mean I can take AI-generated or rushed code and turn it into something typed, tested, and genuinely production-ready.",
   "I've built products for Australian agencies, Ethiopian startups, and global SaaS companies. I'm comfortable working with international clients, async communication, and tight deadlines.",
   "Currently working on VIGS SEO automation, building Ethiopian Medical Hub, and looking for my next opportunity — ideally something that combines AI systems with real business impact.",
 ];
@@ -19,6 +20,7 @@ export const stackList: string[] = [
   "OpenAI API", "Assistants v2", "LangChain",
   "Google Calendar", "Monday.com", "Telegram",
   "SearchAtlas API", "Git", "Docker", "OpenClaw",
+  "Vibe-coding", "Code cleanup",
 ];
 
 // Full structured about used by the /about resume page.

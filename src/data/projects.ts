@@ -57,16 +57,6 @@ export const clientProjects: PortfolioProject[] = [
     stack: ["Next.js", "PostgreSQL", "Prisma", "Brand positioning", "GTM"],
   },
   {
-    id: "nexus-solar",
-    name: "Nexus Solar Platform",
-    subtitle: "Solar Operations SaaS",
-    icon: "☀️",
-    badge: "Full-Stack SaaS",
-    description:
-      "Full-stack SaaS platform for solar company operations — company profiles, PV array analysis, load assessment reports, and multi-platform delivery (web, Android, iOS).",
-    stack: ["React", "Next.js", "Node.js", "MongoDB", "REST API"],
-  },
-  {
     id: "nibret",
     name: "Nibret.com",
     subtitle: "Ethiopian Client",
@@ -99,12 +89,12 @@ export const clientProjects: PortfolioProject[] = [
   {
     id: "yenesuzuki",
     name: "Yenesuzuki.com",
-    subtitle: "Global Client",
+    subtitle: "Suzuki Spare Parts Store",
     icon: "⚙️",
-    badge: "Global Client",
+    badge: "E-commerce",
     description:
-      "Website build for an automotive client.",
-    stack: ["Next.js"],
+      "An online catalog and store for genuine Suzuki spare parts — browsable inventory by model, part search, and order enquiries for customers and workshops.",
+    stack: ["Next.js", "Node.js", "PostgreSQL", "Stripe"],
   },
   {
     id: "agrisun",
