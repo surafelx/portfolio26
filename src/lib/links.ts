@@ -3,7 +3,7 @@ export const SOCIAL_LINKS = {
   github: "https://github.com/surafelyimam",
   linkedin: "https://linkedin.com/in/surafelyimam",
   telegram: "https://t.me/YouAreTheThingILoveMost",
-  email: "surafel.yimam@gmail.com",
+  email: "workwithsurafel@gmail.com",
 };
 
 // TODO: replace with your Cal.com username/event slug, e.g. "surafelx/30min".

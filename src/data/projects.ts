@@ -16,6 +16,17 @@ export const clientProjects: PortfolioProject[] = [
     link: { label: "celerus.io", url: "https://celerus.io" },
   },
   {
+    id: "conducting-ai",
+    name: "Conducting.ai",
+    subtitle: "Multi-Agent AI Orchestration",
+    icon: "🎯",
+    badge: "AI / Agents",
+    description:
+      "The core architecture behind Celerus.io — 5 independent AI agents that coordinate through an orchestration layer. Each agent handles a distinct role (sales, support, analytics, scheduling, reporting) and the system manages communication between them.",
+    stack: ["Next.js", "TypeScript", "OpenAI Assistants", "Agent orchestration"],
+    link: { label: "celerus.io", url: "https://celerus.io" },
+  },
+  {
     id: "vigs-seo",
     name: "VIGS SEO",
     subtitle: "SEO Operations Automation",
@@ -119,17 +130,6 @@ export const personalProjects: PortfolioProject[] = [
       "A personal AI therapy and wellness companion with encrypted mood tracking, journaling, and AI chat via Telegram. Includes 7 therapy exercises (CBT thought records, grounding, box breathing, self-compassion, behavioral activation, values clarification, grief work). AES-256-GCM field-level encryption with built-in crisis detection.",
     stack: ["Next.js", "Prisma", "Telegram Bot", "OpenAI", "AES-256", "PostgreSQL"],
     link: { label: "Private build" },
-  },
-  {
-    id: "conducting-ai",
-    name: "Conducting.ai",
-    subtitle: "Multi-Agent AI Orchestration",
-    icon: "🎯",
-    badge: "Personal",
-    description:
-      "The core architecture behind Celerus.io — 5 independent AI agents that coordinate through an orchestration layer. Each agent handles a distinct role (sales, support, analytics, scheduling, reporting) and the system manages communication between them.",
-    stack: ["Next.js", "TypeScript", "OpenAI Assistants", "Agent orchestration"],
-    link: { label: "celerus.io", url: "https://celerus.io" },
   },
   {
     id: "abebe",

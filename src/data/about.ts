@@ -53,7 +53,7 @@ export const about: About = {
     graduation: "—",
   },
   contact: {
-    email: "surafel.yimam@gmail.com",
+    email: "workwithsurafel@gmail.com",
     location: "Addis Ababa, Ethiopia",
     responseTime: "Usually responds within 24h",
   },

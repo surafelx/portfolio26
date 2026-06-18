@@ -1,19 +1,26 @@
 "use client";
-import { useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
+  Briefcase,
   ChevronLeft,
   ChevronRight,
   Download,
   ExternalLink,
+  FileText,
   Github,
   Linkedin,
   Mail,
+  MessageSquareQuote,
   Send,
+  Sparkles,
   Star,
+  UserRound,
+  X,
 } from "lucide-react";
+import type { ReactNode } from "react";
 import {
   getClientProjects,
   getPersonalProjects,
@@ -44,14 +51,21 @@ function SectionHeading({
   label,
   title,
   sub,
+  icon,
 }: {
   label: string;
   title: string;
   sub?: string;
+  icon?: ReactNode;
 }) {
   return (
-    <div className="mb-10">
-      <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+    <div className="mb-8">
+      <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+        {icon && (
+          <span className="inline-flex items-center justify-center w-5 h-5 rounded-md bg-primary/10">
+            {icon}
+          </span>
+        )}
         {label}
       </p>
       <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">{title}</h2>
@@ -66,35 +80,57 @@ export default function HomeClient() {
   const recommendations = getRecommendations();
   const articles = getArticles();
 
-  const sliderRef = useRef<HTMLDivElement>(null);
-  const scrollSlider = (dir: "left" | "right") => {
-    sliderRef.current?.scrollBy({
-      left: dir === "left" ? -380 : 380,
-      behavior: "smooth",
-    });
-  };
+  // Project detail modal (shared by both sections)
+  const [modal, setModal] = useState<{ list: PortfolioProject[]; index: number } | null>(
+    null
+  );
+  const openModal = (list: PortfolioProject[], index: number) =>
+    setModal({ list, index });
+  const closeModal = useCallback(() => setModal(null), []);
+  const stepModal = useCallback(
+    (dir: -1 | 1) =>
+      setModal((m) =>
+        m
+          ? { ...m, index: (m.index + dir + m.list.length) % m.list.length }
+          : m
+      ),
+    []
+  );
+
+  useEffect(() => {
+    if (!modal) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeModal();
+      if (e.key === "ArrowRight") stepModal(1);
+      if (e.key === "ArrowLeft") stepModal(-1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [modal, closeModal, stepModal]);
 
   return (
     <div className="space-y-24">
-      {/* HERO */}
-      <section className="pt-4">
+      {/* HERO — name first */}
+      <section className="pt-2">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <span className="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-3 py-1 rounded-full mb-6">
-            Available for roles worldwide
-          </span>
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-6">
-            Full-Stack Engineer
-            <br />
-            <span className="text-primary">&amp; AI Systems Builder</span>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.02] mb-4 text-gradient pb-1">
+            Surafel Yimam
           </h1>
-          <p className="text-lg text-muted-foreground max-w-xl leading-relaxed mb-8">
+          <p className="text-xl md:text-2xl font-medium text-primary mb-5">
+            Full-Stack Engineer &amp; AI Systems Builder
+          </p>
+          <p className="text-lg text-muted-foreground max-w-xl leading-relaxed mb-6">
             I build production software: AI agents that think, full-stack apps
             that scale, and the integrations that make businesses actually run
             without manual chasing.
+          </p>
+          <p className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            Available for roles worldwide
           </p>
           <div className="flex flex-wrap gap-3">
             <a
@@ -113,79 +149,33 @@ export default function HomeClient() {
         </motion.div>
       </section>
 
-      {/* CLIENT WORK — slider */}
-      <section id="work" className="scroll-mt-24">
-        <div className="flex items-end justify-between gap-4">
-          <SectionHeading
-            label="Client Work"
-            title="Global & Ethiopian Clients"
-            sub="Full-stack products, AI integrations, and automation systems built for clients across Australia, Ethiopia, and beyond."
-          />
-          <div className="hidden sm:flex gap-2 mb-10">
-            <button
-              onClick={() => scrollSlider("left")}
-              aria-label="Scroll left"
-              className="w-9 h-9 flex items-center justify-center rounded-lg border border-border hover:bg-secondary transition"
-            >
-              <ChevronLeft size={18} />
-            </button>
-            <button
-              onClick={() => scrollSlider("right")}
-              aria-label="Scroll right"
-              className="w-9 h-9 flex items-center justify-center rounded-lg border border-border hover:bg-secondary transition"
-            >
-              <ChevronRight size={18} />
-            </button>
-          </div>
-        </div>
+      {/* CLIENT WORK — full-width carousel */}
+      <section id="work" className="scroll-mt-12">
+        <SectionHeading
+          icon={<Briefcase size={12} />}
+          label="Client & Global Work"
+          title="Global & Ethiopian Clients"
+          sub="Full-stack products, AI integrations, and automation systems built for clients across Australia, Ethiopia, and beyond."
+        />
 
-        <div
-          ref={sliderRef}
-          className="no-scrollbar flex gap-5 overflow-x-auto snap-x snap-mandatory pb-2 -mx-1 px-1"
-        >
-          {clientProjects.map((p) => (
-            <article
-              key={p.id}
-              className="snap-start shrink-0 w-[320px] sm:w-[360px] terminal-border bg-card overflow-hidden flex flex-col"
-            >
-              <div className="flex items-start justify-between p-6 border-b border-border">
-                <div className="w-11 h-11 flex items-center justify-center rounded-xl bg-primary/10 text-xl">
-                  {p.icon}
-                </div>
-                <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground border border-border rounded-full px-2.5 py-1">
-                  {p.badge}
-                </span>
-              </div>
-              <div className="p-6 flex flex-col flex-1">
-                <h3 className="font-semibold">{p.name}</h3>
-                <p className="text-xs font-medium text-primary mb-3">{p.subtitle}</p>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-1">
-                  {p.description}
-                </p>
-                <StackChips items={p.stack} />
-              </div>
-            </article>
-          ))}
-        </div>
+        <ProjectCarousel projects={clientProjects} onOpen={openModal} />
       </section>
 
       {/* PERSONAL PROJECTS — grid */}
-      <section id="personal" className="scroll-mt-24">
+      <section id="personal" className="scroll-mt-12">
         <SectionHeading
+          icon={<Sparkles size={12} />}
           label="Personal Projects"
           title="Things I Built Because I Wanted To"
           sub="Side projects and experiments — some turned into real products, some remain prototypes. All taught me something."
         />
-        <div className="grid gap-5 md:grid-cols-2">
-          {personalProjects.map((p) => (
-            <ProjectPanel key={p.id} project={p} />
-          ))}
-        </div>
+        <ProjectCarousel projects={personalProjects} onOpen={openModal} />
       </section>
 
       {/* RECOMMENDATIONS */}
-      <section id="recommendations" className="scroll-mt-24">
+      <section id="recommendations" className="scroll-mt-12">
         <SectionHeading
+          icon={<MessageSquareQuote size={12} />}
           label="Recommendations"
           title="What People Say"
           sub="Feedback from clients and collaborators."
@@ -216,8 +206,9 @@ export default function HomeClient() {
       </section>
 
       {/* ARTICLES */}
-      <section id="articles" className="scroll-mt-24">
+      <section id="articles" className="scroll-mt-12">
         <SectionHeading
+          icon={<FileText size={12} />}
           label="Articles"
           title="Thinking in Public"
           sub="Occasional writing about what I'm building and learning."
@@ -250,8 +241,8 @@ export default function HomeClient() {
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="scroll-mt-24">
-        <SectionHeading label="About" title="Who's Building This" />
+      <section id="about" className="scroll-mt-12">
+        <SectionHeading icon={<UserRound size={12} />} label="About" title="Who's Building This" />
         <div className="grid gap-10 md:grid-cols-2 md:items-start">
           <div className="space-y-4">
             {aboutParagraphs.map((para, i) => (
@@ -277,7 +268,7 @@ export default function HomeClient() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="scroll-mt-24 text-center py-8">
+      <section id="contact" className="scroll-mt-12 text-center py-8">
         <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
           Let&apos;s build something.
         </h2>
@@ -293,45 +284,208 @@ export default function HomeClient() {
           <ContactLink href={SOCIAL_LINKS.telegram} icon={<Send size={15} />} label="Telegram" />
         </div>
       </section>
+
+      {/* PROJECT MODAL */}
+      <AnimatePresence>
+        {modal && (
+          <ProjectModal
+            project={modal.list[modal.index]}
+            position={`${modal.index + 1} / ${modal.list.length}`}
+            onPrev={() => stepModal(-1)}
+            onNext={() => stepModal(1)}
+            onClose={closeModal}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
-function ProjectPanel({ project: p }: { project: PortfolioProject }) {
+function ProjectCarousel({
+  projects,
+  onOpen,
+}: {
+  projects: PortfolioProject[];
+  onOpen: (list: PortfolioProject[], index: number) => void;
+}) {
+  const [slide, setSlide] = useState(0);
+  const last = projects.length - 1;
+  const go = (dir: -1 | 1) =>
+    setSlide((s) => Math.min(last, Math.max(0, s + dir)));
+
   return (
-    <article className="terminal-border bg-card p-7 transition hover:border-primary/40">
-      <div className="flex items-start justify-between mb-4">
-        <div>
-          <h3 className="font-semibold text-lg">{p.name}</h3>
-          <p className="text-xs font-medium text-primary mt-0.5">{p.subtitle}</p>
-        </div>
-        <div className="w-11 h-11 flex items-center justify-center rounded-xl bg-primary/10 text-xl shrink-0">
-          {p.icon}
+    <div>
+      <div className="overflow-hidden">
+        <div
+          className="flex transition-transform duration-500 ease-out"
+          style={{ transform: `translateX(-${slide * 100}%)` }}
+        >
+          {projects.map((p, i) => (
+            <div key={p.id} className="w-full shrink-0 px-0.5">
+              <button
+                onClick={() => onOpen(projects, i)}
+                className="group w-full text-left terminal-border bg-card p-8 md:p-10 transition hover:border-primary/40"
+              >
+                <div className="flex items-start justify-between gap-4 mb-5">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-primary/10 text-2xl">
+                      {p.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold tracking-tight">{p.name}</h3>
+                      <p className="text-sm font-medium text-primary">{p.subtitle}</p>
+                    </div>
+                  </div>
+                  <span className="hidden sm:inline-block text-[10px] font-semibold uppercase tracking-wide text-muted-foreground border border-border rounded-full px-2.5 py-1 shrink-0">
+                    {p.badge}
+                  </span>
+                </div>
+                <p className="text-muted-foreground leading-relaxed max-w-2xl mb-6">
+                  {p.description}
+                </p>
+                <div className="flex items-center justify-between gap-4 flex-wrap">
+                  <StackChips items={p.stack} />
+                  <span className="text-sm font-medium text-primary inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
+                    Open <ArrowRight size={14} />
+                  </span>
+                </div>
+              </button>
+            </div>
+          ))}
         </div>
       </div>
-      <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-        {p.description}
-      </p>
-      {p.link && (
-        <div className="mb-4">
-          {p.link.url ? (
-            <a
-              href={p.link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs font-medium text-muted-foreground hover:text-primary inline-flex items-center gap-1"
-            >
-              <ExternalLink size={13} /> {p.link.label}
-            </a>
-          ) : (
-            <span className="text-xs font-medium text-muted-foreground inline-flex items-center gap-1">
-              {p.link.label}
-            </span>
-          )}
+
+      {/* Carousel controls */}
+      <div className="flex items-center justify-between mt-5">
+        <div className="flex gap-1.5">
+          {projects.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setSlide(i)}
+              aria-label={`Go to item ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all ${
+                i === slide ? "w-7 bg-primary" : "w-3 bg-border hover:bg-muted-foreground/40"
+              }`}
+            />
+          ))}
         </div>
-      )}
-      <StackChips items={p.stack} />
-    </article>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-muted-foreground tabular-nums mr-1">
+            {slide + 1} / {projects.length}
+          </span>
+          <button
+            onClick={() => go(-1)}
+            disabled={slide === 0}
+            aria-label="Previous"
+            className="w-9 h-9 flex items-center justify-center rounded-lg border border-border hover:bg-secondary transition disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <button
+            onClick={() => go(1)}
+            disabled={slide === last}
+            aria-label="Next"
+            className="w-9 h-9 flex items-center justify-center rounded-lg border border-border hover:bg-secondary transition disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <ChevronRight size={18} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProjectModal({
+  project: p,
+  position,
+  onPrev,
+  onNext,
+  onClose,
+}: {
+  project: PortfolioProject;
+  position: string;
+  onPrev: () => void;
+  onNext: () => void;
+  onClose: () => void;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm"
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.96, y: 10 }}
+        transition={{ duration: 0.2 }}
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-2xl bg-card border border-border rounded-2xl shadow-xl p-8"
+      >
+        <button
+          onClick={onClose}
+          aria-label="Close"
+          className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition"
+        >
+          <X size={20} />
+        </button>
+
+        <div className="flex items-center gap-4 mb-5 pr-8">
+          <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-primary/10 text-2xl shrink-0">
+            {p.icon}
+          </div>
+          <div>
+            <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground border border-border rounded-full px-2.5 py-0.5">
+              {p.badge}
+            </span>
+            <h3 className="text-2xl font-bold tracking-tight mt-1">{p.name}</h3>
+            <p className="text-sm font-medium text-primary">{p.subtitle}</p>
+          </div>
+        </div>
+
+        <p className="text-muted-foreground leading-relaxed mb-5">{p.description}</p>
+
+        <div className="mb-6">
+          <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+            Stack
+          </h4>
+          <StackChips items={p.stack} />
+        </div>
+
+        {p.link?.url && (
+          <a
+            href={p.link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline mb-6"
+          >
+            <ExternalLink size={14} /> {p.link.label}
+          </a>
+        )}
+
+        <div className="flex items-center justify-between border-t border-border pt-4 mt-2">
+          <span className="text-xs text-muted-foreground tabular-nums">{position}</span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onPrev}
+              aria-label="Previous project"
+              className="inline-flex items-center gap-1 text-sm border border-border rounded-lg px-3 py-1.5 hover:bg-secondary transition"
+            >
+              <ChevronLeft size={16} /> Prev
+            </button>
+            <button
+              onClick={onNext}
+              aria-label="Next project"
+              className="inline-flex items-center gap-1 text-sm border border-border rounded-lg px-3 py-1.5 hover:bg-secondary transition"
+            >
+              Next <ChevronRight size={16} />
+            </button>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }
 

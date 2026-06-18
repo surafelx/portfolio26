@@ -3,6 +3,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Menu, X, Home, User, BookOpen, Calendar, Send } from "lucide-react";
 import { SOCIAL_LINKS } from "@/lib/links";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const Footer = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -40,7 +41,8 @@ export const Footer = () => {
             </span>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
             {/* Menu Button */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
