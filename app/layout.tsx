@@ -1,6 +1,5 @@
 import { Providers } from "./providers";
 import { MainLayout } from "@/layouts/MainLayout";
-import { MouseTracker } from "@/components/MouseTracker";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import "../src/index.css";
 
@@ -14,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* Google tag (gtag.js) */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-MPNN4GQ10S"></script>
@@ -30,7 +29,6 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <MouseTracker />
         <ScrollToTop />
         <Providers>
           <MainLayout>{children}</MainLayout>

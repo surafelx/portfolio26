@@ -14,29 +14,18 @@ export default function NotesClient({ initialArticles, initialNotes }: NotesClie
   return (
     <div>
       {/* Header */}
-      <div className="flex items-center gap-2 mb-6">
-        <span className="text-muted-foreground">$</span>
-        <span className="text-foreground">cat</span>
-        <span className="text-terminal-cyan">notes.md</span>
-      </div>
-
-      {/* Notes Header */}
-      <div className="terminal-border bg-card/50 p-4 mb-6">
-        <h1 className="text-lg text-primary terminal-glow mb-3 flex items-center gap-2">
-          <Notebook size={20} /> Notes & Articles
-        </h1>
-        <div className="space-y-3 text-foreground/80 leading-relaxed text-sm">
-          <p>
-            A collection of technical insights and articles about my journey
-            in technology, creativity, and live-coding music.
-          </p>
-        </div>
+      <div className="mb-10">
+        <h1 className="text-3xl font-semibold tracking-tight mb-2">Notes &amp; Articles</h1>
+        <p className="text-muted-foreground leading-relaxed">
+          A collection of technical insights and articles about my journey
+          in technology, creativity, and live-coding music.
+        </p>
       </div>
 
       {/* Articles Section */}
-      <div className="mb-8">
-        <h2 className="text-base text-primary terminal-glow mb-4 flex items-center gap-2">
-          <BookOpen size={18} /> Featured Articles
+      <div className="mb-10">
+        <h2 className="text-sm font-medium uppercase tracking-wide text-muted-foreground mb-4 flex items-center gap-2">
+          <BookOpen size={16} /> Featured Articles
         </h2>
         {(
           <div className="space-y-3">
@@ -51,7 +40,7 @@ export default function NotesClient({ initialArticles, initialNotes }: NotesClie
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <Link href={`/articles/${article.id}`}>
-                    <h3 className="text-base text-primary terminal-glow mb-2 hover:text-primary/80 transition-colors cursor-pointer">
+                    <h3 className="text-base font-medium mb-2 hover:text-primary transition-colors cursor-pointer">
                       {article.title}
                     </h3>
                   </Link>
@@ -99,8 +88,8 @@ export default function NotesClient({ initialArticles, initialNotes }: NotesClie
 
       {/* Notes Section */}
       <div className="mb-8">
-        <h2 className="text-base text-primary terminal-glow mb-4 flex items-center gap-2">
-          <Notebook size={18} /> Personal Notes
+        <h2 className="text-sm font-medium uppercase tracking-wide text-muted-foreground mb-4 flex items-center gap-2">
+          <Notebook size={16} /> Personal Notes
         </h2>
         {(
           <div className="space-y-3">
@@ -115,7 +104,7 @@ export default function NotesClient({ initialArticles, initialNotes }: NotesClie
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <Link href={`/notes/${note.id}`}>
-                    <h3 className="text-base text-primary terminal-glow mb-2 hover:text-primary/80 transition-colors cursor-pointer">
+                    <h3 className="text-base font-medium mb-2 hover:text-primary transition-colors cursor-pointer">
                       {note.title}
                     </h3>
                   </Link>

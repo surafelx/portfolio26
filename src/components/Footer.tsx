@@ -25,9 +25,9 @@ export const Footer = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5 }}
-      className="terminal-border border-t-0 bg-card/30 px-4 py-3"
+      className="border-t border-border bg-background px-6 py-4"
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         {/* Main Footer Content */}
         <div className="flex items-center justify-between text-sm mb-3">
           <div className="flex items-center gap-4">

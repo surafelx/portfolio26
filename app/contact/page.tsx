@@ -58,33 +58,34 @@ export default function Contact() {
       animate={{ opacity: 1, y: 0 }}
     >
       {/* Header */}
-      <div className="flex items-center gap-2 mb-6">
-        <span className="text-muted-foreground">$</span>
-        <span className="text-foreground">./contact</span>
-        <span className="text-terminal-cyan">--interactive</span>
+      <div className="mb-10">
+        <h1 className="text-3xl font-semibold tracking-tight mb-2">Contact</h1>
+        <p className="text-muted-foreground">
+          Have a project in mind or want to collaborate? Let&apos;s talk.
+        </p>
       </div>
 
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2">
         {/* Contact Info */}
         <div className="space-y-6">
-          <div className="terminal-border bg-card/50 p-4">
-            <h2 className="text-lg text-primary terminal-glow mb-3">Get in Touch</h2>
-            <p className="text-foreground/80 leading-relaxed mb-4 text-sm">
+          <div className="terminal-border bg-card p-6">
+            <h2 className="text-lg font-semibold mb-3">Get in Touch</h2>
+            <p className="text-muted-foreground leading-relaxed mb-5 text-sm">
               Have a project in mind or want to collaborate?
               Drop me a message and I'll get back to you.
             </p>
 
-            <div className="space-y-4">
-               <div className="flex items-center gap-3 text-foreground/80">
+            <div className="space-y-4 text-sm">
+               <div className="flex items-center gap-3 text-muted-foreground">
                  <Mail size={16} className="text-primary" />
                  <span>{contactInfo.email}</span>
                </div>
-               <div className="flex items-center gap-3 text-foreground/80">
-                 <MapPin size={16} className="text-terminal-cyan" />
+               <div className="flex items-center gap-3 text-muted-foreground">
+                 <MapPin size={16} className="text-primary" />
                  <span>{contactInfo.location}</span>
                </div>
-               <div className="flex items-center gap-3 text-foreground/80">
-                 <Clock size={16} className="text-terminal-amber" />
+               <div className="flex items-center gap-3 text-muted-foreground">
+                 <Clock size={16} className="text-primary" />
                  <span>{contactInfo.responseTime}</span>
                </div>
              </div>
@@ -99,47 +100,47 @@ export default function Contact() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
-          className="terminal-border bg-card/50 p-4"
+          className="terminal-border bg-card p-6"
         >
           <div className="space-y-4">
             <div>
-              <label className="block text-sm text-muted-foreground mb-2">
-                {">"} name
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Name
               </label>
               <input
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
-                className="w-full bg-secondary border border-border px-4 py-2 text-foreground focus:outline-none focus:border-primary transition-colors"
+                className="w-full bg-background border border-border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-shadow"
                 placeholder="John Doe"
               />
             </div>
 
             <div>
-              <label className="block text-sm text-muted-foreground mb-2">
-                {">"} email
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Email
               </label>
               <input
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
-                className="w-full bg-secondary border border-border px-4 py-2 text-foreground focus:outline-none focus:border-primary transition-colors"
+                className="w-full bg-background border border-border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-shadow"
                 placeholder="john@example.com"
               />
             </div>
 
             <div>
-              <label className="block text-sm text-muted-foreground mb-2">
-                {">"} message
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Message
               </label>
               <textarea
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 required
-                rows={3}
-                className="w-full bg-secondary border border-border px-4 py-2 text-foreground focus:outline-none focus:border-primary transition-colors resize-none"
+                rows={4}
+                className="w-full bg-background border border-border rounded-lg px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-shadow resize-none"
                 placeholder="Your message..."
               />
             </div>

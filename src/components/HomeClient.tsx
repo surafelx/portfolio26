@@ -2,12 +2,10 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { TerminalInput } from "@/components/TerminalInput";
 import { ProjectCard } from "@/components/ProjectCard";
 import { ProjectModal } from "@/components/ProjectModal";
 import type { Project } from "@/data/projects";
 import { ProjectSearchAccordion } from "@/components/ProjectSearchAccordion";
-import { toast } from "sonner";
 import { Download, Github, Linkedin, Mail, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
@@ -39,12 +37,6 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
   useEffect(() => {
     setFilteredProjects(displayProjects);
   }, [displayProjects]);
-
-  const handleMessageSubmit = (message: string) => {
-    toast.success("Message sent!", {
-      description: `"${message}" - I'll get back to you soon.`,
-    });
-  };
 
   const handleProjectClick = (project: Project) => {
     setSelectedProject(project);
@@ -95,65 +87,62 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
       >
 
       {/* Intro section */}
-      <motion.div variants={itemVariants} className="mb-12">
-        <h2 className="text-sm uppercase tracking-wider text-muted-foreground mb-4 flex items-center gap-2">
-          <span className="w-8 h-px bg-primary" />
-          Welcome
-        </h2>
-        <div className="pl-4 border-l-2 border-primary/30">
-          <h1 className="text-xl md:text-2xl text-foreground mb-2">
-            Hi, I'm <span className="text-primary terminal-glow">Surafel Yimam</span>
-          </h1>
-          <p className="text-muted-foreground leading-relaxed max-w-2xl">
-            Building software that matters. Focused on distributed systems, developer tools, and AI/ML applications.
-          </p>
+      <motion.div variants={itemVariants} className="mb-16">
+        <p className="text-sm font-medium uppercase tracking-wide text-primary mb-4">
+          Software Engineer
+        </p>
+        <h1 className="text-4xl md:text-5xl font-semibold tracking-tight mb-5">
+          Hi, I&apos;m Surafel Yimam
+        </h1>
+        <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
+          I build software that matters — focused on distributed systems,
+          developer tools, and AI/ML applications.
+        </p>
 
-          {/* Action buttons */}
-          <div className="flex flex-wrap items-center gap-4 mt-6">
-            <Button
-              asChild
-              variant="default"
-              size="sm"
-              className="bg-primary hover:bg-primary/90"
+        {/* Action buttons */}
+        <div className="flex flex-wrap items-center gap-3 mt-8">
+          <Button asChild size="default" className="rounded-lg">
+            <a href="/Surafel Yimam CV.pdf" download className="flex items-center gap-2">
+              <Download size={16} />
+              Download Resume
+            </a>
+          </Button>
+
+          <div className="flex items-center gap-1">
+            <a
+              href={SOCIAL_LINKS.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="text-muted-foreground hover:text-foreground transition-colors p-2 hover:bg-secondary rounded-lg"
             >
-              <a href="/resume.pdf" download className="flex items-center gap-2">
-                <Download size={16} />
-                Download Resume
-              </a>
-            </Button>
-
-            <div className="flex items-center gap-2">
-              <a
-                href={SOCIAL_LINKS.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors p-2 hover:bg-secondary/50 rounded"
-              >
-                <Github size={18} />
-              </a>
-              <a
-                href={SOCIAL_LINKS.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors p-2 hover:bg-secondary/50 rounded"
-              >
-                <Linkedin size={18} />
-              </a>
-              <a
-                href={SOCIAL_LINKS.upwork}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors p-2 hover:bg-secondary/50 rounded"
-              >
-                <Briefcase size={18} />
-              </a>
-              <a
-                href={`mailto:${SOCIAL_LINKS.email}`}
-                className="text-muted-foreground hover:text-primary transition-colors p-2 hover:bg-secondary/50 rounded"
-              >
-                <Mail size={18} />
-              </a>
-            </div>
+              <Github size={18} />
+            </a>
+            <a
+              href={SOCIAL_LINKS.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="text-muted-foreground hover:text-foreground transition-colors p-2 hover:bg-secondary rounded-lg"
+            >
+              <Linkedin size={18} />
+            </a>
+            <a
+              href={SOCIAL_LINKS.upwork}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Upwork"
+              className="text-muted-foreground hover:text-foreground transition-colors p-2 hover:bg-secondary rounded-lg"
+            >
+              <Briefcase size={18} />
+            </a>
+            <a
+              href={`mailto:${SOCIAL_LINKS.email}`}
+              aria-label="Email"
+              className="text-muted-foreground hover:text-foreground transition-colors p-2 hover:bg-secondary rounded-lg"
+            >
+              <Mail size={18} />
+            </a>
           </div>
         </div>
       </motion.div>
@@ -283,15 +272,9 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
         )}
       </motion.div>
 
-    {/* Quick message input */}
-      <motion.div variants={itemVariants} className="mb-8">
-        <TerminalInput onSubmit={handleMessageSubmit} />
-      </motion.div>
-
-
       {/* Projects section */}
       <motion.div variants={itemVariants}>
-
+        <h2 className="text-2xl font-semibold tracking-tight mb-6">Projects</h2>
 
         {/* Retractable search and filter accordion */}
         <motion.div variants={itemVariants} className="mb-6">
@@ -324,8 +307,7 @@ export default function HomeClient({ initialProjects, initialArticles, modules }
           variants={itemVariants}
           className="mt-6 text-sm text-muted-foreground flex items-center gap-2"
         >
-          <span className="text-primary">{displayProjects.length}</span> projects •{" "}
-          <span className="text-terminal-cyan">click to view details</span>
+          <span className="text-foreground font-medium">{displayProjects.length}</span> projects · click any card to view details
         </motion.div>
       </motion.div>
     </motion.div>

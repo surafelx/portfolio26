@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
+"use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Folder, User, Contact, Notebook, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Sheet,
@@ -12,38 +12,31 @@ import {
 } from "@/components/ui/sheet";
 
 const navItems = [
-  { path: "/", label: "projects", icon: Folder },
-  { path: "/about", label: "about", icon: User },
-  { path: "/notes", label: "notes", icon: Notebook },
-  { path: "/contact", label: "contact", icon: Contact },
+  { path: "/", label: "Projects" },
+  { path: "/about", label: "About" },
+  { path: "/notes", label: "Notes" },
+  { path: "/contact", label: "Contact" },
 ];
 
 export const Navigation = () => {
   const pathname = usePathname();
   const isMobile = useIsMobile();
 
-  const NavLinks = () => (
+  const NavLinks = ({ stacked = false }: { stacked?: boolean }) => (
     <>
-      {navItems.map((item, index) => {
-        const isActive = pathname === item.path;
+      {navItems.map((item) => {
+        const isActive =
+          item.path === "/" ? pathname === "/" : pathname.startsWith(item.path);
         return (
-          <motion.div
+          <Link
             key={item.path}
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.1 }}
+            href={item.path}
+            className={`text-sm transition-colors hover:text-foreground ${
+              isActive ? "text-foreground font-medium" : "text-muted-foreground"
+            } ${stacked ? "py-2 text-base" : ""}`}
           >
-            <Link
-              href={item.path}
-              className={`flex items-center gap-2 transition-all hover:text-primary ${
-                isActive ? "text-primary terminal-glow" : "text-muted-foreground"
-              } ${isMobile ? "py-2" : ""}`}
-            >
-              <item.icon size={16} className="text-muted-foreground/70" />
-              <span>{item.label}</span>
-              {isActive && <span className="text-primary cursor-blink">_</span>}
-            </Link>
-          </motion.div>
+            {item.label}
+          </Link>
         );
       })}
     </>
@@ -53,17 +46,19 @@ export const Navigation = () => {
     return (
       <Sheet>
         <SheetTrigger asChild>
-          <button className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+          <button
+            className="text-muted-foreground hover:text-foreground transition-colors"
+            aria-label="Open menu"
+          >
             <Menu size={20} />
-            <span>menu</span>
           </button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-64">
+        <SheetContent side="right" className="w-64">
           <SheetHeader>
-            <SheetTitle>Navigation</SheetTitle>
+            <SheetTitle>Menu</SheetTitle>
           </SheetHeader>
-          <nav className="flex flex-col gap-4 mt-6">
-            <NavLinks />
+          <nav className="flex flex-col gap-1 mt-6">
+            <NavLinks stacked />
           </nav>
         </SheetContent>
       </Sheet>
@@ -71,7 +66,7 @@ export const Navigation = () => {
   }
 
   return (
-    <nav className="flex items-center gap-6 text-sm">
+    <nav className="flex items-center gap-6">
       <NavLinks />
     </nav>
   );
