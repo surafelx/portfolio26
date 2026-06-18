@@ -124,7 +124,7 @@ export default function HomeClient() {
             Full-Stack Engineer &amp; AI Systems Builder
           </p>
 
-          {/* Small icons below role */}
+          {/* Small icons + résumé below role */}
           <div className="flex items-center gap-1 mb-7">
             <HeroIcon href={`mailto:${SOCIAL_LINKS.email}`} label="Email">
               <Mail size={18} />
@@ -138,6 +138,14 @@ export default function HomeClient() {
             <HeroIcon href={SOCIAL_LINKS.telegram} label="Telegram" external>
               <Send size={18} />
             </HeroIcon>
+            <span className="w-px h-5 bg-border mx-2" />
+            <a
+              href="/Surafel Yimam CV.pdf"
+              download
+              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
+            >
+              <Download size={16} /> Download résumé
+            </a>
           </div>
 
           <p className="text-lg text-muted-foreground max-w-xl leading-relaxed mb-5">
