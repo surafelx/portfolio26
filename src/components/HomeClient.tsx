@@ -17,12 +17,10 @@ import {
   Linkedin,
   Mail,
   MessageSquareQuote,
-  Music,
   Send,
   Sparkles,
   Star,
   UserRound,
-  Wand2,
   X,
 } from "lucide-react";
 import type { ReactNode } from "react";
@@ -38,7 +36,6 @@ import {
 } from "@/data";
 import { SOCIAL_LINKS, CAL_URL } from "@/lib/links";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
-import { StrudelMusic } from "@/components/StrudelMusic";
 import type { PortfolioProject } from "@/data";
 
 function StackChips({ items }: { items: string[] }) {
@@ -289,55 +286,6 @@ export default function HomeClient() {
               </span>
             </Link>
           ))}
-        </div>
-      </section>
-
-      {/* BEYOND CODE — live coding music & visuals */}
-      <section id="creative" className="scroll-mt-12">
-        <SectionHeading
-          icon={<Music size={12} />}
-          label="Beyond Code"
-          title="Live Coding Music & Visuals"
-          sub="When I'm not shipping software, I perform algorithmic music and generative visuals — coding sound and light in real time."
-        />
-        <div className="grid gap-6 md:grid-cols-2 md:items-start">
-          <div>
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-primary/10 text-primary">
-                <Music size={18} />
-              </div>
-              <div>
-                <h3 className="font-semibold">Live Coding Music</h3>
-                <p className="text-xs text-primary font-medium">Strudel · TidalCycles</p>
-              </div>
-            </div>
-            <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-              I write music as code — live-patterned rhythms and melodies that
-              evolve on the fly. Hit play to hear a snippet running right here in
-              your browser.
-            </p>
-            <StrudelMusic
-              title="Live snippet"
-              code={'note("c3 eb3 g3 bb3").sound("sawtooth").lpf(800).room(0.4).slow(2)'}
-            />
-          </div>
-          <div>
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-primary/10 text-primary">
-                <Wand2 size={18} />
-              </div>
-              <div>
-                <h3 className="font-semibold">Live Visuals</h3>
-                <p className="text-xs text-primary font-medium">Hydra · GLSL shaders</p>
-              </div>
-            </div>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              I build generative, audio-reactive visuals — feedback loops,
-              shaders, and geometry coded live to match the music. The same
-              instinct as my engineering work: systems that respond, in real
-              time, to what's happening around them.
-            </p>
-          </div>
         </div>
       </section>
 

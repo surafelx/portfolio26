@@ -123,6 +123,7 @@ export const personalProjects: PortfolioProject[] = [
       "A personal AI therapy and wellness companion with encrypted mood tracking, journaling, and AI chat via Telegram. Includes 7 therapy exercises (CBT thought records, grounding, box breathing, self-compassion, behavioral activation, values clarification, grief work). AES-256-GCM field-level encryption with built-in crisis detection.",
     stack: ["Next.js", "Prisma", "Telegram Bot", "OpenAI", "AES-256", "PostgreSQL"],
     link: { label: "Private build" },
+    image: "/projects/mindbridge.jpg",
   },
   {
     id: "abebe",
@@ -134,6 +135,7 @@ export const personalProjects: PortfolioProject[] = [
       "A persistent AI assistant running on an EC2 server, connected to Telegram. Handles scheduling, reminders, research, writing, opportunity finding, and daily check-ins. Built with OpenClaw, Google Calendar API, and AfroMessage SMS.",
     stack: ["OpenClaw", "Telegram", "Google Calendar", "AfroMessage", "Node.js"],
     link: { label: "Personal tool" },
+    image: "/projects/abebe.jpg",
   },
   {
     id: "opportunity-finder",
@@ -145,6 +147,7 @@ export const personalProjects: PortfolioProject[] = [
       "Automated system that proactively searches for scholarships, fellowships, freelance gigs, and writing opportunities relevant to my goals. Delivers results formatted for Telegram with source links and deadlines.",
     stack: ["OpenClaw", "Web scraping", "Telegram", "Scheduler"],
     link: { label: "Personal tool" },
+    image: "/projects/opportunity-finder.jpg",
   },
 ];
 
