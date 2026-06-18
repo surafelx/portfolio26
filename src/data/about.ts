@@ -4,73 +4,72 @@ export type { About } from "@/data/types";
 
 // Paragraphs for the home "About" section.
 export const aboutParagraphs: string[] = [
-  "I'm a full-stack software engineer with 8+ years of experience — currently Chief AI Officer at Vision Infrastructure Services and a former CTO at Budera, based in Addis Ababa, Ethiopia. I've been building since I was a kid, driven by turning ideas into innovative, user-friendly products.",
-  "I work across the full stack: Python (Django, FastAPI) and Node.js on the backend, React and Next.js on the frontend, PostgreSQL/MongoDB for data, and the OpenAI/LangChain stack for AI features. I deploy, I debug, I ship.",
+  "I'm a full-stack software engineer with 9+ years of experience — currently Chief Agent Officer at Vision Infrastructure Group Services (Sydney) and co-founder of Celerus.io, based in Addis Ababa, Ethiopia. I've been building since I was a kid, driven by turning ideas into innovative, user-friendly products.",
+  "I work across the full stack and the MERN ecosystem: React, Next.js, Vue, and Angular on the frontend; Node.js and MongoDB on the backend; plus CMS platforms (WordPress, Shopify, HubSpot) and solid DevOps / CI-CD practices.",
   "I'm a big believer in vibe-coding — moving fast with AI to prototype and ship ideas in hours, not weeks. But the real value is in the cleanup: years of experience mean I can take AI-generated or rushed code and turn it into something typed, tested, and genuinely production-ready.",
-  "I've led product from idea to MVP, architected multi-agent AI systems, built B2B marketplaces and SaaS platforms, and shipped 20+ projects for Australian, Ethiopian, and global clients — comfortable with international teams, async work, and tight deadlines.",
+  "Right now I'm building an AI-powered eLearning platform, interactive 3D modeling tools, and a recruiting venture connecting Ethiopian talent with U.S. software opportunities.",
 ];
 
-// Condensed experience timeline (from CV) for the home "Experience" section.
+// Flat tech list for the home "About" stack panel.
+export const stackList: string[] = [
+  "JavaScript", "TypeScript", "Python",
+  "React", "Next.js", "Vue.js", "Angular",
+  "Node.js", "Express", "MERN stack",
+  "MongoDB", "PostgreSQL", "Redis",
+  "REST & GraphQL", "WordPress", "Shopify", "HubSpot",
+  "OpenAI API", "LangChain", "OpenClaw",
+  "Docker", "CI/CD", "Git",
+  "Vibe-coding", "Code cleanup",
+];
+
+// Certifications (from LinkedIn profile).
+export const certifications: string[] = [
+  "Introduction to Cloud Computing",
+  "HTML, CSS, & JavaScript",
+];
+
+// Condensed experience timeline for the home "Experience" section.
 export const experience = [
-  { company: "Vision Infrastructure Services", role: "Chief AI Officer", dates: "Mar 2026 — Present", note: "Leading AI strategy and delivery — agentic systems and AI infrastructure for the business and its clients." },
-  { company: "Agrisun Engineering", role: "Senior Software Engineer", dates: "2024 — Present", note: "Software for solar-powered agriculture, IoT, and analytics dashboards." },
-  { company: "Budera", role: "CTO / Senior Software Engineer", dates: "2025", note: "Led an AI-powered business-partner SaaS from idea to MVP; built 5 orchestrated AI agents." },
-  { company: "Celerus", role: "CTO / Senior Software Engineer", dates: "2024 — 2025", note: "Talent-assessment tooling, recruitment automation, and predictive analytics." },
-  { company: "Nibret", role: "CTO / Senior Software Engineer", dates: "2024 — 2025", note: "Full-stack SaaS real-estate platform across web, Android, and iOS." },
-  { company: "ITIO", role: "Software Engineer", dates: "2022 — 2024", note: "End-to-end web apps with Node.js/React/MongoDB and TDD." },
-  { company: "Freelance · Upwork", role: "Software Engineer", dates: "2020 — 2022", note: "Delivered 20+ full-stack web and mobile projects for global clients." },
+  { company: "Vision Infrastructure Group Services", role: "Chief Agent Officer", dates: "Mar 2026 — Present", note: "Leading AI agent strategy and delivery — agentic systems and AI infrastructure. (Sydney, NSW)" },
+  { company: "Celerus.io", role: "Co-Founder", dates: "Aug 2024 — Present", note: "Co-founded an AI agents platform; analytics, dashboards, and predictive models for global clients." },
+  { company: "Budera", role: "Chief Technology Officer", dates: "Apr 2025 — Sep 2025", note: "Led an AI-powered business-partner SaaS from idea to MVP; 5 orchestrated AI agents. (Singapore)" },
+  { company: "Coderz", role: "Product Manager", dates: "Nov 2024 — Jan 2025", note: "Product management for a coding-education product." },
+  { company: "Empire Business", role: "Senior Web Developer", dates: "Oct 2024 — Jan 2025", note: "Sales funnels and CRM automation that improved client lead conversion." },
+  { company: "AgriSun Ethiopia", role: "Technology Lead", dates: "Jan 2023 — Sep 2024", note: "Software for solar-powered agriculture, IoT, and analytics dashboards." },
+  { company: "ITIO", role: "Full Stack Engineer", dates: "Jun 2020 — Sep 2023", note: "End-to-end web apps — website testing tool, social platform, and solar monitoring." },
 ];
 
 export const education = {
   institution: "University of Gondar",
-  degree: "BSc. Biomedical Engineering — Cum Laude (3.6 GPA)",
+  degree: "BSc. Biomedical Engineering",
   graduation: "2023",
 };
-
-// Flat tech list for the home "About" stack panel.
-export const stackList: string[] = [
-  "JavaScript", "TypeScript", "Python", "SQL",
-  "React", "Next.js", "Tailwind CSS",
-  "Node.js", "Next.js API Routes",
-  "PostgreSQL", "Prisma", "MongoDB",
-  "OpenAI API", "Assistants v2", "LangChain",
-  "Google Calendar", "Monday.com", "Telegram",
-  "SearchAtlas API", "Git", "Docker", "OpenClaw",
-  "Vibe-coding", "Code cleanup",
-];
 
 // Full structured about used by the /about resume page.
 export const about: About = {
   id: "about",
   summary: aboutParagraphs.join(" "),
   skills: {
-    programming: ["JavaScript", "TypeScript", "Python", "SQL"],
-    tools: ["Git", "Monday.com", "Google Calendar", "SearchAtlas API"],
-    databases: ["PostgreSQL", "Prisma", "MongoDB"],
-    ai: ["OpenAI API", "Assistants v2", "LangChain", "OpenClaw"],
-    testing: ["Vitest", "Playwright"],
-    devops: ["Docker", "Vercel", "EC2"],
-    other: ["React", "Next.js", "Tailwind CSS", "Telegram Bot API"],
+    programming: ["JavaScript", "TypeScript", "Python"],
+    tools: ["React", "Next.js", "Vue.js", "Angular", "Node.js", "Express"],
+    databases: ["MongoDB", "PostgreSQL", "Redis"],
+    ai: ["OpenAI API", "LangChain", "OpenClaw", "AI agents"],
+    testing: ["Unit", "Integration", "E2E", "TDD"],
+    devops: ["Docker", "CI/CD", "AWS", "Git"],
+    other: ["MERN stack", "REST & GraphQL", "WordPress", "Shopify", "HubSpot"],
   },
-  experience: [
-    {
-      company: "Independent / Freelance",
-      position: "Full-Stack & AI Engineer",
-      dates: "2022 — Present",
-      location: "Remote / Addis Ababa",
-      description: [
-        "Built AI agent platforms and automation systems for Australian and global clients.",
-        "Co-built B2B marketplaces for Ethiopian healthcare and specialty-coffee export.",
-        "Shipped full-stack SaaS across web, Android, and iOS.",
-      ],
-    },
-  ],
+  experience: experience.map((e) => ({
+    company: e.company,
+    position: e.role,
+    dates: e.dates,
+    description: [e.note],
+  })),
   education: {
     institution: "University of Gondar",
-    degree: "BSc. Biomedical Engineering (Cum Laude)",
+    degree: "BSc. Biomedical Engineering",
     graduation: "2023",
-    gpa: "3.6",
   },
+  qualifications: certifications,
   contact: {
     email: "workwithsurafel@gmail.com",
     location: "Addis Ababa, Ethiopia",
@@ -79,8 +78,9 @@ export const about: About = {
   socialLinks: {
     github: "https://github.com/surafelx",
     linkedin: "https://www.linkedin.com/in/surafelykebede",
+    website: "https://www.surafel.work",
   },
-  resumeUrl: "/Surafel Yimam CV.pdf",
+  resumeUrl: "/Surafel-Yimam-Resume.pdf",
 };
 
 export function getAbout(): About {
