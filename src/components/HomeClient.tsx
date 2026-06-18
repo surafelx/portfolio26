@@ -5,12 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   Briefcase,
+  Building2,
   ChevronLeft,
   ChevronRight,
   Download,
   ExternalLink,
   FileText,
   Github,
+  GraduationCap,
   Linkedin,
   Mail,
   MessageSquareQuote,
@@ -28,6 +30,8 @@ import {
   getArticles,
   aboutParagraphs,
   stackList,
+  experience,
+  education,
 } from "@/data";
 import { SOCIAL_LINKS } from "@/lib/links";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
@@ -185,6 +189,29 @@ export default function HomeClient() {
         <ProjectCarousel projects={personalProjects} onOpen={openModal} />
       </section>
 
+      {/* EXPERIENCE */}
+      <section id="experience" className="scroll-mt-12">
+        <SectionHeading
+          icon={<Building2 size={12} />}
+          label="Experience"
+          title="Where I've Worked"
+          sub="8+ years across startups and agencies — including CTO roles. Full history in the résumé."
+        />
+        <div className="divide-y divide-border border-t border-border">
+          {experience.map((e) => (
+            <div key={e.company + e.dates} className="py-5 grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-x-6 gap-y-1">
+              <div>
+                <h3 className="font-semibold">
+                  {e.role} <span className="text-muted-foreground font-normal">· {e.company}</span>
+                </h3>
+                <p className="text-sm text-muted-foreground mt-1 max-w-2xl">{e.note}</p>
+              </div>
+              <p className="text-sm text-muted-foreground tabular-nums sm:text-right">{e.dates}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* RECOMMENDATIONS */}
       <section id="recommendations" className="scroll-mt-12">
         <SectionHeading
@@ -271,11 +298,21 @@ export default function HomeClient() {
               <Download size={15} /> Download résumé
             </a>
           </div>
-          <div className="terminal-border bg-card p-6">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">
-              Stack
-            </h3>
-            <StackChips items={stackList} />
+          <div className="space-y-5">
+            <div className="terminal-border bg-card p-6">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">
+                Stack
+              </h3>
+              <StackChips items={stackList} />
+            </div>
+            <div className="terminal-border bg-card p-6">
+              <h3 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                <GraduationCap size={14} /> Education
+              </h3>
+              <p className="font-medium">{education.institution}</p>
+              <p className="text-sm text-muted-foreground">{education.degree}</p>
+              <p className="text-sm text-muted-foreground">Graduated {education.graduation}</p>
+            </div>
           </div>
         </div>
       </section>
@@ -337,41 +374,34 @@ function ProjectCarousel({
             <div key={p.id} className="w-full shrink-0 px-0.5">
               <button
                 onClick={() => onOpen(projects, i)}
-                className="group w-full text-left terminal-border bg-card overflow-hidden transition hover:border-primary/40"
+                className="group w-full text-left"
               >
                 {p.image && (
-                  <div className="h-48 md:h-60 w-full overflow-hidden border-b border-border bg-secondary">
+                  <div className="h-52 md:h-72 w-full overflow-hidden rounded-2xl border border-border bg-secondary mb-6">
                     <ImageWithFallback
                       src={p.image}
                       alt={p.name}
-                      className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
                       showIcon={false}
                       fallbackText={p.name}
                     />
                   </div>
                 )}
-                <div className="p-8 md:p-10">
-                  <div className="flex items-start justify-between gap-4 mb-5">
-                    <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-primary/10 text-2xl">
-                        {p.icon}
-                      </div>
-                      <div>
-                        <h3 className="text-2xl font-bold tracking-tight">{p.name}</h3>
-                        <p className="text-sm font-medium text-primary">{p.subtitle}</p>
-                      </div>
-                    </div>
-                    <span className="hidden sm:inline-block text-[10px] font-semibold uppercase tracking-wide text-muted-foreground border border-border rounded-full px-2.5 py-1 shrink-0">
+                <div>
+                  <div className="flex items-baseline justify-between gap-4 mb-2">
+                    <h3 className="text-2xl md:text-3xl font-bold tracking-tight">{p.name}</h3>
+                    <span className="hidden sm:inline-block text-[10px] font-semibold uppercase tracking-wide text-muted-foreground shrink-0">
                       {p.badge}
                     </span>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed max-w-2xl mb-6">
+                  <p className="text-sm font-medium text-primary mb-4">{p.subtitle}</p>
+                  <p className="text-muted-foreground leading-relaxed max-w-2xl mb-5">
                     {p.description}
                   </p>
                   <div className="flex items-center justify-between gap-4 flex-wrap">
                     <StackChips items={p.stack} />
-                    <span className="text-sm font-medium text-primary inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
-                      Open <ArrowRight size={14} />
+                    <span className="text-sm font-medium text-primary inline-flex items-center gap-1 opacity-60 group-hover:opacity-100 transition">
+                      View details <ArrowRight size={14} />
                     </span>
                   </div>
                 </div>
