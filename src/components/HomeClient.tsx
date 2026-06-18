@@ -6,6 +6,7 @@ import {
   ArrowRight,
   Briefcase,
   Building2,
+  CalendarClock,
   ChevronLeft,
   ChevronRight,
   Download,
@@ -16,10 +17,12 @@ import {
   Linkedin,
   Mail,
   MessageSquareQuote,
+  Music,
   Send,
   Sparkles,
   Star,
   UserRound,
+  Wand2,
   X,
 } from "lucide-react";
 import type { ReactNode } from "react";
@@ -33,8 +36,9 @@ import {
   experience,
   education,
 } from "@/data";
-import { SOCIAL_LINKS } from "@/lib/links";
+import { SOCIAL_LINKS, CAL_URL } from "@/lib/links";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
+import { StrudelMusic } from "@/components/StrudelMusic";
 import type { PortfolioProject } from "@/data";
 
 function StackChips({ items }: { items: string[] }) {
@@ -129,8 +133,25 @@ export default function HomeClient() {
             Chief Agent Officer · AI Engineer · Full-Stack Engineer
           </p>
 
-          {/* Small icons + résumé below role */}
-          <div className="flex items-center gap-1 mb-7">
+          {/* CTAs + icons below role */}
+          <div className="flex flex-wrap items-center gap-2 mb-7">
+            <a
+              href={CAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-medium bg-primary text-primary-foreground rounded-full px-4 py-2 hover:brightness-110 transition"
+            >
+              <CalendarClock size={16} /> Book a call
+            </a>
+            <a
+              href="/Surafel-Yimam-Resume.pdf"
+              download
+              className="group inline-flex items-center gap-2 text-sm font-medium text-foreground border border-border rounded-full px-4 py-2 hover:border-primary hover:text-primary hover:bg-primary/5 transition"
+            >
+              <Download size={15} className="transition-transform group-hover:translate-y-0.5" />
+              Résumé
+            </a>
+            <span className="w-px h-5 bg-border mx-1" />
             <HeroIcon href={`mailto:${SOCIAL_LINKS.email}`} label="Email">
               <Mail size={18} />
             </HeroIcon>
@@ -143,15 +164,6 @@ export default function HomeClient() {
             <HeroIcon href={SOCIAL_LINKS.telegram} label="Telegram" external>
               <Send size={18} />
             </HeroIcon>
-            <span className="w-px h-5 bg-border mx-2" />
-            <a
-              href="/Surafel-Yimam-Resume.pdf"
-              download
-              className="group inline-flex items-center gap-2 text-sm font-medium text-foreground border border-border rounded-full pl-3 pr-3.5 py-1.5 hover:border-primary hover:text-primary hover:bg-primary/5 transition"
-            >
-              <Download size={15} className="transition-transform group-hover:translate-y-0.5" />
-              Résumé
-            </a>
           </div>
 
           <p className="text-lg text-muted-foreground max-w-xl leading-relaxed mb-5">
@@ -280,6 +292,55 @@ export default function HomeClient() {
         </div>
       </section>
 
+      {/* BEYOND CODE — live coding music & visuals */}
+      <section id="creative" className="scroll-mt-12">
+        <SectionHeading
+          icon={<Music size={12} />}
+          label="Beyond Code"
+          title="Live Coding Music & Visuals"
+          sub="When I'm not shipping software, I perform algorithmic music and generative visuals — coding sound and light in real time."
+        />
+        <div className="grid gap-6 md:grid-cols-2 md:items-start">
+          <div>
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <Music size={18} />
+              </div>
+              <div>
+                <h3 className="font-semibold">Live Coding Music</h3>
+                <p className="text-xs text-primary font-medium">Strudel · TidalCycles</p>
+              </div>
+            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+              I write music as code — live-patterned rhythms and melodies that
+              evolve on the fly. Hit play to hear a snippet running right here in
+              your browser.
+            </p>
+            <StrudelMusic
+              title="Live snippet"
+              code={'note("c3 eb3 g3 bb3").sound("sawtooth").lpf(800).room(0.4).slow(2)'}
+            />
+          </div>
+          <div>
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <Wand2 size={18} />
+              </div>
+              <div>
+                <h3 className="font-semibold">Live Visuals</h3>
+                <p className="text-xs text-primary font-medium">Hydra · GLSL shaders</p>
+              </div>
+            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              I build generative, audio-reactive visuals — feedback loops,
+              shaders, and geometry coded live to match the music. The same
+              instinct as my engineering work: systems that respond, in real
+              time, to what's happening around them.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ABOUT */}
       <section id="about" className="scroll-mt-12">
         <SectionHeading icon={<UserRound size={12} />} label="About" title="Who's Building This" />
@@ -327,6 +388,14 @@ export default function HomeClient() {
           problems. If you're building something that needs a full-stack engineer
           who actually ships — let's talk.
         </p>
+        <a
+          href={CAL_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 text-sm font-medium bg-primary text-primary-foreground rounded-full px-6 py-3 hover:brightness-110 transition mb-6"
+        >
+          <CalendarClock size={16} /> Book a call
+        </a>
         <div className="flex flex-wrap justify-center gap-3">
           <ContactLink href={`mailto:${SOCIAL_LINKS.email}`} icon={<Mail size={15} />} label="Email" />
           <ContactLink href={SOCIAL_LINKS.github} icon={<Github size={15} />} label="GitHub" />
