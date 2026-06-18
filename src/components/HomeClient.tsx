@@ -30,6 +30,7 @@ import {
   stackList,
 } from "@/data";
 import { SOCIAL_LINKS } from "@/lib/links";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
 import type { PortfolioProject } from "@/data";
 
 function StackChips({ items }: { items: string[] }) {
@@ -140,11 +141,12 @@ export default function HomeClient() {
             </HeroIcon>
             <span className="w-px h-5 bg-border mx-2" />
             <a
-              href="/Surafel Yimam CV.pdf"
+              href="/Surafel-Yimam-Resume.pdf"
               download
-              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
+              className="group inline-flex items-center gap-2 text-sm font-medium text-foreground border border-border rounded-full pl-3 pr-3.5 py-1.5 hover:border-primary hover:text-primary hover:bg-primary/5 transition"
             >
-              <Download size={16} /> Download résumé
+              <Download size={15} className="transition-transform group-hover:translate-y-0.5" />
+              Résumé
             </a>
           </div>
 
@@ -161,7 +163,7 @@ export default function HomeClient() {
       </section>
 
       {/* CLIENT WORK — full-width carousel */}
-      <section id="work" className="scroll-mt-12">
+      <section id="work" className="scroll-mt-12 !mt-8">
         <SectionHeading
           icon={<Briefcase size={12} />}
           label="Client & Global Work"
@@ -262,9 +264,9 @@ export default function HomeClient() {
               </p>
             ))}
             <a
-              href="/Surafel Yimam CV.pdf"
+              href="/Surafel-Yimam-Resume.pdf"
               download
-              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
+              className="inline-flex items-center gap-2 text-sm font-medium border border-border rounded-full px-4 py-2 hover:border-primary hover:text-primary hover:bg-primary/5 transition"
             >
               <Download size={15} /> Download résumé
             </a>
@@ -335,30 +337,43 @@ function ProjectCarousel({
             <div key={p.id} className="w-full shrink-0 px-0.5">
               <button
                 onClick={() => onOpen(projects, i)}
-                className="group w-full text-left terminal-border bg-card p-8 md:p-10 transition hover:border-primary/40"
+                className="group w-full text-left terminal-border bg-card overflow-hidden transition hover:border-primary/40"
               >
-                <div className="flex items-start justify-between gap-4 mb-5">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-primary/10 text-2xl">
-                      {p.icon}
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-bold tracking-tight">{p.name}</h3>
-                      <p className="text-sm font-medium text-primary">{p.subtitle}</p>
-                    </div>
+                {p.image && (
+                  <div className="h-48 md:h-60 w-full overflow-hidden border-b border-border bg-secondary">
+                    <ImageWithFallback
+                      src={p.image}
+                      alt={p.name}
+                      className="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+                      showIcon={false}
+                      fallbackText={p.name}
+                    />
                   </div>
-                  <span className="hidden sm:inline-block text-[10px] font-semibold uppercase tracking-wide text-muted-foreground border border-border rounded-full px-2.5 py-1 shrink-0">
-                    {p.badge}
-                  </span>
-                </div>
-                <p className="text-muted-foreground leading-relaxed max-w-2xl mb-6">
-                  {p.description}
-                </p>
-                <div className="flex items-center justify-between gap-4 flex-wrap">
-                  <StackChips items={p.stack} />
-                  <span className="text-sm font-medium text-primary inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
-                    Open <ArrowRight size={14} />
-                  </span>
+                )}
+                <div className="p-8 md:p-10">
+                  <div className="flex items-start justify-between gap-4 mb-5">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-primary/10 text-2xl">
+                        {p.icon}
+                      </div>
+                      <div>
+                        <h3 className="text-2xl font-bold tracking-tight">{p.name}</h3>
+                        <p className="text-sm font-medium text-primary">{p.subtitle}</p>
+                      </div>
+                    </div>
+                    <span className="hidden sm:inline-block text-[10px] font-semibold uppercase tracking-wide text-muted-foreground border border-border rounded-full px-2.5 py-1 shrink-0">
+                      {p.badge}
+                    </span>
+                  </div>
+                  <p className="text-muted-foreground leading-relaxed max-w-2xl mb-6">
+                    {p.description}
+                  </p>
+                  <div className="flex items-center justify-between gap-4 flex-wrap">
+                    <StackChips items={p.stack} />
+                    <span className="text-sm font-medium text-primary inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
+                      Open <ArrowRight size={14} />
+                    </span>
+                  </div>
                 </div>
               </button>
             </div>
@@ -442,6 +457,18 @@ function ProjectModal({
         >
           <X size={20} />
         </button>
+
+        {p.image && (
+          <div className="h-44 w-full overflow-hidden rounded-xl border border-border bg-secondary mb-5">
+            <ImageWithFallback
+              src={p.image}
+              alt={p.name}
+              className="w-full h-full object-cover object-top"
+              showIcon={false}
+              fallbackText={p.name}
+            />
+          </div>
+        )}
 
         <div className="flex items-center gap-4 mb-5 pr-8">
           <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-primary/10 text-2xl shrink-0">

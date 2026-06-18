@@ -1,7 +1,7 @@
 // Central place for external/contact links.
 export const SOCIAL_LINKS = {
-  github: "https://github.com/surafelyimam",
-  linkedin: "https://linkedin.com/in/surafelyimam",
+  github: "https://github.com/surafelx",
+  linkedin: "https://www.linkedin.com/in/surafelykebede",
   telegram: "https://t.me/YouAreTheThingILoveMost",
   email: "workwithsurafel@gmail.com",
 };

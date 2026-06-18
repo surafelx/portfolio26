@@ -60,8 +60,8 @@ export const about: About = {
     responseTime: "Usually responds within 24h",
   },
   socialLinks: {
-    github: "https://github.com/surafelyimam",
-    linkedin: "https://linkedin.com/in/surafelyimam",
+    github: "https://github.com/surafelx",
+    linkedin: "https://www.linkedin.com/in/surafelykebede",
   },
   resumeUrl: "/Surafel Yimam CV.pdf",
 };

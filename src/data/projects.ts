@@ -5,6 +5,18 @@ export type { PortfolioProject } from "@/data/types";
 // Client work — shown as a horizontal slider on the home page.
 export const clientProjects: PortfolioProject[] = [
   {
+    id: "conducting-os",
+    name: "Conducting OS",
+    subtitle: "Multi-Agent AI Orchestration",
+    icon: "🎯",
+    badge: "AI / Agents",
+    description:
+      "The operating system behind Celerus.io — 5 independent AI agents that coordinate through an orchestration layer. Each agent handles a distinct role (sales, support, analytics, scheduling, reporting) and the system manages communication between them.",
+    stack: ["Next.js", "TypeScript", "OpenAI Assistants", "Agent orchestration"],
+    link: { label: "celerus.io", url: "https://celerus.io" },
+    image: "/projects/celerus.png",
+  },
+  {
     id: "celerus",
     name: "Celerus.io",
     subtitle: "AI Agent Orchestration Platform",
@@ -14,17 +26,7 @@ export const clientProjects: PortfolioProject[] = [
       "Designed and built a multi-agent AI system where 5 specialized agents work together like an orchestra — sales, support, analytics, scheduling, and reporting, all coordinated through an orchestration layer.",
     stack: ["Next.js", "TypeScript", "OpenAI API", "Telegram", "Tailwind"],
     link: { label: "celerus.io", url: "https://celerus.io" },
-  },
-  {
-    id: "conducting-ai",
-    name: "Conducting.ai",
-    subtitle: "Multi-Agent AI Orchestration",
-    icon: "🎯",
-    badge: "AI / Agents",
-    description:
-      "The core architecture behind Celerus.io — 5 independent AI agents that coordinate through an orchestration layer. Each agent handles a distinct role (sales, support, analytics, scheduling, reporting) and the system manages communication between them.",
-    stack: ["Next.js", "TypeScript", "OpenAI Assistants", "Agent orchestration"],
-    link: { label: "celerus.io", url: "https://celerus.io" },
+    image: "/projects/celerus.png",
   },
   {
     id: "vigs-seo",

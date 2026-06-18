@@ -51,6 +51,7 @@ export interface PortfolioProject {
   description: string;
   stack: string[];
   link?: { label: string; url?: string };
+  image?: string; // optional cover image (path under /public)
 }
 
 export interface Recommendation {

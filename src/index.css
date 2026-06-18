@@ -16,25 +16,25 @@
 
 @layer base {
   :root {
-    --background: 40 36% 93%;
-    --foreground: 28 16% 16%;
+    --background: 220 24% 98%;
+    --foreground: 222 18% 16%;
 
-    --card: 42 44% 96%;
-    --card-foreground: 28 16% 16%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 18% 16%;
 
-    --popover: 42 44% 96%;
-    --popover-foreground: 28 16% 16%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 18% 16%;
 
     --primary: 18 46% 44%;
     --primary-foreground: 42 44% 97%;
 
     --accent-2: 36 52% 62%;
 
-    --secondary: 40 28% 88%;
-    --secondary-foreground: 28 16% 22%;
+    --secondary: 220 20% 95%;
+    --secondary-foreground: 222 18% 22%;
 
-    --muted: 40 28% 88%;
-    --muted-foreground: 32 9% 40%;
+    --muted: 220 20% 95%;
+    --muted-foreground: 220 9% 44%;
 
     --accent: 18 46% 44%;
     --accent-foreground: 42 44% 97%;
@@ -42,8 +42,8 @@
     --destructive: 0 65% 48%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 38 22% 82%;
-    --input: 38 22% 82%;
+    --border: 220 16% 90%;
+    --input: 220 16% 90%;
     --ring: 18 46% 44%;
 
     --radius: 0.85rem;
@@ -54,13 +54,13 @@
     --terminal-pink: 12 50% 48%;
     --terminal-dim: 32 9% 55%;
 
-    --sidebar-background: 40 36% 93%;
-    --sidebar-foreground: 28 16% 16%;
+    --sidebar-background: 220 24% 98%;
+    --sidebar-foreground: 222 18% 16%;
     --sidebar-primary: 18 46% 44%;
     --sidebar-primary-foreground: 42 44% 97%;
-    --sidebar-accent: 40 28% 88%;
-    --sidebar-accent-foreground: 28 16% 22%;
-    --sidebar-border: 38 22% 82%;
+    --sidebar-accent: 220 20% 95%;
+    --sidebar-accent-foreground: 222 18% 22%;
+    --sidebar-border: 220 16% 90%;
     --sidebar-ring: 18 46% 44%;
   }
 
@@ -140,55 +140,21 @@
   }
 }
 
-/* Subtle interactive animated background */
+/* Simple, soft background wash */
 @layer base {
   .bg-fx {
     position: fixed;
     inset: 0;
     z-index: -1;
-    overflow: hidden;
     pointer-events: none;
+    background:
+      radial-gradient(60vmax 60vmax at 100% 0%, hsl(var(--primary) / 0.06), transparent 70%),
+      radial-gradient(50vmax 50vmax at 0% 100%, hsl(var(--accent-2) / 0.05), transparent 70%);
   }
-  .bg-fx::before,
-  .bg-fx::after {
-    content: "";
-    position: absolute;
-    width: 50vmax;
-    height: 50vmax;
-    border-radius: 50%;
-    filter: blur(90px);
-    opacity: 0.16;
-    will-change: transform;
-  }
-  .bg-fx::before {
-    background: radial-gradient(circle, hsl(var(--primary)) 0%, transparent 60%);
-    top: -12vmax;
-    left: -8vmax;
-    transform: translate3d(var(--bgx, 0px), var(--bgy, 0px), 0);
-    animation: drift-a 24s ease-in-out infinite;
-  }
-  .bg-fx::after {
-    background: radial-gradient(circle, hsl(var(--accent-2)) 0%, transparent 60%);
-    bottom: -14vmax;
-    right: -10vmax;
-    transform: translate3d(calc(var(--bgx, 0px) * -1), calc(var(--bgy, 0px) * -1), 0);
-    animation: drift-b 30s ease-in-out infinite;
-  }
-  .dark .bg-fx::before,
-  .dark .bg-fx::after {
-    opacity: 0.22;
-  }
-
-  @keyframes drift-a {
-    0%, 100% { translate: 0 0; }
-    50% { translate: 6vmax 4vmax; }
-  }
-  @keyframes drift-b {
-    0%, 100% { translate: 0 0; }
-    50% { translate: -5vmax -6vmax; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .bg-fx::before, .bg-fx::after { animation: none; }
+  .dark .bg-fx {
+    background:
+      radial-gradient(60vmax 60vmax at 100% 0%, hsl(var(--primary) / 0.10), transparent 70%),
+      radial-gradient(50vmax 50vmax at 0% 100%, hsl(var(--accent-2) / 0.08), transparent 70%);
   }
 }
 
