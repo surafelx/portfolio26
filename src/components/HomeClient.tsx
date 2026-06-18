@@ -377,7 +377,7 @@ function ProjectCarousel({
                 className="group w-full text-left"
               >
                 {p.image && (
-                  <div className="h-52 md:h-72 w-full overflow-hidden rounded-2xl border border-border bg-secondary mb-6">
+                  <div className="aspect-video w-full overflow-hidden rounded-2xl border border-border bg-secondary mb-6">
                     <ImageWithFallback
                       src={p.image}
                       alt={p.name}
@@ -489,7 +489,7 @@ function ProjectModal({
         </button>
 
         {p.image && (
-          <div className="h-44 w-full overflow-hidden rounded-xl border border-border bg-secondary mb-5">
+          <div className="aspect-video w-full overflow-hidden rounded-xl border border-border bg-secondary mb-5">
             <ImageWithFallback
               src={p.image}
               alt={p.name}
