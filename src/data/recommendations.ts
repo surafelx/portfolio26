@@ -2,31 +2,31 @@ import type { Recommendation } from "@/data/types";
 
 export type { Recommendation } from "@/data/types";
 
-// Placeholder recommendations — replace the quotes/names with real ones.
+// Real client testimonials. Names withheld; add them if/when you have permission.
 export const recommendations: Recommendation[] = [
   {
-    id: "rec-1",
+    id: "rec-ai",
     quote:
-      "Surafel shipped fast and communicated clearly the whole way through. The automation he built saved us hours every single day.",
-    name: "Add Name",
-    role: "Title, Company",
+      "A very strong fit for AI work — we enjoyed working with him. He has a good understanding of structure, was able to pick up concepts and then advance them to new levels, and communication was easy.",
+    name: "AI Project Client",
+    role: "Upwork",
     initial: "A",
   },
   {
-    id: "rec-2",
+    id: "rec-fullstack",
     quote:
-      "He understood the product, not just the code. He pushed back where it mattered and delivered something we could actually run a business on.",
-    name: "Add Name",
-    role: "Title, Company",
-    initial: "B",
+      "Surafel did an outstanding job and delivered results far beyond my expectations. I'm extremely satisfied and would highly recommend him to anyone looking for a reliable, skilled full-stack developer. I would definitely work with him again.",
+    name: "Full-Stack Project Client",
+    role: "Upwork",
+    initial: "F",
   },
   {
-    id: "rec-3",
+    id: "rec-web",
     quote:
-      "Reliable, thoughtful, and genuinely good at full-stack work. Would happily work with him again on the next thing.",
-    name: "Add Name",
-    role: "Title, Company",
-    initial: "C",
+      "A good experience working with this freelancer. Communication was polite and respectful, and he showed real willingness to help and move the project forward.",
+    name: "Web Project Client",
+    role: "Upwork",
+    initial: "W",
   },
 ];
 
