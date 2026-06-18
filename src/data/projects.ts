@@ -1,106 +1,164 @@
-import type { Project } from "@/data/types";
+import type { PortfolioProject } from "@/data/types";
 
-export type { Project } from "@/data/types";
+export type { PortfolioProject } from "@/data/types";
 
-// Static portfolio projects. Edit these freely — they are plain data, no
-// database required.
-export const projects: Project[] = [
+// Client work — shown as a horizontal slider on the home page.
+export const clientProjects: PortfolioProject[] = [
   {
-    id: "neural-canvas",
-    title: "Neural Canvas",
-    brief: "Real-time collaborative AI image studio.",
+    id: "celerus",
+    name: "Celerus.io",
+    subtitle: "AI Agent Orchestration Platform",
+    icon: "🤖",
+    badge: "AI / Agents",
     description:
-      "Neural Canvas is a browser-based studio where teams generate, edit, and remix AI imagery together in real time. It pairs a diffusion backend with a CRDT-synced canvas so multiple people can iterate on the same board without conflicts. The app streams generation progress over WebSockets and keeps a full, branchable history of every prompt and edit.",
-    tags: ["AI", "Web", "Realtime"],
-    keywords: ["diffusion", "collaboration", "crdt", "websockets", "canvas"],
-    techStack: ["Next.js", "TypeScript", "Python", "FastAPI", "WebSockets", "PostgreSQL"],
-    imageUrl: "/projects/neural.jpg",
-    liveUrl: "https://example.com/neural-canvas",
-    githubUrl: "https://github.com/surafelx/neural-canvas",
-    year: "2025",
-    priority: 9,
-    nodeGraph: {
-      nodes: [
-        { id: "client", type: "input", position: { x: 0, y: 0 }, data: { label: "Canvas Client", description: "React + CRDT", tech: ["Next.js", "Yjs"] } },
-        { id: "gateway", type: "default", position: { x: 220, y: 0 }, data: { label: "Realtime Gateway", description: "WebSocket fan-out", tech: ["Node", "ws"] } },
-        { id: "infer", type: "default", position: { x: 220, y: 140 }, data: { label: "Inference", description: "Diffusion workers", tech: ["Python", "FastAPI"] } },
-        { id: "store", type: "output", position: { x: 440, y: 70 }, data: { label: "History Store", description: "Branchable edits", tech: ["PostgreSQL"] } },
-      ],
-      edges: [
-        { id: "e1", source: "client", target: "gateway", animated: true },
-        { id: "e2", source: "gateway", target: "infer" },
-        { id: "e3", source: "infer", target: "store" },
-        { id: "e4", source: "gateway", target: "store" },
-      ],
-    },
+      "Designed and built a multi-agent AI system where 5 specialized agents work together like an orchestra — sales, support, analytics, scheduling, and reporting, all coordinated through an orchestration layer.",
+    stack: ["Next.js", "TypeScript", "OpenAI API", "Telegram", "Tailwind"],
+    link: { label: "celerus.io", url: "https://celerus.io" },
   },
   {
-    id: "meshroute",
-    title: "MeshRoute",
-    brief: "Edge-first request router with zero-downtime deploys.",
+    id: "vigs-seo",
+    name: "VIGS SEO",
+    subtitle: "SEO Operations Automation",
+    icon: "📈",
+    badge: "Automation",
     description:
-      "MeshRoute is a lightweight service mesh control plane that pushes routing rules to edge nodes in milliseconds. It supports weighted canaries, automatic rollback on error-budget burn, and a declarative config that compiles to per-node rule sets. Operators get a live topology view and can shift traffic with a single command.",
-    tags: ["Infrastructure", "DevOps", "Go"],
-    keywords: ["service mesh", "routing", "canary", "edge", "observability"],
-    techStack: ["Go", "gRPC", "Redis", "React", "Prometheus"],
-    imageUrl: "/projects/mesh.jpg",
-    githubUrl: "https://github.com/surafelx/meshroute",
-    year: "2024",
-    priority: 8,
+      "Built an automation layer connecting the SearchAtlas API to OpenClaw for an SEO agency. Daily digest reports, proactive alerts, backlink monitoring, and Monday.com auto-tasks for 7 Australian clients.",
+    stack: ["SearchAtlas API", "OpenClaw", "Node.js", "Monday.com", "Telegram"],
   },
   {
-    id: "pulse-analytics",
-    title: "Pulse",
-    brief: "Privacy-first product analytics in a single binary.",
+    id: "ethiopian-medical-hub",
+    name: "Ethiopian Medical Hub",
+    subtitle: "B2B Healthcare Marketplace",
+    icon: "🏥",
+    badge: "Full-Stack",
     description:
-      "Pulse is a self-hosted analytics platform that captures product events without third-party cookies. It ships as one binary with an embedded column store, computes funnels and retention on the fly, and exposes a SQL-like query layer for ad-hoc exploration. Dashboards are shareable and update in near real time.",
-    tags: ["Analytics", "Web", "Data"],
-    keywords: ["analytics", "privacy", "funnels", "retention", "self-hosted"],
-    techStack: ["Rust", "DuckDB", "SvelteKit", "TypeScript"],
-    imageUrl: "/projects/pulse.jpg",
-    liveUrl: "https://example.com/pulse",
-    githubUrl: "https://github.com/surafelx/pulse",
-    year: "2024",
-    priority: 7,
+      "Co-built a B2B marketplace connecting Ethiopian healthcare suppliers with buyers across East Africa. Full product strategy, revenue model, and platform build.",
+    stack: ["Next.js", "PostgreSQL", "Prisma", "Stripe", "Email automation"],
   },
   {
-    id: "syntax-notes",
-    title: "Syntax",
-    brief: "Markdown notebook that runs your code blocks.",
+    id: "ethiopian-coffee-guide",
+    name: "Ethiopian Coffee Guide",
+    subtitle: "B2B Specialty Coffee Export Platform",
+    icon: "☕",
+    badge: "Product",
     description:
-      "Syntax turns plain markdown notes into executable notebooks. Fenced code blocks run in sandboxed runtimes, results are inlined under each block, and notes stay diff-friendly as ordinary markdown files. It is built for engineers who want literate docs without leaving their editor.",
-    tags: ["Tools", "Web", "Developer"],
-    keywords: ["markdown", "notebook", "repl", "sandbox", "documentation"],
-    techStack: ["Next.js", "TypeScript", "WebAssembly", "Monaco"],
-    imageUrl: "/projects/syntax.jpg",
-    githubUrl: "https://github.com/surafelx/syntax",
-    year: "2023",
-    priority: 6,
+      "Built the product vision and platform for a B2B marketplace connecting international specialty-coffee buyers with Ethiopian exporters. Revenue model: paid profiles + FOB commission + agent fees.",
+    stack: ["Next.js", "PostgreSQL", "Prisma", "Brand positioning", "GTM"],
   },
   {
-    id: "cryptotrack",
-    title: "CryptoTrack",
-    brief: "Portfolio tracker with on-chain alerts.",
+    id: "nexus-solar",
+    name: "Nexus Solar Platform",
+    subtitle: "Solar Operations SaaS",
+    icon: "☀️",
+    badge: "Full-Stack SaaS",
     description:
-      "CryptoTrack aggregates balances across wallets and exchanges into one dashboard and watches on-chain activity for the assets you hold. Users set threshold and event alerts (large transfers, governance votes, liquidity changes) and receive them via web push or email. Historical performance is broken down by asset and strategy.",
-    tags: ["Web", "Data", "Fintech"],
-    keywords: ["crypto", "portfolio", "alerts", "on-chain", "dashboard"],
-    techStack: ["React", "Node.js", "TypeScript", "PostgreSQL", "Web3"],
-    imageUrl: "/projects/crypto.jpg",
-    liveUrl: "https://example.com/cryptotrack",
-    year: "2023",
-    priority: 5,
+      "Full-stack SaaS platform for solar company operations — company profiles, PV array analysis, load assessment reports, and multi-platform delivery (web, Android, iOS).",
+    stack: ["React", "Next.js", "Node.js", "MongoDB", "REST API"],
+  },
+  {
+    id: "nibret",
+    name: "Nibret.com",
+    subtitle: "Ethiopian Client",
+    icon: "🌱",
+    badge: "Ethiopian Client",
+    description:
+      "Full-stack web build for an Ethiopian client.",
+    stack: ["Next.js", "Node.js"],
+  },
+  {
+    id: "rubypictures",
+    name: "RubyPictures.com",
+    subtitle: "Ethiopian Client",
+    icon: "📸",
+    badge: "Ethiopian Client",
+    description:
+      "Website build for a creative studio.",
+    stack: ["Next.js", "Tailwind"],
+  },
+  {
+    id: "kebelezero",
+    name: "Kebelezero.com",
+    subtitle: "Ethiopian Client",
+    icon: "🌍",
+    badge: "Ethiopian Client",
+    description:
+      "Full-stack web build for an Ethiopian client.",
+    stack: ["Next.js", "Node.js"],
+  },
+  {
+    id: "yenesuzuki",
+    name: "Yenesuzuki.com",
+    subtitle: "Global Client",
+    icon: "⚙️",
+    badge: "Global Client",
+    description:
+      "Website build for an automotive client.",
+    stack: ["Next.js"],
+  },
+  {
+    id: "agrisun",
+    name: "AgriSun Ethiopia",
+    subtitle: "Agricultural Reference",
+    icon: "🌾",
+    badge: "Ethiopian Client",
+    description:
+      "Reference letter and documentation prepared for agricultural operations and export work in Ethiopia.",
+    stack: ["Document preparation"],
   },
 ];
 
-export function getProjects(): Project[] {
-  return [...projects].sort((a, b) => b.priority - a.priority);
+// Personal projects — shown as a grid on the home page.
+export const personalProjects: PortfolioProject[] = [
+  {
+    id: "mindbridge",
+    name: "MindBridge",
+    subtitle: "AI Therapy Companion",
+    icon: "🧠",
+    badge: "Personal",
+    description:
+      "A personal AI therapy and wellness companion with encrypted mood tracking, journaling, and AI chat via Telegram. Includes 7 therapy exercises (CBT thought records, grounding, box breathing, self-compassion, behavioral activation, values clarification, grief work). AES-256-GCM field-level encryption with built-in crisis detection.",
+    stack: ["Next.js", "Prisma", "Telegram Bot", "OpenAI", "AES-256", "PostgreSQL"],
+    link: { label: "Private build" },
+  },
+  {
+    id: "conducting-ai",
+    name: "Conducting.ai",
+    subtitle: "Multi-Agent AI Orchestration",
+    icon: "🎯",
+    badge: "Personal",
+    description:
+      "The core architecture behind Celerus.io — 5 independent AI agents that coordinate through an orchestration layer. Each agent handles a distinct role (sales, support, analytics, scheduling, reporting) and the system manages communication between them.",
+    stack: ["Next.js", "TypeScript", "OpenAI Assistants", "Agent orchestration"],
+    link: { label: "celerus.io", url: "https://celerus.io" },
+  },
+  {
+    id: "abebe",
+    name: "Abebe — My AI Assistant",
+    subtitle: "OpenClaw-Powered Assistant",
+    icon: "🤝",
+    badge: "Personal",
+    description:
+      "A persistent AI assistant running on an EC2 server, connected to Telegram. Handles scheduling, reminders, research, writing, opportunity finding, and daily check-ins. Built with OpenClaw, Google Calendar API, and AfroMessage SMS.",
+    stack: ["OpenClaw", "Telegram", "Google Calendar", "AfroMessage", "Node.js"],
+    link: { label: "Personal tool" },
+  },
+  {
+    id: "opportunity-finder",
+    name: "Opportunity Finder",
+    subtitle: "Scholarship & Freelance Tracker",
+    icon: "🔍",
+    badge: "Personal",
+    description:
+      "Automated system that proactively searches for scholarships, fellowships, freelance gigs, and writing opportunities relevant to my goals. Delivers results formatted for Telegram with source links and deadlines.",
+    stack: ["OpenClaw", "Web scraping", "Telegram", "Scheduler"],
+    link: { label: "Personal tool" },
+  },
+];
+
+export function getClientProjects(): PortfolioProject[] {
+  return clientProjects;
 }
 
-export function getProjectById(id: string): Project | undefined {
-  return projects.find((p) => p.id === id);
-}
-
-export function getProjectModules(): string[] {
-  return Array.from(new Set(projects.flatMap((p) => p.tags)));
+export function getPersonalProjects(): PortfolioProject[] {
+  return personalProjects;
 }

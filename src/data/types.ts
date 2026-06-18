@@ -42,6 +42,25 @@ export interface Project {
   updatedAt?: string;
 }
 
+export interface PortfolioProject {
+  id: string;
+  name: string;
+  subtitle: string;
+  icon: string; // emoji
+  badge: string;
+  description: string;
+  stack: string[];
+  link?: { label: string; url?: string };
+}
+
+export interface Recommendation {
+  id: string;
+  quote: string;
+  name: string;
+  role: string;
+  initial: string;
+}
+
 export interface ArticleBlock {
   id: string;
   type: 'h1' | 'h2' | 'h3' | 'h4' | 'paragraph' | 'image' | 'code' | 'quote' | 'image-grid' | 'two-column' | 'youtube-video' | 'video' | 'strudel-music';

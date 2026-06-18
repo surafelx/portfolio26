@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, Menu, X, Home, User, BookOpen, Calendar, Briefcase } from "lucide-react";
+import { Github, Linkedin, Mail, Menu, X, Home, User, BookOpen, Calendar, Send } from "lucide-react";
 import { SOCIAL_LINKS } from "@/lib/links";
 
 export const Footer = () => {
@@ -9,15 +9,15 @@ export const Footer = () => {
 
   const navigationLinks = [
     { href: "/", label: "home", icon: Home },
-    { href: "/about", label: "about", icon: User },
-    { href: "/notes", label: "notes", icon: BookOpen },
-    { href: "/contact", label: "contact", icon: Mail },
+    { href: "/#about", label: "about", icon: User },
+    { href: "/#articles", label: "articles", icon: BookOpen },
+    { href: "/#contact", label: "contact", icon: Mail },
   ];
 
   const socialLinks = [
     { href: SOCIAL_LINKS.github, icon: Github, label: "GitHub" },
     { href: SOCIAL_LINKS.linkedin, icon: Linkedin, label: "LinkedIn" },
-    { href: SOCIAL_LINKS.upwork, icon: Briefcase, label: "Upwork" },
+    { href: SOCIAL_LINKS.telegram, icon: Send, label: "Telegram" },
   ];
 
   return (
