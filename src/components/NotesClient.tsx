@@ -2,9 +2,6 @@
 import { motion } from "framer-motion";
 import { Notebook, BookOpen, Calendar, Clock, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { useArticles } from "@/hooks/useArticles";
-import { useNotes } from "@/hooks/useNotes";
-import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 interface NotesClientProps {
   initialArticles: any[];
@@ -12,77 +9,25 @@ interface NotesClientProps {
 }
 
 export default function NotesClient({ initialArticles, initialNotes }: NotesClientProps) {
-  const { articles, loading: articlesLoading, error: articlesError } = useArticles();
-  const { notes, loading: notesLoading, error: notesError } = useNotes();
-  const displayArticles = articles.length > 0 ? articles : initialArticles;
-  const displayNotes = notes.length > 0 ? notes : initialNotes;
-
-  // In production, show fallback content if database fails
-  const showFallbackArticles = process.env.NODE_ENV === 'production' && articlesError && displayArticles.length === 0;
-  const showFallbackNotes = process.env.NODE_ENV === 'production' && notesError && displayNotes.length === 0;
-
-  // Fallback sample data for production
-  const fallbackArticles = showFallbackArticles ? [
-    {
-      id: 'sample-article-1',
-      title: 'Welcome to My Portfolio',
-      excerpt: 'An introduction to my work and journey in technology.',
-      publishedAt: new Date().toISOString().split('T')[0],
-      readingTime: '3 min',
-      author: 'Surafel Yimam',
-      tags: ['introduction', 'portfolio']
-    }
-  ] : [];
-
-  const fallbackNotes = showFallbackNotes ? [
-    {
-      id: 'sample-note-1',
-      title: 'Database Connection Status',
-      createdAt: new Date(),
-      blocks: [
-        {
-          id: 'sample-block-1',
-          type: 'paragraph',
-          content: 'Database connection is currently unavailable. Full content will be restored soon.'
-        }
-      ]
-    }
-  ] : [];
-
-  const finalArticles = showFallbackArticles ? fallbackArticles : displayArticles;
-  const finalNotes = showFallbackNotes ? fallbackNotes : displayNotes;
+  const finalArticles = initialArticles;
+  const finalNotes = initialNotes;
   return (
     <div>
       {/* Header */}
-      <div className="flex items-center gap-2 mb-6">
-        <span className="text-muted-foreground">$</span>
-        <span className="text-foreground">cat</span>
-        <span className="text-terminal-cyan">notes.md</span>
-      </div>
-
-      {/* Notes Header */}
-      <div className="terminal-border bg-card/50 p-4 mb-6">
-        <h1 className="text-lg text-primary terminal-glow mb-3 flex items-center gap-2">
-          <Notebook size={20} /> Notes & Articles
-        </h1>
-        <div className="space-y-3 text-foreground/80 leading-relaxed text-sm">
-          <p>
-            A collection of technical insights and articles about my journey
-            in technology, creativity, and live-coding music.
-          </p>
-        </div>
+      <div className="mb-10">
+        <h1 className="text-3xl font-semibold tracking-tight mb-2">Notes &amp; Articles</h1>
+        <p className="text-muted-foreground leading-relaxed">
+          A collection of technical insights and articles about my journey
+          in technology, creativity, and live-coding music.
+        </p>
       </div>
 
       {/* Articles Section */}
-      <div className="mb-8">
-        <h2 className="text-base text-primary terminal-glow mb-4 flex items-center gap-2">
-          <BookOpen size={18} /> Featured Articles
+      <div className="mb-10">
+        <h2 className="text-sm font-medium uppercase tracking-wide text-muted-foreground mb-4 flex items-center gap-2">
+          <BookOpen size={16} /> Featured Articles
         </h2>
-        {articlesLoading && !showFallbackArticles ? (
-          <div className="flex justify-center py-4">
-            <LoadingSpinner message="Loading articles..." />
-          </div>
-        ) : (
+        {(
           <div className="space-y-3">
             {finalArticles.map((article) => (
               <motion.div
@@ -95,7 +40,7 @@ export default function NotesClient({ initialArticles, initialNotes }: NotesClie
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <Link href={`/articles/${article.id}`}>
-                    <h3 className="text-base text-primary terminal-glow mb-2 hover:text-primary/80 transition-colors cursor-pointer">
+                    <h3 className="text-base font-medium mb-2 hover:text-primary transition-colors cursor-pointer">
                       {article.title}
                     </h3>
                   </Link>
@@ -143,14 +88,10 @@ export default function NotesClient({ initialArticles, initialNotes }: NotesClie
 
       {/* Notes Section */}
       <div className="mb-8">
-        <h2 className="text-base text-primary terminal-glow mb-4 flex items-center gap-2">
-          <Notebook size={18} /> Personal Notes
+        <h2 className="text-sm font-medium uppercase tracking-wide text-muted-foreground mb-4 flex items-center gap-2">
+          <Notebook size={16} /> Personal Notes
         </h2>
-        {notesLoading && !showFallbackNotes ? (
-          <div className="flex justify-center py-4">
-            <LoadingSpinner message="Loading notes..." />
-          </div>
-        ) : (
+        {(
           <div className="space-y-3">
             {finalNotes.map((note) => (
               <motion.div
@@ -163,7 +104,7 @@ export default function NotesClient({ initialArticles, initialNotes }: NotesClie
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <Link href={`/notes/${note.id}`}>
-                    <h3 className="text-base text-primary terminal-glow mb-2 hover:text-primary/80 transition-colors cursor-pointer">
+                    <h3 className="text-base font-medium mb-2 hover:text-primary transition-colors cursor-pointer">
                       {note.title}
                     </h3>
                   </Link>

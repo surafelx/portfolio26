@@ -1,25 +1,25 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, Menu, X, Home, User, BookOpen, Users, Calendar, Briefcase } from "lucide-react";
-import { useAnalytics } from "@/hooks/useAnalytics";
+import { Github, Linkedin, Mail, Menu, X, Home, User, BookOpen, Briefcase, Calendar, Send } from "lucide-react";
 import { SOCIAL_LINKS } from "@/lib/links";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const Footer = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { analytics, loading } = useAnalytics();
 
   const navigationLinks = [
     { href: "/", label: "home", icon: Home },
-    { href: "/about", label: "about", icon: User },
-    { href: "/notes", label: "notes", icon: BookOpen },
-    { href: "/contact", label: "contact", icon: Mail },
+    { href: "/#experience", label: "experience", icon: Briefcase },
+    { href: "/#about", label: "about", icon: User },
+    { href: "/#articles", label: "articles", icon: BookOpen },
+    { href: "/#contact", label: "contact", icon: Mail },
   ];
 
   const socialLinks = [
     { href: SOCIAL_LINKS.github, icon: Github, label: "GitHub" },
     { href: SOCIAL_LINKS.linkedin, icon: Linkedin, label: "LinkedIn" },
-    { href: SOCIAL_LINKS.upwork, icon: Briefcase, label: "Upwork" },
+    { href: SOCIAL_LINKS.telegram, icon: Send, label: "Telegram" },
   ];
 
   return (
@@ -27,9 +27,9 @@ export const Footer = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.5 }}
-      className="terminal-border border-t-0 bg-card/30 px-4 py-3"
+      className="border-t border-border bg-background px-6 py-4"
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         {/* Main Footer Content */}
         <div className="flex items-center justify-between text-sm mb-3">
           <div className="flex items-center gap-4">
@@ -42,14 +42,8 @@ export const Footer = () => {
             </span>
           </div>
 
-          <div className="flex items-center gap-4">
-            {!loading && (
-              <span className="text-muted-foreground/70 flex items-center gap-1">
-                <Users size={14} />
-                {analytics.uniqueVisitors} visitors
-              </span>
-            )}
-
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
             {/* Menu Button */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}

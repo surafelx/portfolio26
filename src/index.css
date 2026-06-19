@@ -1,137 +1,114 @@
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+@import "@fontsource/space-grotesk/500.css";
+@import "@fontsource/space-grotesk/600.css";
+@import "@fontsource/space-grotesk/700.css";
 @import "@fontsource/jetbrains-mono/400.css";
 @import "@fontsource/jetbrains-mono/500.css";
-@import "@fontsource/jetbrains-mono/700.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Terminal Portfolio Design System */
+/* Modern, characterful design system — indigo→fuchsia accents, light by default. */
 
 @layer base {
   :root {
-    --background: 0 0% 12%;
-    --foreground: 0 0% 80%;
+    --background: 40 40% 95%;
+    --foreground: 28 18% 16%;
 
-    --card: 0 0% 15%;
-    --card-foreground: 0 0% 80%;
+    --card: 42 46% 98%;
+    --card-foreground: 28 18% 16%;
 
-    --popover: 0 0% 12%;
-    --popover-foreground: 0 0% 80%;
+    --popover: 42 46% 98%;
+    --popover-foreground: 28 18% 16%;
 
-    --primary: 207 100% 50%;
-    --primary-foreground: 0 0% 12%;
+    --primary: 18 46% 44%;
+    --primary-foreground: 42 46% 98%;
 
-    --secondary: 240 4% 18%;
-    --secondary-foreground: 0 0% 80%;
+    --accent-2: 36 52% 62%;
 
-    --muted: 0 0% 24%;
-    --muted-foreground: 0 0% 55%;
+    --secondary: 40 30% 90%;
+    --secondary-foreground: 28 18% 22%;
 
-    --accent: 207 100% 50%;
-    --accent-foreground: 0 0% 12%;
+    --muted: 40 30% 90%;
+    --muted-foreground: 32 9% 42%;
 
-    --destructive: 0 70% 50%;
+    --accent: 18 46% 44%;
+    --accent-foreground: 42 46% 98%;
+
+    --destructive: 0 65% 48%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 4% 25%;
-    --input: 240 4% 18%;
-    --ring: 207 100% 50%;
+    --border: 40 24% 86%;
+    --input: 40 24% 86%;
+    --ring: 18 46% 44%;
 
-    --radius: 0.25rem;
+    --radius: 0.85rem;
 
-    /* Custom terminal colors */
-    --terminal-green: 120 60% 50%;
-    --terminal-cyan: 180 60% 50%;
-    --terminal-amber: 40 90% 50%;
-    --terminal-pink: 330 80% 60%;
-    --terminal-dim: 120 20% 35%;
-    --terminal-glow: 0 0 20px hsl(207 100% 50% / 0.4);
+    --terminal-green: 150 40% 36%;
+    --terminal-cyan: 195 45% 40%;
+    --terminal-amber: 32 70% 46%;
+    --terminal-pink: 12 50% 48%;
+    --terminal-dim: 32 9% 55%;
 
-    --sidebar-background: 0 0% 12%;
-    --sidebar-foreground: 0 0% 80%;
-    --sidebar-primary: 207 100% 50%;
-    --sidebar-primary-foreground: 0 0% 12%;
-    --sidebar-accent: 240 4% 18%;
-    --sidebar-accent-foreground: 0 0% 80%;
-    --sidebar-border: 240 4% 25%;
-    --sidebar-ring: 207 100% 50%;
-  }
-
-  .light {
-    --background: 0 0% 98%;
-    --foreground: 0 0% 15%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 15%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 15%;
-
-    --primary: 207 100% 50%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 15%;
-
-    --muted: 0 0% 90%;
-    --muted-foreground: 0 0% 45%;
-
-    --accent: 207 100% 50%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 0 0% 85%;
-    --input: 0 0% 90%;
-    --ring: 207 100% 50%;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 0 0% 15%;
-    --sidebar-primary: 207 100% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 96%;
-    --sidebar-accent-foreground: 0 0% 15%;
-    --sidebar-border: 0 0% 85%;
-    --sidebar-ring: 207 100% 50%;
-
-    --terminal-green: 120 60% 40%;
-    --terminal-cyan: 180 60% 40%;
-    --terminal-amber: 40 90% 50%;
-    --terminal-pink: 330 80% 50%;
-    --terminal-dim: 120 20% 60%;
-    --terminal-glow: 0 0 15px hsl(207 100% 50% / 0.3);
+    --sidebar-background: 40 40% 95%;
+    --sidebar-foreground: 28 18% 16%;
+    --sidebar-primary: 18 46% 44%;
+    --sidebar-primary-foreground: 42 46% 98%;
+    --sidebar-accent: 40 30% 90%;
+    --sidebar-accent-foreground: 28 18% 22%;
+    --sidebar-border: 40 24% 86%;
+    --sidebar-ring: 18 46% 44%;
   }
 
   .dark {
-    --background: 0 0% 12%;
-    --foreground: 0 0% 80%;
-    --card: 0 0% 15%;
-    --card-foreground: 0 0% 80%;
-    --popover: 0 0% 12%;
-    --popover-foreground: 0 0% 80%;
-    --primary: 207 100% 50%;
-    --primary-foreground: 0 0% 12%;
-    --secondary: 240 4% 18%;
-    --secondary-foreground: 0 0% 80%;
-    --muted: 0 0% 24%;
-    --muted-foreground: 0 0% 55%;
-    --accent: 207 100% 50%;
-    --accent-foreground: 0 0% 12%;
-    --destructive: 0 70% 50%;
+    --background: 28 12% 10%;
+    --foreground: 40 24% 90%;
+
+    --card: 28 11% 13%;
+    --card-foreground: 40 24% 90%;
+
+    --popover: 28 11% 13%;
+    --popover-foreground: 40 24% 90%;
+
+    --primary: 20 62% 60%;
+    --primary-foreground: 28 12% 10%;
+
+    --accent-2: 36 52% 56%;
+
+    --secondary: 28 10% 17%;
+    --secondary-foreground: 40 24% 90%;
+
+    --muted: 28 10% 17%;
+    --muted-foreground: 36 12% 62%;
+
+    --accent: 20 62% 60%;
+    --accent-foreground: 28 12% 10%;
+
+    --destructive: 0 63% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 240 4% 25%;
-    --input: 240 4% 18%;
-    --ring: 207 100% 50%;
-    --sidebar-background: 0 0% 12%;
-    --sidebar-foreground: 0 0% 80%;
-    --sidebar-primary: 207 100% 50%;
-    --sidebar-primary-foreground: 0 0% 12%;
-    --sidebar-accent: 240 4% 18%;
-    --sidebar-accent-foreground: 0 0% 80%;
-    --sidebar-border: 240 4% 25%;
-    --sidebar-ring: 207 100% 50%;
+
+    --border: 30 10% 22%;
+    --input: 30 10% 22%;
+    --ring: 20 62% 60%;
+
+    --terminal-green: 150 42% 52%;
+    --terminal-cyan: 195 50% 58%;
+    --terminal-amber: 36 80% 62%;
+    --terminal-pink: 14 60% 62%;
+    --terminal-dim: 36 12% 52%;
+
+    --sidebar-background: 28 12% 10%;
+    --sidebar-foreground: 40 24% 90%;
+    --sidebar-primary: 20 62% 60%;
+    --sidebar-primary-foreground: 28 12% 10%;
+    --sidebar-accent: 28 10% 17%;
+    --sidebar-accent-foreground: 40 24% 90%;
+    --sidebar-border: 30 10% 22%;
+    --sidebar-ring: 20 62% 60%;
   }
 }
 
@@ -141,276 +118,83 @@
   }
 
   body {
-    @apply bg-background text-foreground font-mono antialiased;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 18px;
-  }
-
-  /* Light mode specific background */
-  .light body {
-    background-image:
-      /* Circuit-like patterns */
-      radial-gradient(circle at 20% 20%, hsl(var(--terminal-cyan) / 0.05) 1px, transparent 1px),
-      radial-gradient(circle at 80% 20%, hsl(var(--terminal-pink) / 0.05) 1px, transparent 1px),
-      radial-gradient(circle at 20% 80%, hsl(var(--terminal-amber) / 0.05) 1px, transparent 1px),
-      radial-gradient(circle at 80% 80%, hsl(var(--primary) / 0.05) 1px, transparent 1px),
-      radial-gradient(circle at 50% 50%, hsl(var(--terminal-green) / 0.05) 1px, transparent 1px),
-
-      /* Hexagonal grid pattern */
-      repeating-linear-gradient(
-        60deg,
-        transparent,
-        transparent 15px,
-        hsl(var(--border) / 0.08) 15px,
-        hsl(var(--border) / 0.08) 16px
-      ),
-      repeating-linear-gradient(
-        -60deg,
-        transparent,
-        transparent 15px,
-        hsl(var(--border) / 0.08) 15px,
-        hsl(var(--border) / 0.08) 16px
-      ),
-
-      /* Vertical circuit lines */
-      repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 2px,
-        hsl(var(--terminal-cyan) / 0.03) 2px,
-        hsl(var(--terminal-cyan) / 0.03) 4px,
-        transparent 4px,
-        transparent 20px
-      ),
-
-      /* Horizontal data streams */
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 1px,
-        hsl(var(--terminal-green) / 0.03) 1px,
-        hsl(var(--terminal-green) / 0.03) 2px,
-        transparent 2px,
-        transparent 25px
-      );
-    background-size:
-      200px 200px,
-      250px 250px,
-      180px 180px,
-      220px 220px,
-      300px 300px,
-      30px 52px,
-      30px 52px,
-      25px 25px,
-      20px 20px;
-    background-position:
-      var(--mouse-x, 50%) var(--mouse-y, 50%),
-      calc(var(--mouse-x, 50%) + 100px) calc(var(--mouse-y, 50%) + 100px),
-      calc(var(--mouse-x, 50%) + 200px) calc(var(--mouse-y, 50%) + 200px),
-      calc(var(--mouse-x, 50%) + 300px) calc(var(--mouse-y, 50%) + 300px),
-      calc(var(--mouse-x, 50%) + 150px) calc(var(--mouse-y, 50%) + 150px),
-      0 0, 15px 26px, 0 0, 0 0;
-    background-color: hsl(var(--background));
-  }
-
-  /* Dark mode specific background */
-  .dark body {
-    background-image:
-      /* Circuit-like patterns */
-      radial-gradient(circle at 20% 20%, hsl(var(--terminal-cyan) / 0.03) 1px, transparent 1px),
-      radial-gradient(circle at 80% 20%, hsl(var(--terminal-pink) / 0.03) 1px, transparent 1px),
-      radial-gradient(circle at 20% 80%, hsl(var(--terminal-amber) / 0.03) 1px, transparent 1px),
-      radial-gradient(circle at 80% 80%, hsl(var(--primary) / 0.03) 1px, transparent 1px),
-      radial-gradient(circle at 50% 50%, hsl(var(--terminal-green) / 0.03) 1px, transparent 1px),
-
-      /* Hexagonal grid pattern */
-      repeating-linear-gradient(
-        60deg,
-        transparent,
-        transparent 15px,
-        hsl(var(--border) / 0.04) 15px,
-        hsl(var(--border) / 0.04) 16px
-      ),
-      repeating-linear-gradient(
-        -60deg,
-        transparent,
-        transparent 15px,
-        hsl(var(--border) / 0.04) 15px,
-        hsl(var(--border) / 0.04) 16px
-      ),
-
-      /* Vertical circuit lines */
-      repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 2px,
-        hsl(var(--terminal-cyan) / 0.02) 2px,
-        hsl(var(--terminal-cyan) / 0.02) 4px,
-        transparent 4px,
-        transparent 20px
-      ),
-
-      /* Horizontal data streams */
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 1px,
-        hsl(var(--terminal-green) / 0.02) 1px,
-        hsl(var(--terminal-green) / 0.02) 2px,
-        transparent 2px,
-        transparent 25px
-      );
-    background-size:
-      200px 200px,  /* circuit node 1 */
-      250px 250px,  /* circuit node 2 */
-      180px 180px,  /* circuit node 3 */
-      220px 220px,  /* circuit node 4 */
-      300px 300px,  /* circuit node 5 */
-      30px 52px,    /* hex grid 1 */
-      30px 52px,    /* hex grid 2 */
-      25px 25px,    /* vertical circuits */
-      20px 20px;    /* horizontal streams */
-    background-position:
-      var(--mouse-x, 50%) var(--mouse-y, 50%),
-      calc(var(--mouse-x, 50%) + 100px) calc(var(--mouse-y, 50%) + 100px),
-      calc(var(--mouse-x, 50%) + 200px) calc(var(--mouse-y, 50%) + 200px),
-      calc(var(--mouse-x, 50%) + 300px) calc(var(--mouse-y, 50%) + 300px),
-      calc(var(--mouse-x, 50%) + 150px) calc(var(--mouse-y, 50%) + 150px),
-      0 0, 15px 26px, 0 0, 0 0;
-    animation:
-      circuit-flow 15s ease-in-out infinite,
-      data-stream 8s linear infinite,
-      matrix-glow 10s ease-in-out infinite;
-  }
-
-  /* Subtle accent dots */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    background-image:
-      radial-gradient(circle at 33% 33%, hsl(var(--terminal-green) / 0.04) 1px, transparent 1px),
-      radial-gradient(circle at 66% 33%, hsl(var(--terminal-pink) / 0.04) 1px, transparent 1px),
-      radial-gradient(circle at 33% 66%, hsl(var(--primary) / 0.04) 1px, transparent 1px),
-      radial-gradient(circle at 66% 66%, hsl(var(--terminal-cyan) / 0.04) 1px, transparent 1px);
-    background-size: 300px 300px;
-    background-position: var(--mouse-x, 50%) var(--mouse-y, 50%);
-    animation: subtle-float 25s ease-in-out infinite;
-    z-index: -1;
-  }
-
-  @keyframes circuit-flow {
-    0%, 100% {
-      background-position:
-        0% 0%, 100px 100px, 200px 200px, 300px 300px, 150px 150px,
-        0 0, 15px 26px, 0 0, 0 0;
-    }
-    50% {
-      background-position:
-        50px 50px, 150px 150px, 250px 250px, 350px 350px, 200px 200px,
-        2px 2px, 17px 28px, 1px 1px, 1px 1px;
-    }
-  }
-
-  @keyframes data-stream {
-    0% { background-position: 0% 0%, 100px 100px, 200px 200px, 300px 300px, 150px 150px, 0 0, 15px 26px, 0 0, 0 0; }
-    100% { background-position: 0% 100%, 100px 200px, 200px 300px, 300px 400px, 150px 250px, 0 0, 15px 26px, 0 0, 5px 5px; }
-  }
-
-  @keyframes matrix-glow {
-    0%, 100% { filter: brightness(1) contrast(1) hue-rotate(0deg); }
-    25% { filter: brightness(1.1) contrast(1.05) hue-rotate(5deg); }
-    50% { filter: brightness(1.05) contrast(1.02) hue-rotate(0deg); }
-    75% { filter: brightness(1.1) contrast(1.05) hue-rotate(-5deg); }
-  }
-
-  @keyframes subtle-pulse {
-    0%, 100% { filter: brightness(1) contrast(1); }
-    50% { filter: brightness(1.02) contrast(1.01); }
-  }
-
-  @keyframes subtle-float {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.6; }
+    @apply bg-background text-foreground antialiased;
+    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-size: 1.5em;
+    @apply font-semibold tracking-tight text-foreground;
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    line-height: 1.2;
   }
 
-  .text-lg {
-    font-size: 1.25rem;
-  }
-
-  .text-xl {
-    font-size: 1.5rem;
-  }
-
-  .text-2xl {
-    font-size: 1.75rem;
+  code, pre, kbd, samp {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   }
 
   ::selection {
-    background: hsl(var(--primary) / 0.3);
-    color: hsl(var(--primary));
+    background: hsl(var(--primary) / 0.18);
+  }
+}
+
+/* Simple, soft background wash */
+@layer base {
+  .bg-fx {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(60vmax 60vmax at 100% 0%, hsl(var(--primary) / 0.06), transparent 70%),
+      radial-gradient(50vmax 50vmax at 0% 100%, hsl(var(--accent-2) / 0.05), transparent 70%);
+  }
+  .dark .bg-fx {
+    background:
+      radial-gradient(60vmax 60vmax at 100% 0%, hsl(var(--primary) / 0.10), transparent 70%),
+      radial-gradient(50vmax 50vmax at 0% 100%, hsl(var(--accent-2) / 0.08), transparent 70%);
   }
 }
 
 @layer utilities {
+  .text-gradient {
+    background-image: linear-gradient(115deg, hsl(var(--primary)), hsl(var(--accent-2)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
   .terminal-glow {
-    text-shadow: 0 0 10px hsl(var(--primary) / 0.6), 0 0 20px hsl(var(--primary) / 0.4);
+    text-shadow: none;
   }
 
   .terminal-border {
-    border: 1px solid hsl(var(--border));
-    box-shadow: 0 0 10px hsl(var(--primary) / 0.1);
+    @apply border border-border rounded-2xl;
+    box-shadow: 0 1px 2px hsl(240 24% 14% / 0.04), 0 6px 20px -8px hsl(250 84% 60% / 0.10);
+  }
+  .dark .terminal-border {
+    box-shadow: 0 1px 2px hsl(0 0% 0% / 0.25);
   }
 
-  .scanlines {
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      hsl(240 50% 2%) 2px,
-      hsl(240 50% 2%) 4px
-    );
-    pointer-events: none;
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 
-  .highlight-keyword {
-    color: hsl(var(--terminal-cyan));
-    font-weight: 500;
-  }
-
-  .highlight-tech {
-    color: hsl(var(--terminal-amber));
-  }
-
-  .highlight-important {
-    color: hsl(var(--terminal-pink));
-  }
+  .highlight-keyword { color: hsl(var(--terminal-cyan)); font-weight: 500; }
+  .highlight-tech { color: hsl(var(--terminal-amber)); }
+  .highlight-important { color: hsl(var(--terminal-pink)); }
 }
 
 @keyframes blink {
   0%, 50% { opacity: 1; }
   51%, 100% { opacity: 0; }
 }
-
-@keyframes typewriter {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
 .cursor-blink {
   animation: blink 1s step-end infinite;
-}
-
-.typing-effect {
-  overflow: hidden;
-  white-space: nowrap;
-  animation: typewriter 2s steps(40) forwards;
 }
