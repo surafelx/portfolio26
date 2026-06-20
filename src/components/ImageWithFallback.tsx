@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Image as ImageIcon, AlertCircle } from 'lucide-react';
 
 interface ImageWithFallbackProps {
@@ -21,6 +21,7 @@ export const ImageWithFallback = ({
 }: ImageWithFallbackProps) => {
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const imgRef = useRef<HTMLImageElement>(null);
 
   const handleError = () => {
     setHasError(true);
@@ -30,6 +31,18 @@ export const ImageWithFallback = ({
   const handleLoad = () => {
     setIsLoading(false);
   };
+
+  // Handle images that finish loading (e.g. from cache) before the
+  // onLoad handler is attached, which would otherwise leave the spinner stuck.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img && img.complete) {
+      if (img.naturalWidth === 0) {
+        setHasError(true);
+      }
+      setIsLoading(false);
+    }
+  }, [src]);
 
   if (hasError) {
     return (
@@ -52,6 +65,7 @@ export const ImageWithFallback = ({
         </div>
       )}
       <img
+        ref={imgRef}
         src={src}
         alt={alt}
         className={`${className} ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
