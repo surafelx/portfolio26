@@ -116,6 +116,18 @@ export const clientProjects: PortfolioProject[] = [
 // Personal projects — shown as a grid on the home page.
 export const personalProjects: PortfolioProject[] = [
   {
+    id: "apleo",
+    name: "Apleo",
+    subtitle: "Opportunity Discovery Platform",
+    icon: "🧭",
+    badge: "Product",
+    description:
+      "A product that surfaces every scholarship, job, fellowship, and grant worth your shot — new opportunities added daily across 190+ countries, with personalized matches, a calendar, and notifications. The productized evolution of my Opportunity Finder.",
+    stack: ["Next.js", "TypeScript", "Tailwind", "PostgreSQL", "Web scraping"],
+    link: { label: "Live product" },
+    image: "/projects/apleo.jpg",
+  },
+  {
     id: "mindbridge",
     name: "MindBridge",
     subtitle: "AI Therapy Companion",
