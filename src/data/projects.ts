@@ -14,7 +14,7 @@ export const clientProjects: PortfolioProject[] = [
       "The operating system behind Celerus.io — 5 independent AI agents that coordinate through an orchestration layer. Each agent handles a distinct role (sales, support, analytics, scheduling, reporting) and the system manages communication between them.",
     stack: ["Next.js", "TypeScript", "OpenAI Assistants", "Agent orchestration"],
     link: { label: "celerus.io", url: "https://celerus.io" },
-    image: "/projects/celerus.jpg",
+    image: "/projects/conducting.jpg",
   },
   {
     id: "celerus",
