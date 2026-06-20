@@ -68,6 +68,7 @@ export const clientProjects: PortfolioProject[] = [
     description:
       "Full-stack web build for an Ethiopian client.",
     stack: ["Next.js", "Node.js"],
+    image: "/projects/kebelezero.jpg",
   },
   {
     id: "rubypictures",
