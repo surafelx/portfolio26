@@ -78,6 +78,7 @@ export const clientProjects: PortfolioProject[] = [
     description:
       "Website build for a creative studio.",
     stack: ["Next.js", "Tailwind"],
+    image: "/projects/rubypictures.jpg",
   },
   {
     id: "kebelezero",
