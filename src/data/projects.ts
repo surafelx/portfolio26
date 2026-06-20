@@ -37,6 +37,7 @@ export const clientProjects: PortfolioProject[] = [
     description:
       "Co-built a B2B marketplace connecting Ethiopian healthcare suppliers with buyers across East Africa. Full product strategy, revenue model, and platform build.",
     stack: ["Next.js", "PostgreSQL", "Prisma", "Stripe", "Email automation"],
+    image: "/projects/ethiopian-medical-hub.jpg",
   },
   {
     id: "ethiopian-coffee-guide",
