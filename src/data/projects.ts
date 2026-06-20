@@ -29,16 +29,6 @@ export const clientProjects: PortfolioProject[] = [
     image: "/projects/celerus.jpg",
   },
   {
-    id: "vigs-seo",
-    name: "VIGS SEO",
-    subtitle: "SEO Operations Automation",
-    icon: "📈",
-    badge: "Automation",
-    description:
-      "Built an automation layer connecting the SearchAtlas API to OpenClaw for an SEO agency. Daily digest reports, proactive alerts, backlink monitoring, and Monday.com auto-tasks for 7 Australian clients.",
-    stack: ["SearchAtlas API", "OpenClaw", "Node.js", "Monday.com", "Telegram"],
-  },
-  {
     id: "ethiopian-medical-hub",
     name: "Ethiopian Medical Hub",
     subtitle: "B2B Healthcare Marketplace",
@@ -60,17 +50,6 @@ export const clientProjects: PortfolioProject[] = [
     image: "/projects/ethiopian-coffee-guide.jpg",
   },
   {
-    id: "nibret",
-    name: "Nibret.com",
-    subtitle: "Ethiopian Client",
-    icon: "🌱",
-    badge: "Ethiopian Client",
-    description:
-      "Full-stack web build for an Ethiopian client.",
-    stack: ["Next.js", "Node.js"],
-    image: "/projects/kebelezero.jpg",
-  },
-  {
     id: "rubypictures",
     name: "RubyPictures.com",
     subtitle: "Ethiopian Client",
@@ -90,6 +69,7 @@ export const clientProjects: PortfolioProject[] = [
     description:
       "Full-stack web build for an Ethiopian client.",
     stack: ["Next.js", "Node.js"],
+    image: "/projects/kebelezero.jpg",
   },
   {
     id: "yenesuzuki",
