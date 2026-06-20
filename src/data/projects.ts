@@ -14,7 +14,7 @@ export const clientProjects: PortfolioProject[] = [
       "The operating system behind Celerus.io — 5 independent AI agents that coordinate through an orchestration layer. Each agent handles a distinct role (sales, support, analytics, scheduling, reporting) and the system manages communication between them.",
     stack: ["Next.js", "TypeScript", "OpenAI Assistants", "Agent orchestration"],
     link: { label: "celerus.io", url: "https://celerus.io" },
-    image: "/projects/celerus.jpg",
+    image: "/projects/conducting.jpg",
   },
   {
     id: "celerus",
@@ -37,7 +37,6 @@ export const clientProjects: PortfolioProject[] = [
     description:
       "Built an automation layer connecting the SearchAtlas API to OpenClaw for an SEO agency. Daily digest reports, proactive alerts, backlink monitoring, and Monday.com auto-tasks for 7 Australian clients.",
     stack: ["SearchAtlas API", "OpenClaw", "Node.js", "Monday.com", "Telegram"],
-    image: "/projects/vigs-seo.jpg",
   },
   {
     id: "ethiopian-medical-hub",
@@ -48,7 +47,6 @@ export const clientProjects: PortfolioProject[] = [
     description:
       "Co-built a B2B marketplace connecting Ethiopian healthcare suppliers with buyers across East Africa. Full product strategy, revenue model, and platform build.",
     stack: ["Next.js", "PostgreSQL", "Prisma", "Stripe", "Email automation"],
-    image: "/projects/ethiopian-medical-hub.jpg",
   },
   {
     id: "ethiopian-coffee-guide",
@@ -70,7 +68,7 @@ export const clientProjects: PortfolioProject[] = [
     description:
       "Full-stack web build for an Ethiopian client.",
     stack: ["Next.js", "Node.js"],
-    image: "/projects/nibret.jpg",
+    image: "/projects/kebelezero.jpg",
   },
   {
     id: "rubypictures",
@@ -92,7 +90,6 @@ export const clientProjects: PortfolioProject[] = [
     description:
       "Full-stack web build for an Ethiopian client.",
     stack: ["Next.js", "Node.js"],
-    image: "/projects/kebelezero.jpg",
   },
   {
     id: "yenesuzuki",
@@ -103,7 +100,6 @@ export const clientProjects: PortfolioProject[] = [
     description:
       "An online catalog and store for genuine Suzuki spare parts — browsable inventory by model, part search, and order enquiries for customers and workshops.",
     stack: ["Next.js", "Node.js", "PostgreSQL", "Stripe"],
-    image: "/projects/yenesuzuki.jpg",
   },
   {
     id: "agrisun",
@@ -114,12 +110,23 @@ export const clientProjects: PortfolioProject[] = [
     description:
       "Reference letter and documentation prepared for agricultural operations and export work in Ethiopia.",
     stack: ["Document preparation"],
-    image: "/projects/agrisun.jpg",
   },
 ];
 
 // Personal projects — shown as a grid on the home page.
 export const personalProjects: PortfolioProject[] = [
+  {
+    id: "apleo",
+    name: "Apleo",
+    subtitle: "Opportunity Discovery Platform",
+    icon: "🧭",
+    badge: "Product",
+    description:
+      "A product that surfaces every scholarship, job, fellowship, and grant worth your shot — new opportunities added daily across 190+ countries, with personalized matches, a calendar, and notifications. The productized evolution of my Opportunity Finder.",
+    stack: ["Next.js", "TypeScript", "Tailwind", "PostgreSQL", "Web scraping"],
+    link: { label: "Live product" },
+    image: "/projects/apleo.jpg",
+  },
   {
     id: "mindbridge",
     name: "MindBridge",
@@ -130,7 +137,6 @@ export const personalProjects: PortfolioProject[] = [
       "A personal AI therapy and wellness companion with encrypted mood tracking, journaling, and AI chat via Telegram. Includes 7 therapy exercises (CBT thought records, grounding, box breathing, self-compassion, behavioral activation, values clarification, grief work). AES-256-GCM field-level encryption with built-in crisis detection.",
     stack: ["Next.js", "Prisma", "Telegram Bot", "OpenAI", "AES-256", "PostgreSQL"],
     link: { label: "Private build" },
-    image: "/projects/mindbridge.jpg",
   },
   {
     id: "abebe",
@@ -142,7 +148,6 @@ export const personalProjects: PortfolioProject[] = [
       "A persistent AI assistant running on an EC2 server, connected to Telegram. Handles scheduling, reminders, research, writing, opportunity finding, and daily check-ins. Built with OpenClaw, Google Calendar API, and AfroMessage SMS.",
     stack: ["OpenClaw", "Telegram", "Google Calendar", "AfroMessage", "Node.js"],
     link: { label: "Personal tool" },
-    image: "/projects/abebe.jpg",
   },
   {
     id: "opportunity-finder",
@@ -154,7 +159,6 @@ export const personalProjects: PortfolioProject[] = [
       "Automated system that proactively searches for scholarships, fellowships, freelance gigs, and writing opportunities relevant to my goals. Delivers results formatted for Telegram with source links and deadlines.",
     stack: ["OpenClaw", "Web scraping", "Telegram", "Scheduler"],
     link: { label: "Personal tool" },
-    image: "/projects/opportunity-finder.jpg",
   },
 ];
 
