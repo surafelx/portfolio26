@@ -159,12 +159,19 @@ export function HeroScene({ site, section }: SceneProps) {
 export function FeaturedScene({ site, section }: SceneProps) {
   const projects = visibleProjects(site, "featured");
   if (projects.length === 0) return null;
+  // Two screenshot projects sit side by side as equal cards; any other mix uses the wide layout.
+  const pair = projects.length === 2 && projects.every((p) => p.steps.length === 0 && p.image);
   return (
     <Scene section={section}>
       <SceneHead section={section} />
-      <div className="featured reveal">
+      <div className={`featured reveal${pair ? " pair" : ""}`}>
         {projects.map((project) =>
-          project.steps.length > 0 ? (
+          pair ? (
+            <article key={project.id} className="tile deep">
+              <ProjectCopy project={project} />
+              <Shot project={project} />
+            </article>
+          ) : project.steps.length > 0 ? (
             <article key={project.id} className="tile deep">
               <ProjectCopy project={project} />
               <ol className="flow" aria-label={`How ${project.name} works`}>

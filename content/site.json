@@ -30,8 +30,7 @@
   "headerStats": [
     { "value": "9 yrs", "label": "building software" },
     { "value": "3×", "label": "executive roles" },
-    { "value": "20+", "label": "five-star projects" },
-    { "value": "1st", "label": "Chapa Hackathon '24" }
+    { "value": "20+", "label": "five-star projects" }
   ],
   "now": [
     { "title": "Chief Agent Officer", "org": "Vision Infrastructure Group Services", "place": "Sydney" },
@@ -39,14 +38,14 @@
     { "title": "Co-founder", "org": "Celerus.io", "place": "" }
   ],
   "highlights": [
-    { "value": "11", "label": "projects you can open or read the code for" },
+    { "value": "12", "label": "projects you can open or read the code for" },
     { "value": "190+", "label": "countries of opportunities tracked by Apleo" },
     { "value": "5", "label": "agents working together in one system" },
     { "value": "3", "label": "countries of clients: US, Australia, Ethiopia" }
   ],
   "sections": [
     { "id": "hero", "visible": true, "nav": "Intro", "eyebrow": "", "title": "", "intro": "" },
-    { "id": "featured", "visible": true, "nav": "Featured", "eyebrow": "Featured", "title": "The work I'd show first.", "intro": "Two systems that run every day: one I built as CTO, one for a US sales team." },
+    { "id": "featured", "visible": true, "nav": "Featured", "eyebrow": "Featured", "title": "The work I'd show first.", "intro": "An AI product I led as CTO, and the writing garden I build and tend myself." },
     { "id": "products", "visible": true, "nav": "Products", "eyebrow": "Products", "title": "Things you can open today.", "intro": "Click a screenshot to try the product, or read the code where it's public." },
     { "id": "more", "visible": true, "nav": "Also built", "eyebrow": "Also built", "title": "Tools, client builds and open source.", "intro": "Smaller systems, some private and some public, plus the numbers behind the work." },
     { "id": "experience", "visible": true, "nav": "Experience", "eyebrow": "Experience", "title": "Where I've worked.", "intro": "Remote, with teams in Australia, the US, Singapore and Ethiopia." },
@@ -70,11 +69,25 @@
       "visible": true
     },
     {
+      "id": "garden",
+      "name": "Garden · VisualSpam",
+      "label": "Personal · Writing platform",
+      "tagline": "A digital garden for essays, notes and logs, with a private planning studio, AI triage and a browser extension that files anything worth keeping.",
+      "placement": "featured",
+      "image": "/projects/garden.jpg",
+      "liveUrl": "https://garden.visualspam.et",
+      "codeUrl": "https://github.com/surafelx/visualspam-garden",
+      "ctaLabel": "",
+      "ctaUrl": "",
+      "steps": [],
+      "visible": true
+    },
+    {
       "id": "homewise",
       "name": "AI sales automation",
       "label": "Homewise · North Carolina",
       "tagline": "Sales reps only talk to leads who are ready.",
-      "placement": "featured",
+      "placement": "compact",
       "image": "",
       "liveUrl": "",
       "codeUrl": "",
@@ -87,7 +100,7 @@
         { "name": "Follow-up", "note": "email · sms" },
         { "name": "Meeting booked", "note": "done" }
       ],
-      "visible": true
+      "visible": false
     },
     {
       "id": "apleo",
