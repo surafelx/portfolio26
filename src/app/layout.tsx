@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Caveat, Geist, Geist_Mono } from "next/font/google";
 import { site, settingsCss } from "@/lib/content";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
+import "./sketch.css";
 
 const sans = Geist({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
 const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
+const hand = Caveat({ subsets: ["latin"], weight: ["500", "700"], variable: "--font-hand", display: "swap" });
 
 export const metadata: Metadata = {
   title: site.profile.seoTitle || site.profile.shortName,
@@ -30,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${sans.variable} ${mono.variable}`}
+      className={`${sans.variable} ${mono.variable} ${hand.variable}`}
       data-snap={settings.snapScroll ? "on" : "off"}
       data-motion={settings.animations ? "on" : "off"}
     >

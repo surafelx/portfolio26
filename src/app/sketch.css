@@ -1,0 +1,159 @@
+/*
+ * Sketchbook layer: pen-and-pencil accents on top of the clean layout. Wobbly hand-drawn edges with a second pencil
+ * stroke, pen underlines and circles in the accent colour, handwritten labels and margin notes, and a dot-grid page.
+ * Scoped to `.site` (the public pages), so the admin editor is untouched. Marks are CSS masks filled with theme
+ * colours, so they follow light and dark mode. Delete this file and its import to remove the look.
+ */
+:root {
+  --hand: var(--font-hand), "Segoe Print", "Bradley Hand", cursive;
+  --pen: var(--accent);
+  --pencil: color-mix(in srgb, var(--ink) 58%, transparent);
+  --pencil-soft: color-mix(in srgb, var(--ink) 16%, transparent);
+  --wobble-lg: 28px 9px 32px 11px / 11px 30px 9px 28px;
+  --wobble-md: 20px 6px 22px 8px / 8px 22px 6px 20px;
+  --wobble-btn: 255px 18px 225px 18px / 18px 225px 18px 255px;
+  --second-stroke: 3px 4px 0 -1px var(--pencil-soft);
+  --mark-squiggle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 16' preserveAspectRatio='none'%3E%3Cpath d='M3 10C24 3 40 13 62 8s38-6 58 0 36 5 52-1 18-2 25 0' fill='none' stroke='black' stroke-width='3.2' stroke-linecap='round'/%3E%3Cpath d='M22 14c30-4 70-2 112-3' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' opacity='.6'/%3E%3C/svg%3E");
+  --mark-circle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 60' preserveAspectRatio='none'%3E%3Cpath d='M64 6C30 3 5 16 6 32s26 25 58 24 52-12 51-28S88 4 52 7C36 9 22 14 16 21' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  --mark-highlight: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M4 26c40-6 90-9 190-8M8 32c50-5 110-7 186-4' fill='none' stroke='black' stroke-width='11' stroke-linecap='round' opacity='.9'/%3E%3C/svg%3E");
+}
+
+/* ---------- Dot-grid sketchbook page ---------- */
+.backdrop::before {
+  background:
+    radial-gradient(60% 50% at 12% 0%, var(--glow), transparent 70%),
+    radial-gradient(50% 45% at 100% 100%, var(--glow), transparent 70%),
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--ink) 13%, transparent) 1px, transparent 1.4px) 0 0 / 26px 26px;
+}
+
+/* ---------- Hand-drawn surfaces ---------- */
+.site :is(.tile, .post) {
+  border-radius: var(--wobble-lg);
+  outline-width: 1.5px;
+  box-shadow: var(--card-shadow), var(--second-stroke);
+}
+.site :is(.now, .quote) {
+  border-width: 1.5px;
+  border-color: var(--pencil-soft);
+  border-radius: var(--wobble-lg);
+  box-shadow: var(--shadow), var(--second-stroke);
+}
+.site .contact { border-radius: 34px 12px 38px 14px / 14px 36px 12px 34px; box-shadow: 4px 5px 0 -1px var(--pencil-soft); }
+.site :is(.tile, .post):hover { box-shadow: var(--card-shadow), 4px 5px 0 -1px color-mix(in srgb, var(--accent) 45%, transparent); }
+.site .tile .shot { border-radius: 14px 6px 0 0 / 10px 8px 0 0; }
+.site .flow li { border-radius: 12px 5px 13px 6px / 6px 13px 5px 12px; }
+
+/* Pencil rules instead of ruler-straight lines */
+.site :is(.jobs li, .quote figcaption, .now .clock, .highlights, .highlights div, .footer-base, .article .excerpt, .more-articles) { border-style: dashed; border-color: var(--pencil-soft); }
+.site .jobs li:last-child { border-bottom-style: dashed; }
+
+/* ---------- Handwriting ---------- */
+.site :is(.scene-head .label, .xp aside > .label, .now .top .label, .tile .copy .label, .footer .label, .article > .label, .more-articles .label) {
+  font-family: var(--hand);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  line-height: 1.05;
+  color: var(--pen);
+}
+.site .tile.deep .copy .label { color: var(--deep-link); }
+.site .scene-head .label, .site .xp aside > .label { display: inline-block; transform: rotate(-2deg); transform-origin: left bottom; }
+.site .intro .greeting { font-family: var(--hand); font-size: 30px; font-weight: 700; color: var(--pen); transform: rotate(-2deg); transform-origin: left; display: inline-block; }
+.site .quote .mark { font-family: var(--hand); font-size: 76px; height: 30px; line-height: 0.75; }
+.site .quote .who { border-radius: 46% 54% 42% 58% / 55% 45% 55% 45%; border: 1.5px solid var(--pencil-soft); }
+
+/* ---------- Pen marks ---------- */
+/* The muted half of the headline gets a highlighter swipe behind it. */
+.site .intro h1 span { position: relative; z-index: 0; white-space: nowrap; }
+:root[data-theme="dark"] .site .intro h1 span::before { background: color-mix(in srgb, var(--accent) 48%, transparent); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .site .intro h1 span::before { background: color-mix(in srgb, var(--accent) 48%, transparent); } }
+.site .intro h1 span::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -6px;
+  right: -8px;
+  bottom: 0.02em;
+  height: 0.5em;
+  background: color-mix(in srgb, var(--accent) 34%, transparent);
+  -webkit-mask: var(--mark-highlight) center / 100% 100% no-repeat;
+  mask: var(--mark-highlight) center / 100% 100% no-repeat;
+}
+/* Squiggle under section titles */
+.site :is(.scene-head h2, .xp aside h2, .article h1)::after {
+  content: "";
+  display: block;
+  width: min(200px, 60%);
+  height: 14px;
+  margin-top: 10px;
+  background: var(--pen);
+  -webkit-mask: var(--mark-squiggle) left center / 100% 100% no-repeat;
+  mask: var(--mark-squiggle) left center / 100% 100% no-repeat;
+}
+.site .contact h2::after {
+  content: "";
+  display: block;
+  width: min(240px, 60%);
+  height: 16px;
+  margin-top: 12px;
+  background: var(--deep-link);
+  -webkit-mask: var(--mark-squiggle) left center / 100% 100% no-repeat;
+  mask: var(--mark-squiggle) left center / 100% 100% no-repeat;
+}
+/* Circled numbers */
+.site .highlights b { position: relative; display: inline-block; }
+.site .highlights div:first-child b::after {
+  content: "";
+  position: absolute;
+  inset: -12px -18px -10px -16px;
+  background: var(--pen);
+  -webkit-mask: var(--mark-circle) center / 100% 100% no-repeat;
+  mask: var(--mark-circle) center / 100% 100% no-repeat;
+  rotate: -4deg;
+}
+/* The current section in the side rail gets a pen stroke instead of a bar */
+.site .rail button[aria-current="true"] .tick {
+  width: 30px;
+  height: 8px;
+  background: var(--pen);
+  -webkit-mask: var(--mark-squiggle) center / 100% 100% no-repeat;
+  mask: var(--mark-squiggle) center / 100% 100% no-repeat;
+}
+.site .rail .name { border-radius: 14px 6px 15px 7px / 7px 15px 6px 14px; }
+
+/* ---------- Controls ---------- */
+.site .btn { border-radius: var(--wobble-btn); box-shadow: 3px 4px 0 -1px color-mix(in srgb, var(--accent) 45%, transparent); transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease; }
+.site .btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 5px 0 -1px color-mix(in srgb, var(--accent) 60%, transparent); }
+.site .btn:active { transform: translate(2px, 3px); box-shadow: 0 0 0 -1px transparent; }
+.site .btn.line { border-width: 1.5px; border-color: var(--pencil); box-shadow: 3px 4px 0 -1px var(--pencil-soft); }
+.site .contact .btn.line { border-color: rgba(255, 255, 255, 0.35); box-shadow: 3px 4px 0 -1px rgba(255, 255, 255, 0.14); }
+.site .theme-toggle { border-radius: 47% 53% 45% 55% / 55% 46% 54% 45%; border-width: 1.5px; }
+.site .article .tags li { border-radius: 14px 5px 15px 6px / 6px 15px 5px 14px; border-style: dashed; }
+
+/* ---------- Margin notes ---------- */
+.hand-note { display: inline-flex; align-items: flex-end; gap: 2px; font-family: var(--hand); font-size: 24px; font-weight: 700; line-height: 1; color: var(--pen); pointer-events: none; user-select: none; }
+.hand-note-text { transform: rotate(-4deg); white-space: nowrap; }
+.hand-arrow { width: 48px; height: 36px; flex: none; }
+.hand-note.arrow-down .hand-arrow { transform: translateY(16px); }
+.hand-note.arrow-down-left { flex-direction: row-reverse; }
+.hand-note.arrow-down-left .hand-arrow { transform: scaleX(-1) translateY(16px); }
+.hand-note.arrow-right .hand-arrow { transform: rotate(-55deg); }
+.hand-note.arrow-up { flex-direction: column-reverse; align-items: flex-start; }
+.hand-note.arrow-up .hand-arrow { transform: rotate(-150deg); margin: 0 0 -2px 18px; }
+
+.site .intro .actions { position: relative; }
+.site .intro .actions .hand-note { position: absolute; left: 12px; top: calc(100% + 10px); }
+.site .scene-head .hand-note { justify-self: end; align-self: start; }
+.site .contact .hand-note { color: var(--deep-link); margin-bottom: 4px; }
+.site .featured-note { display: flex; justify-content: flex-end; margin: -8px 24px 6px 0; }
+
+@media (max-width: 1023px) {
+  .site .intro .actions .hand-note, .site .featured-note { display: none; }
+}
+@media (max-width: 640px) {
+  .site .contact .hand-note { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site .btn, .site .btn:hover, .site .btn:active { transform: none; transition: none; }
+}

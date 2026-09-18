@@ -1,4 +1,5 @@
 import type { Project, Section, Site } from "@/lib/schema";
+import { HandNote } from "./HandNote";
 import { LocalTime } from "./LocalTime";
 
 type SceneProps = { site: Site; section: Section };
@@ -112,6 +113,7 @@ export function HeroScene({ site, section }: SceneProps) {
                 Download CV
               </a>
             )}
+            <HandNote arrow="up">start here</HandNote>
           </div>
         </div>
 
@@ -164,6 +166,9 @@ export function FeaturedScene({ site, section }: SceneProps) {
   return (
     <Scene section={section}>
       <SceneHead section={section} />
+      <div className="featured-note">
+        <HandNote arrow="down">live &amp; shipped, click through</HandNote>
+      </div>
       <div className={`featured reveal${pair ? " pair" : ""}`}>
         {projects.map((project) =>
           pair ? (
@@ -337,6 +342,7 @@ export function ContactScene({ site, section }: SceneProps) {
           {section.intro && <p>{section.intro}</p>}
         </div>
         <div className="actions">
+          <HandNote arrow="down-left">say hi!</HandNote>
           {profile.bookingUrl && (
             <ExtLink className="btn" href={profile.bookingUrl}>
               Book a 20-minute call
