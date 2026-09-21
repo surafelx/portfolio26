@@ -9,7 +9,7 @@ const hex = z.string().regex(/^#[0-9a-fA-F]{6}$/, "Use a 6-digit hex colour like
 const text = (max: number) => z.string().trim().max(max);
 const link = z.string().trim().max(500);
 
-export const SECTION_IDS = ["hero", "featured", "ai", "products", "ecommerce", "erp", "websites", "art", "more", "experience", "testimonials", "writing", "contact"] as const;
+export const SECTION_IDS = ["hero", "featured", "ai", "products", "ecommerce", "erp", "websites", "art", "events", "more", "experience", "testimonials", "writing", "contact"] as const;
 
 /** Project groups that render as a showcase: screenshot cards first, then text-only cards. */
 export const SHOWCASE_PLACEMENTS = ["ai", "ecommerce", "erp", "websites", "art"] as const;
@@ -72,6 +72,16 @@ export const postSchema = z.object({
   url: link.default(""),
 });
 
+export const eventSchema = z.object({
+  date: text(24).default(""),
+  title: text(80).min(1, "Name the event"),
+  role: text(60).default(""),
+  host: text(80).default(""),
+  summary: text(240).default(""),
+  url: link.default(""),
+  image: link.default(""),
+});
+
 export const testimonialSchema = z.object({
   quote: text(400).min(1, "Add the quote"),
   name: text(60).min(1, "Add who said it"),
@@ -127,6 +137,7 @@ export const siteSchema = z
     education: text(200).default(""),
     posts: z.array(postSchema).max(9),
     testimonials: z.array(testimonialSchema).max(6).default([]),
+    events: z.array(eventSchema).max(9).default([]),
     contact: z.object({
       note: text(140).default(""),
       footerNote: text(160).default(""),
@@ -157,3 +168,4 @@ export type Project = Site["projects"][number];
 export type Section = Site["sections"][number];
 export type Stat = Site["headerStats"][number];
 export type Testimonial = Site["testimonials"][number];
+export type EventItem = Site["events"][number];

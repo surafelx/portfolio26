@@ -220,6 +220,21 @@ export function ProductsScene({ site, section }: SceneProps) {
 function Showcase({ site, section, placement }: SceneProps & { placement: (typeof SHOWCASE_PLACEMENTS)[number] }) {
   const projects = visibleProjects(site, placement);
   if (projects.length === 0) return null;
+  if (projects.length === 2) {
+    return (
+      <Scene section={section} className={`scene-showcase scene-${placement}`}>
+        <SceneHead section={section} />
+        <div className="featured pair showcase-pair reveal">
+          {projects.map((project) => (
+            <article key={project.id} className="tile" data-project-card={project.id}>
+              <ProjectCopy project={project} />
+              <Shot project={project} />
+            </article>
+          ))}
+        </div>
+      </Scene>
+    );
+  }
   const withShots = projects.filter((p) => p.image);
   const textOnly = projects.filter((p) => !p.image);
   return (
@@ -253,6 +268,45 @@ export const EcommerceScene = (props: SceneProps) => <Showcase {...props} placem
 export const ErpScene = (props: SceneProps) => <Showcase {...props} placement="erp" />;
 export const WebsitesScene = (props: SceneProps) => <Showcase {...props} placement="websites" />;
 export const ArtScene = (props: SceneProps) => <Showcase {...props} placement="art" />;
+
+export function EventsScene({ site, section }: SceneProps) {
+  if (site.events.length === 0) return null;
+  return (
+    <Scene section={section} className="scene-events">
+      <SceneHead section={section} />
+      <ol className={`events${site.events.length === 2 ? " two" : ""} reveal`}>
+        {site.events.map((event) => {
+          const body = (
+            <>
+              {event.image && <img className="event-img" src={event.image} alt="" loading="lazy" />}
+              <div className="event-copy">
+                <div className="event-meta">
+                  {event.date && <span className="mono">{event.date}</span>}
+                  {event.role && <span className="event-role">{event.role}</span>}
+                </div>
+                <h3>{event.title}</h3>
+                {event.host && <p className="event-host">{event.host}</p>}
+                {event.summary && <p className="event-summary">{event.summary}</p>}
+                {event.url && <span className="more">More</span>}
+              </div>
+            </>
+          );
+          return (
+            <li key={`${event.date}-${event.title}`} className="event">
+              {event.url ? (
+                <ExtLink href={event.url} className="event-card">
+                  {body}
+                </ExtLink>
+              ) : (
+                <div className="event-card">{body}</div>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    </Scene>
+  );
+}
 
 export function MoreScene({ site, section }: SceneProps) {
   const projects = visibleProjects(site, "compact");

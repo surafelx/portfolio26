@@ -9,6 +9,7 @@ import {
   ContactScene,
   EcommerceScene,
   ErpScene,
+  EventsScene,
   ExperienceScene,
   FeaturedScene,
   HeroScene,
@@ -28,6 +29,7 @@ const scenes: Record<SectionId, (props: { site: Site; section: Section }) => Rea
   erp: ErpScene,
   websites: WebsitesScene,
   art: ArtScene,
+  events: EventsScene,
   more: MoreScene,
   experience: ExperienceScene,
   testimonials: TestimonialsScene,
@@ -51,6 +53,8 @@ function hasContent(section: Section): boolean {
       return site.projects.some((p) => p.visible && p.placement === "compact") || site.highlights.length > 0;
     case "writing":
       return site.posts.length > 0;
+    case "events":
+      return site.events.length > 0;
     case "testimonials":
       return site.testimonials.length > 0;
     default:

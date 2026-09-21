@@ -141,3 +141,19 @@ html.dialog-open { overflow: hidden; }
   .pd-device { display: none; }
   .pd-browser { min-height: 60svh; }
 }
+
+/* Events: hackathons, talks and performances */
+.site .events { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.site .events.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.site .event-card { height: 100%; display: flex; flex-direction: column; overflow: hidden; color: var(--ink); background: var(--card); outline: 1.5px solid var(--card-edge); outline-offset: -1px; border-radius: var(--wobble-lg); box-shadow: var(--card-shadow), var(--second-stroke); }
+.site a.event-card:hover { text-decoration: none; outline-color: color-mix(in srgb, var(--accent) 45%, var(--card-edge)); box-shadow: var(--card-shadow), 4px 5px 0 -1px color-mix(in srgb, var(--accent) 45%, transparent); }
+.site .event-img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.site .event-copy { padding: 24px 26px; display: grid; gap: 8px; align-content: start; }
+.site .event-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--mute); }
+.site .event-role { font-family: var(--hand); font-size: 22px; font-weight: 700; color: var(--pen); transform: rotate(-2deg); }
+.site .event-card h3 { font-size: clamp(22px, 2.2vw, 28px); line-height: 1.15; }
+.site .event-host { color: var(--ink-2); font-weight: 500; }
+.site .event-summary { color: var(--ink-2); font-size: 15px; }
+.site .event-card .more { margin-top: 4px; color: var(--accent); font-size: 14px; font-weight: 500; }
+@media (max-width: 1023px) { .site .events, .site .events.two { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .site .events, .site .events.two { grid-template-columns: 1fr; } }

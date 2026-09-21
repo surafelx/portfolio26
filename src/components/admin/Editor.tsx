@@ -16,7 +16,7 @@ const TABS: { id: TabId; label: string; blurb: string }[] = [
   { id: "sections", label: "Sections", blurb: "Show, hide, rename and reorder the screens of the site." },
   { id: "projects", label: "Projects", blurb: "Everything in the Featured, Products and Also built screens." },
   { id: "experience", label: "Experience", blurb: "Jobs, skills and education." },
-  { id: "writing", label: "Writing and quotes", blurb: "Articles, and what clients say about you." },
+  { id: "writing", label: "Writing, events and quotes", blurb: "Articles, events you took part in, and what clients say about you." },
   { id: "contact", label: "Contact", blurb: "The closing screen and footer." },
 ];
 
@@ -134,6 +134,15 @@ const postFields: FieldSpec[] = [
   { key: "title", label: "Title", type: "text", wide: true },
   { key: "date", label: "Date", type: "text", placeholder: "June 2026" },
   { key: "url", label: "Link", type: "url" },
+  { key: "summary", label: "Summary", type: "textarea" },
+];
+const eventFields: FieldSpec[] = [
+  { key: "title", label: "Event", type: "text", wide: true },
+  { key: "role", label: "What you did", type: "text", placeholder: "1st place, Speaker, Performed" },
+  { key: "date", label: "Date", type: "text", placeholder: "May 2024" },
+  { key: "host", label: "Host or place", type: "text" },
+  { key: "url", label: "Link", type: "url" },
+  { key: "image", label: "Photo", type: "image" },
   { key: "summary", label: "Summary", type: "textarea" },
 ];
 const testimonialFields: FieldSpec[] = [
@@ -575,6 +584,22 @@ export function Editor({ initial, mode }: { initial: Site; mode: StorageMode }) 
                   max={9}
                   errors={errors}
                   errorPrefix="posts"
+                />
+              </section>
+              <section className="card">
+                <h2>Events</h2>
+                <p className="card-note">Hackathons, talks, workshops and performances. Shown on their own screen.</p>
+                <ListEditor
+                  items={draft.events}
+                  onChange={(v) => set("events", v)}
+                  fields={eventFields}
+                  titleOf={(e) => e.title}
+                  subtitleOf={(e) => [e.role, e.date].filter(Boolean).join(" · ")}
+                  makeNew={() => ({ date: "", title: "", role: "", host: "", summary: "", url: "", image: "" })}
+                  addLabel="Add an event"
+                  max={9}
+                  errors={errors}
+                  errorPrefix="events"
                 />
               </section>
               <section className="card">

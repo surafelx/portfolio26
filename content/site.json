@@ -43,11 +43,6 @@
   ],
   "now": [
     {
-      "title": "Chief Agent Officer",
-      "org": "Vision Infrastructure Group Services",
-      "place": "Sydney"
-    },
-    {
       "title": "AI and SDR automation",
       "org": "Homewise",
       "place": "North Carolina"
@@ -140,6 +135,14 @@
       "eyebrow": "Personal & art",
       "title": "Things I make for myself.",
       "intro": "Visuals, audio, writing, live coding and interactive experiments. The full practice lives at visualspam.et."
+    },
+    {
+      "id": "events",
+      "visible": true,
+      "nav": "Events",
+      "eyebrow": "Events",
+      "title": "Where I've shown up.",
+      "intro": "Hackathons, workshops and live-coded performances."
     },
     {
       "id": "more",
@@ -357,6 +360,24 @@
       "visible": true
     },
     {
+      "label": "Personal · Social app",
+      "tagline": "Take 11 real tests to find the bits that make you you, then meet other people who took them too. No selfies, no swiping, no matching.",
+      "image": "/projects/bytesoul.jpg",
+      "liveUrl": "https://byte-love-spark.vercel.app",
+      "codeUrl": "",
+      "ctaLabel": "",
+      "ctaUrl": "",
+      "videoUrl": "",
+      "docsUrl": "",
+      "stack": "TanStack Start, React, Supabase, Vercel AI SDK",
+      "details": "",
+      "steps": [],
+      "visible": true,
+      "id": "bytesoul",
+      "name": "Bytesoul",
+      "placement": "grid"
+    },
+    {
       "id": "nibret",
       "name": "Nibret",
       "label": "Built as CTO · 2024 to 2025",
@@ -543,7 +564,7 @@
   ],
   "jobs": [
     {
-      "when": "Mar 2026 – now",
+      "when": "Mar – Sep 2026",
       "title": "Chief Agent Officer",
       "org": "Vision Infrastructure Group Services, Sydney",
       "summary": "AI agent strategy and delivery for the business and its clients.",
@@ -668,5 +689,25 @@
   "contact": {
     "note": "Addis Ababa · UTC+3 · overlaps US mornings and Australian afternoons",
     "footerNote": "AI and full-stack engineer in Addis Ababa, working with teams around the world."
-  }
+  },
+  "events": [
+    {
+      "date": "2024",
+      "title": "Chapa Hackathon",
+      "role": "1st place",
+      "host": "Chapa",
+      "summary": "",
+      "url": "",
+      "image": ""
+    },
+    {
+      "date": "",
+      "title": "Live coding music",
+      "role": "Taught and performed",
+      "host": "Dagmawi Babi's event",
+      "summary": "Taught live coding music, then performed a live-coded set.",
+      "url": "",
+      "image": ""
+    }
+  ]
 }
