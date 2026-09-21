@@ -28,37 +28,166 @@
     "showProgress": true
   },
   "headerStats": [
-    { "value": "9 yrs", "label": "building software" },
-    { "value": "3×", "label": "executive roles" },
-    { "value": "20+", "label": "five-star projects" }
+    {
+      "value": "9 yrs",
+      "label": "building software"
+    },
+    {
+      "value": "3×",
+      "label": "executive roles"
+    },
+    {
+      "value": "20+",
+      "label": "five-star projects"
+    }
   ],
   "now": [
-    { "title": "Chief Agent Officer", "org": "Vision Infrastructure Group Services", "place": "Sydney" },
-    { "title": "AI and SDR automation", "org": "Homewise", "place": "North Carolina" },
-    { "title": "Co-founder", "org": "Celerus.io", "place": "" }
+    {
+      "title": "Chief Agent Officer",
+      "org": "Vision Infrastructure Group Services",
+      "place": "Sydney"
+    },
+    {
+      "title": "AI and SDR automation",
+      "org": "Homewise",
+      "place": "North Carolina"
+    },
+    {
+      "title": "Co-founder",
+      "org": "Celerus.io",
+      "place": ""
+    }
   ],
   "highlights": [
-    { "value": "12", "label": "projects you can open or read the code for" },
-    { "value": "190+", "label": "countries of opportunities tracked by Apleo" },
-    { "value": "5", "label": "agents working together in one system" },
-    { "value": "3", "label": "countries of clients: US, Australia, Ethiopia" }
+    {
+      "value": "12",
+      "label": "projects you can open or read the code for"
+    },
+    {
+      "value": "190+",
+      "label": "countries of opportunities tracked by Apleo"
+    },
+    {
+      "value": "5",
+      "label": "agents working together in one system"
+    },
+    {
+      "value": "3",
+      "label": "countries of clients: US, Australia, Ethiopia"
+    }
   ],
   "sections": [
-    { "id": "hero", "visible": true, "nav": "Intro", "eyebrow": "", "title": "", "intro": "" },
-    { "id": "featured", "visible": true, "nav": "Featured", "eyebrow": "Featured", "title": "The work I'd show first.", "intro": "An AI product I led as CTO, and the writing garden I build and tend myself." },
-    { "id": "products", "visible": true, "nav": "Products", "eyebrow": "Products", "title": "Things you can open today.", "intro": "Click a screenshot to try the product, or read the code where it's public." },
-    { "id": "more", "visible": true, "nav": "Also built", "eyebrow": "Also built", "title": "Tools, client builds and open source.", "intro": "Smaller systems, some private and some public, plus the numbers behind the work." },
-    { "id": "experience", "visible": true, "nav": "Experience", "eyebrow": "Experience", "title": "Where I've worked.", "intro": "Remote, with teams in Australia, the US, Singapore and Ethiopia." },
-    { "id": "testimonials", "visible": true, "nav": "Clients", "eyebrow": "What clients say", "title": "In their words.", "intro": "Feedback from clients on Upwork. Names are held back until they agree to be named." },
-    { "id": "writing", "visible": true, "nav": "Writing", "eyebrow": "Writing", "title": "Notes from the build.", "intro": "Short write-ups on what I built, what broke, and what I'd change." },
-    { "id": "contact", "visible": true, "nav": "Contact", "eyebrow": "Contact", "title": "Let's build something.", "intro": "I'm open to senior remote roles and focused contracts, and I usually reply within a day." }
+    {
+      "id": "hero",
+      "visible": true,
+      "nav": "Intro",
+      "eyebrow": "",
+      "title": "",
+      "intro": ""
+    },
+    {
+      "id": "featured",
+      "visible": true,
+      "nav": "Featured",
+      "eyebrow": "Featured",
+      "title": "The work I'd show first.",
+      "intro": "Two AI products I built end to end: a business partner for founders, and a CRM whose agent texts, calls and books leads."
+    },
+    {
+      "id": "ai",
+      "visible": true,
+      "nav": "AI & agents",
+      "eyebrow": "AI & agents",
+      "title": "Agents that do the work.",
+      "intro": "Voice and SMS agents, multi-agent systems, and open-source agent tooling I've shipped."
+    },
+    {
+      "id": "products",
+      "visible": true,
+      "nav": "Products",
+      "eyebrow": "Products",
+      "title": "Things you can open today.",
+      "intro": "Click a screenshot to try the product, or read the code where it's public."
+    },
+    {
+      "id": "ecommerce",
+      "visible": true,
+      "nav": "E-commerce",
+      "eyebrow": "E-commerce",
+      "title": "Stores people buy from.",
+      "intro": "Catalogues, carts and listings, with Amharic for Ethiopian customers."
+    },
+    {
+      "id": "erp",
+      "visible": true,
+      "nav": "ERP",
+      "eyebrow": "ERP modules",
+      "title": "Modules that run the back office.",
+      "intro": "Payroll and inventory, built for how organisations in Ethiopia actually work."
+    },
+    {
+      "id": "websites",
+      "visible": true,
+      "nav": "Websites",
+      "eyebrow": "Websites",
+      "title": "Sites for companies and causes.",
+      "intro": "A company site, a nonprofit I run, and a studio that ships websites in three days."
+    },
+    {
+      "id": "art",
+      "visible": true,
+      "nav": "Art",
+      "eyebrow": "Personal & art",
+      "title": "Things I make for myself.",
+      "intro": "Visuals, audio, writing, live coding and interactive experiments. The full practice lives at visualspam.et."
+    },
+    {
+      "id": "more",
+      "visible": true,
+      "nav": "Also built",
+      "eyebrow": "Also built",
+      "title": "Tools and client builds.",
+      "intro": "Smaller systems, some private and some public, plus the numbers behind the work."
+    },
+    {
+      "id": "experience",
+      "visible": true,
+      "nav": "Experience",
+      "eyebrow": "Experience",
+      "title": "Where I've worked.",
+      "intro": "Remote, with teams in Australia, the US, Singapore and Ethiopia."
+    },
+    {
+      "id": "testimonials",
+      "visible": true,
+      "nav": "Clients",
+      "eyebrow": "What clients say",
+      "title": "In their words.",
+      "intro": "Feedback from clients on Upwork. Names are held back until they agree to be named."
+    },
+    {
+      "id": "writing",
+      "visible": true,
+      "nav": "Writing",
+      "eyebrow": "Writing",
+      "title": "Notes from the build.",
+      "intro": "Short write-ups on what I built, what broke, and what I'd change."
+    },
+    {
+      "id": "contact",
+      "visible": true,
+      "nav": "Contact",
+      "eyebrow": "Contact",
+      "title": "Let's build something.",
+      "intro": "I'm open to senior remote roles and focused contracts, and I usually reply within a day."
+    }
   ],
   "projects": [
     {
       "id": "budera",
       "name": "Budera AI Legion",
       "label": "Built as CTO · 2025",
-      "tagline": "Five agents share one company profile and answer strategy, compliance, trend and competitor questions together.",
+      "tagline": "An AI business partner: five built-in agents plus ones you build, working from your real Stripe, Shopify and Analytics data.",
       "placement": "featured",
       "image": "/projects/budera.jpg",
       "liveUrl": "https://budera-ai-legion.vercel.app",
@@ -73,11 +202,29 @@
       "visible": true
     },
     {
+      "label": "AI agent CRM · 2026",
+      "tagline": "Texts every new lead in seconds, calls the ones who go quiet with a natural AI voice, and books the job, across every client an agency runs.",
+      "image": "/projects/autopilot.jpg",
+      "liveUrl": "https://autopilot-crm-alpha.vercel.app",
+      "codeUrl": "",
+      "ctaLabel": "",
+      "ctaUrl": "",
+      "videoUrl": "",
+      "docsUrl": "",
+      "stack": "Next.js, React, TypeScript, Postgres, Drizzle ORM, React Flow, Twilio, Retell, ElevenLabs",
+      "details": "A multi-tenant CRM with workflow automation, in the style of GoHighLevel. An agency runs sub-accounts, one per client business, each with its own contacts, pipelines, SMS number and playbooks.\n\n- AI voice calls that pitch a chosen offer, and playbooks that branch on the outcome: booked, no answer or voicemail\n- Two-way SMS through Twilio, with inbound lead webhooks and STOP handling\n- A node-canvas playbook builder: drag steps onto connections, with triggers, waits, tags, webhooks and if/else branches\n- An agent brief per client: offers, qualifying questions, objections, guardrails and a call and text script\n- Pipelines on a drag-and-drop board, email campaigns, calendars, funnels, and API keys encrypted per agency",
+      "steps": [],
+      "visible": true,
+      "id": "autopilot",
+      "name": "Autopilot",
+      "placement": "featured"
+    },
+    {
       "id": "garden",
       "name": "Garden · VisualSpam",
       "label": "Personal · Writing platform",
       "tagline": "A digital garden for essays, notes and logs, with a private planning studio, AI triage and a browser extension that files anything worth keeping.",
-      "placement": "featured",
+      "placement": "art",
       "image": "/projects/garden.jpg",
       "liveUrl": "https://garden.visualspam.et",
       "codeUrl": "https://github.com/surafelx/visualspam-garden",
@@ -87,22 +234,55 @@
       "visible": true
     },
     {
+      "label": "Personal · Art",
+      "tagline": "My art home: visuals, audio, shows, live coding and a video diary, as one interactive site.",
+      "image": "/projects/visualspam.jpg",
+      "liveUrl": "https://www.visualspam.et",
+      "codeUrl": "https://github.com/surafelx/visualspam",
+      "ctaLabel": "",
+      "ctaUrl": "",
+      "videoUrl": "",
+      "docsUrl": "",
+      "stack": "",
+      "details": "",
+      "steps": [],
+      "visible": true,
+      "id": "visualspam",
+      "name": "VisualSpam",
+      "placement": "art"
+    },
+    {
       "id": "homewise",
       "name": "AI sales automation",
       "label": "Homewise · North Carolina",
       "tagline": "Sales reps only talk to leads who are ready.",
-      "placement": "compact",
+      "placement": "ai",
       "image": "",
       "liveUrl": "",
       "codeUrl": "",
       "ctaLabel": "Ask for a walkthrough",
       "ctaUrl": "https://cal.com/surafelx",
       "steps": [
-        { "name": "New lead", "note": "in" },
-        { "name": "Enrich", "note": "data" },
-        { "name": "AI qualifies", "note": "score" },
-        { "name": "Follow-up", "note": "email · sms" },
-        { "name": "Meeting booked", "note": "done" }
+        {
+          "name": "New lead",
+          "note": "in"
+        },
+        {
+          "name": "Enrich",
+          "note": "data"
+        },
+        {
+          "name": "AI qualifies",
+          "note": "score"
+        },
+        {
+          "name": "Follow-up",
+          "note": "email · sms"
+        },
+        {
+          "name": "Meeting booked",
+          "note": "done"
+        }
       ],
       "visible": false
     },
@@ -125,7 +305,7 @@
       "name": "Conducting OS",
       "label": "Celerus.io",
       "tagline": "Sales, support, analytics, scheduling and reporting agents coordinated by one conductor.",
-      "placement": "grid",
+      "placement": "ai",
       "image": "/projects/conducting-os.jpg",
       "liveUrl": "https://www.celerus.io",
       "codeUrl": "https://github.com/surafelx/celerus-io",
@@ -181,7 +361,7 @@
       "name": "Nibret",
       "label": "Built as CTO · 2024 to 2025",
       "tagline": "Find a home in Ethiopia. Listings, CRM and a full Amharic interface.",
-      "placement": "grid",
+      "placement": "ecommerce",
       "image": "/projects/nibret.jpg",
       "liveUrl": "https://nibret-home-finder-ethiopia.vercel.app",
       "codeUrl": "https://github.com/surafelx/nibret-home-finder-ethiopia",
@@ -195,8 +375,8 @@
       "name": "YeneSuzuki",
       "label": "Client · E-commerce",
       "tagline": "Online catalogue and store for genuine Suzuki spare parts, searchable by model.",
-      "placement": "compact",
-      "image": "",
+      "placement": "ecommerce",
+      "image": "/projects/yenesuzuki.jpg",
       "liveUrl": "https://yenesuzuki.com",
       "codeUrl": "",
       "ctaLabel": "",
@@ -205,11 +385,29 @@
       "visible": true
     },
     {
+      "label": "ERP module · Payroll",
+      "tagline": "Payroll for multi-branch organisations: employees, monthly transactions, income tax and pension in one place, with reports ready for the bank.",
+      "image": "/projects/celerus-pay.jpg",
+      "liveUrl": "",
+      "codeUrl": "",
+      "ctaLabel": "",
+      "ctaUrl": "",
+      "videoUrl": "",
+      "docsUrl": "",
+      "stack": "Next.js, Express, PostgreSQL",
+      "details": "Each period is entered, calculated, checked and closed on time across every branch and department. Every organisation that signs up gets the app under its own name.\n\n- A batched payroll engine behind an Express and PostgreSQL API\n- Ethiopian income tax bands and 7% employee plus 11% employer pension built in, and editable\n- Amounts in birr, in English and Amharic\n- A demo mode that runs on generated data in the browser, with a scripted assistant",
+      "steps": [],
+      "visible": true,
+      "id": "celerus-pay",
+      "name": "Celerus Pay",
+      "placement": "erp"
+    },
+    {
       "id": "agri-sun",
       "name": "Agri-Sun Stock Smart",
-      "label": "AgriSun Ethiopia",
-      "tagline": "Inventory, customers and installations for a solar-agriculture company.",
-      "placement": "compact",
+      "label": "ERP module · Inventory",
+      "tagline": "Inventory, customers and installations for AgriSun Ethiopia, a solar-agriculture company.",
+      "placement": "erp",
       "image": "/projects/agrisun.jpg",
       "liveUrl": "https://agrisun-inventory.vercel.app",
       "codeUrl": "https://github.com/surafelx/agri-sun-stock-smart",
@@ -219,11 +417,65 @@
       "visible": true
     },
     {
+      "label": "Client · Company website",
+      "tagline": "Solar water pumps and backup power for Ethiopian farms and homes, with services, projects, products and a free assessment request.",
+      "image": "/projects/agrisun-website.jpg",
+      "liveUrl": "https://agrisunethiopia.com",
+      "codeUrl": "",
+      "ctaLabel": "",
+      "ctaUrl": "",
+      "videoUrl": "",
+      "docsUrl": "",
+      "stack": "",
+      "details": "",
+      "steps": [],
+      "visible": true,
+      "id": "agrisun-website",
+      "name": "AgriSun Ethiopia",
+      "placement": "websites"
+    },
+    {
+      "label": "Founder · Nonprofit",
+      "tagline": "Sunday mentoring and essentials for kids and charity homes in Ethiopia. It starts with the Sunday 0 letter and a way to join.",
+      "image": "/projects/happy-lucky.jpg",
+      "liveUrl": "https://happy-lucky-project.vercel.app",
+      "codeUrl": "https://github.com/surafelx/the-happy-lucky-project",
+      "ctaLabel": "",
+      "ctaUrl": "",
+      "videoUrl": "",
+      "docsUrl": "",
+      "stack": "Next.js, Google Sheets API",
+      "details": "",
+      "steps": [],
+      "visible": true,
+      "id": "happy-lucky",
+      "name": "The Happy Lucky Project",
+      "placement": "websites"
+    },
+    {
+      "label": "Web studio",
+      "tagline": "Professional websites for Ethiopian businesses at a fixed price, built in three days.",
+      "image": "/projects/asun-digitals.jpg",
+      "liveUrl": "https://asun-digitals.vercel.app",
+      "codeUrl": "https://github.com/surafelx/asun-digitals",
+      "ctaLabel": "",
+      "ctaUrl": "",
+      "videoUrl": "",
+      "docsUrl": "",
+      "stack": "",
+      "details": "",
+      "steps": [],
+      "visible": true,
+      "id": "asun-digitals",
+      "name": "Asun Digitals",
+      "placement": "websites"
+    },
+    {
       "id": "mindbridge",
       "name": "MindBridge",
       "label": "Private · AI wellness",
       "tagline": "AI therapy companion on Telegram with encrypted mood tracking, seven CBT-based exercises and crisis detection.",
-      "placement": "compact",
+      "placement": "ai",
       "image": "",
       "liveUrl": "",
       "codeUrl": "",
@@ -251,7 +503,7 @@
       "name": "Automaton Auditor",
       "label": "Open source · LangGraph",
       "tagline": "Agents that audit a codebase in parallel, reading its structure and git history.",
-      "placement": "compact",
+      "placement": "ai",
       "image": "",
       "liveUrl": "",
       "codeUrl": "https://github.com/surafelx/automation-auditor",
@@ -265,7 +517,7 @@
       "name": "Chimera",
       "label": "Open source · MCP",
       "tagline": "Research and content agents built from a written spec, with tests and CI from day one.",
-      "placement": "compact",
+      "placement": "ai",
       "image": "",
       "liveUrl": "",
       "codeUrl": "https://github.com/surafelx/chimera",
@@ -279,7 +531,7 @@
       "name": "Abebe",
       "label": "Personal · AI assistant",
       "tagline": "Always-on assistant on a cloud server that handles scheduling, reminders, research and daily check-ins over Telegram and SMS.",
-      "placement": "compact",
+      "placement": "ai",
       "image": "",
       "liveUrl": "",
       "codeUrl": "",
@@ -290,32 +542,128 @@
     }
   ],
   "jobs": [
-    { "when": "Mar 2026 – now", "title": "Chief Agent Officer", "org": "Vision Infrastructure Group Services, Sydney", "summary": "AI agent strategy and delivery for the business and its clients.", "visible": true },
-    { "when": "2026 – now", "title": "AI and SDR Automation", "org": "Homewise, North Carolina", "summary": "Lead enrichment, AI qualification, follow-ups and CRM sync.", "visible": true },
-    { "when": "Aug 2024 – now", "title": "Co-founder", "org": "Celerus.io", "summary": "AI agents platform. Built Conducting OS and client analytics.", "visible": true },
-    { "when": "Apr – Sep 2025", "title": "CTO", "org": "Budera, Singapore", "summary": "AI business-partner SaaS from idea to MVP, five agents.", "visible": true },
-    { "when": "Jun 2024 – Aug 2025", "title": "CTO", "org": "Nibret", "summary": "Real-estate platform for Ethiopia, web and mobile.", "visible": true },
-    { "when": "Nov 2024 – Jan 2025", "title": "Product Manager", "org": "Coderz", "summary": "Roadmap to delivery for a coding-education product.", "visible": true },
-    { "when": "Oct 2024 – Jan 2025", "title": "Senior Web Developer", "org": "Empire Business", "summary": "Sales funnels and CRM automation that lifted lead conversion.", "visible": true },
-    { "when": "Jan 2023 – Sep 2024", "title": "Technology Lead", "org": "AgriSun Ethiopia", "summary": "Solar agriculture software: IoT monitoring, inventory, dashboards.", "visible": true },
-    { "when": "Jun 2020 – Sep 2023", "title": "Full-Stack Engineer", "org": "ITIO, California", "summary": "Website testing tool, a social platform and solar monitoring.", "visible": true },
-    { "when": "2016 – 2024", "title": "Earlier", "org": "Mind Learning, data contracts, Upwork, SolarVillage, DykeSoft", "summary": "Bootcamp, data pipelines, 20+ freelance projects, ERP software.", "visible": true }
+    {
+      "when": "Mar 2026 – now",
+      "title": "Chief Agent Officer",
+      "org": "Vision Infrastructure Group Services, Sydney",
+      "summary": "AI agent strategy and delivery for the business and its clients.",
+      "visible": true
+    },
+    {
+      "when": "2026 – now",
+      "title": "AI and SDR Automation",
+      "org": "Homewise, North Carolina",
+      "summary": "Lead enrichment, AI qualification, follow-ups and CRM sync.",
+      "visible": true
+    },
+    {
+      "when": "Aug 2024 – now",
+      "title": "Co-founder",
+      "org": "Celerus.io",
+      "summary": "AI agents platform. Built Conducting OS and client analytics.",
+      "visible": true
+    },
+    {
+      "when": "Apr – Sep 2025",
+      "title": "CTO",
+      "org": "Budera, Singapore",
+      "summary": "AI business-partner SaaS from idea to MVP, five agents.",
+      "visible": true
+    },
+    {
+      "when": "Jun 2024 – Aug 2025",
+      "title": "CTO",
+      "org": "Nibret",
+      "summary": "Real-estate platform for Ethiopia, web and mobile.",
+      "visible": true
+    },
+    {
+      "when": "Nov 2024 – Jan 2025",
+      "title": "Product Manager",
+      "org": "Coderz",
+      "summary": "Roadmap to delivery for a coding-education product.",
+      "visible": true
+    },
+    {
+      "when": "Oct 2024 – Jan 2025",
+      "title": "Senior Web Developer",
+      "org": "Empire Business",
+      "summary": "Sales funnels and CRM automation that lifted lead conversion.",
+      "visible": true
+    },
+    {
+      "when": "Jan 2023 – Sep 2024",
+      "title": "Technology Lead",
+      "org": "AgriSun Ethiopia",
+      "summary": "Solar agriculture software: IoT monitoring, inventory, dashboards.",
+      "visible": true
+    },
+    {
+      "when": "Jun 2020 – Sep 2023",
+      "title": "Full-Stack Engineer",
+      "org": "ITIO, California",
+      "summary": "Website testing tool, a social platform and solar monitoring.",
+      "visible": true
+    },
+    {
+      "when": "2016 – 2024",
+      "title": "Earlier",
+      "org": "Mind Learning, data contracts, Upwork, SolarVillage, DykeSoft",
+      "summary": "Bootcamp, data pipelines, 20+ freelance projects, ERP software.",
+      "visible": true
+    }
   ],
   "skills": [
-    { "group": "AI and agents", "items": "LangGraph, LangChain, MCP, Claude and OpenAI APIs, RAG, n8n, Playwright" },
-    { "group": "Full stack", "items": "TypeScript, React, Next.js, Node.js, Python, FastAPI, PostgreSQL, MongoDB, Redis" },
-    { "group": "Shipping", "items": "Docker, GitHub Actions, AWS, Vercel, Stripe" }
+    {
+      "group": "AI and agents",
+      "items": "LangGraph, LangChain, MCP, Claude and OpenAI APIs, RAG, n8n, Playwright"
+    },
+    {
+      "group": "Full stack",
+      "items": "TypeScript, React, Next.js, Node.js, Python, FastAPI, PostgreSQL, MongoDB, Redis"
+    },
+    {
+      "group": "Shipping",
+      "items": "Docker, GitHub Actions, AWS, Vercel, Stripe"
+    }
   ],
   "education": "BSc Biomedical Engineering, University of Gondar, 2023, cum laude.",
   "posts": [
-    { "date": "June 2026", "title": "How I built a five-agent orchestration system", "summary": "One conductor, shared context, and the check that stops bad answers reaching users.", "url": "/articles/5-agent-orchestration" },
-    { "date": "June 2026", "title": "Replacing daily SEO reporting across seven clients", "summary": "The SearchAtlas API, a daily digest, and tasks opened automatically when a human is needed.", "url": "/articles/automating-seo-searchatlas" },
-    { "date": "May 2026", "title": "What building in Ethiopia taught me", "summary": "Constraints, trust, and the gap between local and global products.", "url": "/articles/building-in-ethiopia" }
+    {
+      "date": "June 2026",
+      "title": "How I built a five-agent orchestration system",
+      "summary": "One conductor, shared context, and the check that stops bad answers reaching users.",
+      "url": "/articles/5-agent-orchestration"
+    },
+    {
+      "date": "June 2026",
+      "title": "Replacing daily SEO reporting across seven clients",
+      "summary": "The SearchAtlas API, a daily digest, and tasks opened automatically when a human is needed.",
+      "url": "/articles/automating-seo-searchatlas"
+    },
+    {
+      "date": "May 2026",
+      "title": "What building in Ethiopia taught me",
+      "summary": "Constraints, trust, and the gap between local and global products.",
+      "url": "/articles/building-in-ethiopia"
+    }
   ],
   "testimonials": [
-    { "quote": "A very strong fit for AI work. We enjoyed working with him. He has a good understanding of structure, was able to pick up concepts and then advance them to new levels, and communication was easy.", "name": "AI project client", "role": "Upwork" },
-    { "quote": "Surafel did an outstanding job and delivered results far beyond my expectations. I'd highly recommend him to anyone looking for a reliable, skilled full-stack developer. I would definitely work with him again.", "name": "Full-stack project client", "role": "Upwork" },
-    { "quote": "A good experience working with this freelancer. Communication was polite and respectful, and he showed real willingness to help and move the project forward.", "name": "Web project client", "role": "Upwork" }
+    {
+      "quote": "A very strong fit for AI work. We enjoyed working with him. He has a good understanding of structure, was able to pick up concepts and then advance them to new levels, and communication was easy.",
+      "name": "AI project client",
+      "role": "Upwork"
+    },
+    {
+      "quote": "Surafel did an outstanding job and delivered results far beyond my expectations. I'd highly recommend him to anyone looking for a reliable, skilled full-stack developer. I would definitely work with him again.",
+      "name": "Full-stack project client",
+      "role": "Upwork"
+    },
+    {
+      "quote": "A good experience working with this freelancer. Communication was polite and respectful, and he showed real willingness to help and move the project forward.",
+      "name": "Web project client",
+      "role": "Upwork"
+    }
   ],
   "contact": {
     "note": "Addis Ababa · UTC+3 · overlaps US mornings and Australian afternoons",

@@ -43,12 +43,21 @@
 .site .tile .shot { border-radius: 14px 6px 0 0 / 10px 8px 0 0; }
 .site .flow li { border-radius: 12px 5px 13px 6px / 6px 13px 5px 12px; }
 
-/* Pencil rules instead of ruler-straight lines */
-.site :is(.jobs li, .quote figcaption, .now .clock, .highlights, .highlights div, .footer-base, .article .excerpt, .more-articles) { border-style: dashed; border-color: var(--pencil-soft); }
-.site .jobs li:last-child { border-bottom-style: dashed; }
+/* Pencil rules instead of ruler-straight lines. Only the sides that already have a rule get dashed, so no boxes appear. */
+.site :is(.jobs li, .quote figcaption, .now .clock, .highlights, .footer-base, .more-articles) { border-top-style: dashed; border-top-color: var(--pencil-soft); }
+.site :is(.jobs li:last-child, .highlights, .article .excerpt) { border-bottom-style: dashed; border-bottom-color: var(--pencil-soft); }
+.site .highlights div { border-left-style: dashed; border-left-color: var(--pencil-soft); }
+
+/* Experience: dates on one line, and a cleaner two-line entry */
+.site .jobs li { grid-template-columns: 150px minmax(0, 1fr); gap: 22px; padding-block: 12px; }
+.site .jobs .when { white-space: nowrap; padding-top: 4px; }
+.site .jobs b { font-size: 16px; }
+.site .jobs li:hover .when { color: var(--pen); }
+@media (min-width: 1024px) and (max-height: 800px) { .site .jobs li { padding-block: 7px; } }
+@media (max-width: 640px) { .site .jobs li { grid-template-columns: 1fr; gap: 2px; } }
 
 /* ---------- Handwriting ---------- */
-.site :is(.scene-head .label, .xp aside > .label, .now .top .label, .tile .copy .label, .footer .label, .article > .label, .more-articles .label) {
+.site :is(.scene-head .label, .xp aside > .label:first-child, .now .top .label, .tile .copy .label, .footer .label, .article > .label, .more-articles .label) {
   font-family: var(--hand);
   font-size: 22px;
   font-weight: 700;
@@ -58,7 +67,7 @@
   color: var(--pen);
 }
 .site .tile.deep .copy .label { color: var(--deep-link); }
-.site .scene-head .label, .site .xp aside > .label { display: inline-block; transform: rotate(-2deg); transform-origin: left bottom; }
+.site .scene-head .label, .site .xp aside > .label:first-child { display: inline-block; transform: rotate(-2deg); transform-origin: left bottom; }
 .site .intro .greeting { font-family: var(--hand); font-size: 30px; font-weight: 700; color: var(--pen); transform: rotate(-2deg); transform-origin: left; display: inline-block; }
 .site .quote .mark { font-family: var(--hand); font-size: 76px; height: 30px; line-height: 0.75; }
 .site .quote .who { border-radius: 46% 54% 42% 58% / 55% 45% 55% 45%; border: 1.5px solid var(--pencil-soft); }

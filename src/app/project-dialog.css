@@ -10,6 +10,15 @@
 
 html.dialog-open { overflow: hidden; }
 
+/* Showcase screens: screenshot cards, then text-only cards */
+.site .scene-showcase .products + .showcase-compact { margin-top: 12px; }
+@media (min-width: 1024px) {
+  .site .scene-showcase .products.showcase-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .site .scene-showcase .products.showcase-three .tile { display: flex; flex-direction: column; }
+  .site .scene-showcase .products.showcase-three .tile .shot { order: 0; margin: auto 16px 0; border-radius: 12px 12px 0 0; }
+  .site .scene-showcase .products.showcase-three .tile .copy { padding: 18px 20px 14px; }
+}
+
 .pd {
   width: min(1180px, calc(100vw - 32px));
   height: min(860px, calc(100svh - 32px));

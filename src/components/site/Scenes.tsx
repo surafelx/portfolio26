@@ -1,4 +1,5 @@
 import type { Project, Section, Site } from "@/lib/schema";
+import type { SHOWCASE_PLACEMENTS } from "@/lib/schema";
 import { HandNote } from "./HandNote";
 import { LocalTime } from "./LocalTime";
 
@@ -214,6 +215,44 @@ export function ProductsScene({ site, section }: SceneProps) {
     </Scene>
   );
 }
+
+/** A group of projects: screenshot cards first, then text-only cards. Used by the AI, e-commerce, ERP, websites and art screens. */
+function Showcase({ site, section, placement }: SceneProps & { placement: (typeof SHOWCASE_PLACEMENTS)[number] }) {
+  const projects = visibleProjects(site, placement);
+  if (projects.length === 0) return null;
+  const withShots = projects.filter((p) => p.image);
+  const textOnly = projects.filter((p) => !p.image);
+  return (
+    <Scene section={section} className={`scene-showcase scene-${placement}`}>
+      <SceneHead section={section} />
+      {withShots.length > 0 && (
+        <div className={`products showcase-${withShots.length === 3 ? "three" : "grid"} reveal`}>
+          {withShots.map((project) => (
+            <article key={project.id} className="tile" data-project-card={project.id}>
+              <ProjectCopy project={project} />
+              <Shot project={project} />
+            </article>
+          ))}
+        </div>
+      )}
+      {textOnly.length > 0 && (
+        <div className="compact showcase-compact reveal">
+          {textOnly.map((project) => (
+            <article key={project.id} className="tile" data-project-card={project.id}>
+              <ProjectCopy project={project} />
+            </article>
+          ))}
+        </div>
+      )}
+    </Scene>
+  );
+}
+
+export const AiScene = (props: SceneProps) => <Showcase {...props} placement="ai" />;
+export const EcommerceScene = (props: SceneProps) => <Showcase {...props} placement="ecommerce" />;
+export const ErpScene = (props: SceneProps) => <Showcase {...props} placement="erp" />;
+export const WebsitesScene = (props: SceneProps) => <Showcase {...props} placement="websites" />;
+export const ArtScene = (props: SceneProps) => <Showcase {...props} placement="art" />;
 
 export function MoreScene({ site, section }: SceneProps) {
   const projects = visibleProjects(site, "compact");

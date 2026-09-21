@@ -93,7 +93,12 @@ const projectFields: FieldSpec[] = [
     type: "select",
     options: [
       { value: "featured", label: "Featured screen (large)" },
+      { value: "ai", label: "AI & agents screen" },
       { value: "grid", label: "Products screen (with screenshot)" },
+      { value: "ecommerce", label: "E-commerce screen" },
+      { value: "erp", label: "ERP modules screen" },
+      { value: "websites", label: "Websites screen" },
+      { value: "art", label: "Personal & art screen" },
       { value: "compact", label: "Also built screen (text only)" },
     ],
   },
@@ -475,7 +480,7 @@ export function Editor({ initial, mode }: { initial: Site; mode: StorageMode }) 
                 onChange={(v) => set("projects", v)}
                 fields={projectFields}
                 titleOf={(p) => p.name}
-                subtitleOf={(p) => ({ featured: "Featured", grid: "Products", compact: "Also built" })[p.placement]}
+                subtitleOf={(p) => ({ featured: "Featured", ai: "AI & agents", grid: "Products", ecommerce: "E-commerce", erp: "ERP modules", websites: "Websites", art: "Personal & art", compact: "Also built" })[p.placement]}
                 isHidden={(p) => !p.visible}
                 makeNew={(): Project => {
                   const n = draft.projects.length + 1;

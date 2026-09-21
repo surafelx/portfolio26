@@ -9,7 +9,10 @@ const hex = z.string().regex(/^#[0-9a-fA-F]{6}$/, "Use a 6-digit hex colour like
 const text = (max: number) => z.string().trim().max(max);
 const link = z.string().trim().max(500);
 
-export const SECTION_IDS = ["hero", "featured", "products", "more", "experience", "testimonials", "writing", "contact"] as const;
+export const SECTION_IDS = ["hero", "featured", "ai", "products", "ecommerce", "erp", "websites", "art", "more", "experience", "testimonials", "writing", "contact"] as const;
+
+/** Project groups that render as a showcase: screenshot cards first, then text-only cards. */
+export const SHOWCASE_PLACEMENTS = ["ai", "ecommerce", "erp", "websites", "art"] as const;
 export type SectionId = (typeof SECTION_IDS)[number];
 
 export const statSchema = z.object({
@@ -33,7 +36,7 @@ export const projectSchema = z.object({
   name: text(60).min(1, "Name the project"),
   label: text(60).default(""),
   tagline: text(260).default(""),
-  placement: z.enum(["featured", "grid", "compact"]),
+  placement: z.enum(["featured", "ai", "grid", "ecommerce", "erp", "websites", "art", "compact"]),
   image: link.default(""),
   liveUrl: link.default(""),
   codeUrl: link.default(""),

@@ -4,20 +4,30 @@ import { Header } from "@/components/site/Header";
 import { ProjectDialog } from "@/components/site/ProjectDialog";
 import { ScrollStage } from "@/components/site/ScrollStage";
 import {
+  AiScene,
+  ArtScene,
   ContactScene,
+  EcommerceScene,
+  ErpScene,
   ExperienceScene,
   FeaturedScene,
   HeroScene,
   MoreScene,
   ProductsScene,
   TestimonialsScene,
+  WebsitesScene,
   WritingScene,
 } from "@/components/site/Scenes";
 
 const scenes: Record<SectionId, (props: { site: Site; section: Section }) => React.ReactNode> = {
   hero: HeroScene,
   featured: FeaturedScene,
+  ai: AiScene,
   products: ProductsScene,
+  ecommerce: EcommerceScene,
+  erp: ErpScene,
+  websites: WebsitesScene,
+  art: ArtScene,
   more: MoreScene,
   experience: ExperienceScene,
   testimonials: TestimonialsScene,
@@ -31,6 +41,12 @@ function hasContent(section: Section): boolean {
       return site.projects.some((p) => p.visible && p.placement === "featured");
     case "products":
       return site.projects.some((p) => p.visible && p.placement === "grid");
+    case "ai":
+    case "ecommerce":
+    case "erp":
+    case "websites":
+    case "art":
+      return site.projects.some((p) => p.visible && p.placement === section.id);
     case "more":
       return site.projects.some((p) => p.visible && p.placement === "compact") || site.highlights.length > 0;
     case "writing":
