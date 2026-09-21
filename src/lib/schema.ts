@@ -39,6 +39,12 @@ export const projectSchema = z.object({
   codeUrl: link.default(""),
   ctaLabel: text(40).default(""),
   ctaUrl: link.default(""),
+  // Shown in the project dialog: a walkthrough video, a docs link (a GitHub repo's README is loaded automatically),
+  // what it's built with, and a longer write-up.
+  videoUrl: link.default(""),
+  docsUrl: link.default(""),
+  stack: text(200).default(""),
+  details: text(3000).default(""),
   steps: z.array(stepSchema).max(6).default([]),
   visible: z.boolean().default(true),
 });

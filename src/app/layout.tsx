@@ -4,6 +4,7 @@ import { site, settingsCss } from "@/lib/content";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 import "./sketch.css";
+import "./project-dialog.css";
 
 const sans = Geist({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
 const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });

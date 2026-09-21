@@ -1,0 +1,134 @@
+/* Project dialog: live app, video and docs for a project, in the sketchbook style. */
+
+/* Cards open the dialog: the screenshot and the Preview link are the keyboard-accessible triggers. */
+.site [data-project-card] { cursor: pointer; }
+.site button.shot { font: inherit; color: inherit; padding: 0; border: 0; cursor: zoom-in; text-align: left; width: auto; }
+.site button.shot:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.site .preview-link { background: none; border: 0; padding: 0; font: inherit; font-weight: 500; color: var(--accent); cursor: pointer; }
+.site .preview-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.site .tile.deep .preview-link { color: var(--deep-link); }
+
+html.dialog-open { overflow: hidden; }
+
+.pd {
+  width: min(1180px, calc(100vw - 32px));
+  height: min(860px, calc(100svh - 32px));
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1.5px solid color-mix(in srgb, var(--ink) 22%, transparent);
+  border-radius: 30px 10px 34px 12px / 12px 32px 10px 30px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35), 5px 6px 0 -1px color-mix(in srgb, var(--accent) 40%, transparent);
+  overflow: hidden;
+}
+.pd::backdrop { background: color-mix(in srgb, var(--bg) 55%, rgba(0, 0, 0, 0.55)); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+@media (prefers-reduced-motion: no-preference) {
+  .pd[open] { animation: pd-in 0.22s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  @keyframes pd-in { from { opacity: 0; transform: translateY(14px) rotate(-0.4deg) scale(0.985); } }
+}
+.pd-inner { height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr); }
+
+.pd-head { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 18px; padding: 18px 20px 14px 26px; border-bottom: 1.5px dashed color-mix(in srgb, var(--ink) 16%, transparent); }
+.pd-title { display: grid; gap: 2px; min-width: 0; }
+.pd-title .label { font-family: var(--hand); font-size: 20px; font-weight: 700; letter-spacing: 0; text-transform: none; color: var(--accent); }
+.pd-title h2 { font-size: clamp(22px, 2.6vw, 30px); line-height: 1.1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.pd-tabs { display: flex; gap: 4px; }
+.pd-tab { position: relative; background: none; border: 0; padding: 8px 14px; font: inherit; font-size: 15px; font-weight: 500; color: var(--mute); cursor: pointer; border-radius: 10px; }
+.pd-tab:hover { color: var(--ink); }
+.pd-tab[aria-selected="true"] { color: var(--ink); }
+.pd-tab[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  inset: -3px -6px -4px -6px;
+  background: var(--accent);
+  -webkit-mask: var(--mark-circle) center / 100% 100% no-repeat;
+  mask: var(--mark-circle) center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+.pd-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pd-close { width: 40px; height: 40px; display: grid; place-items: center; border: 1.5px solid color-mix(in srgb, var(--ink) 20%, transparent); border-radius: 47% 53% 45% 55% / 55% 46% 54% 45%; background: var(--surface); color: var(--ink); cursor: pointer; }
+.pd-close:hover { background: var(--surface-hi); }
+.pd-close svg { width: 18px; height: 18px; }
+
+.pd-body { min-height: 0; overflow: auto; padding: 20px 26px 26px; }
+.pd-status { color: var(--mute); font-size: 15px; padding: 16px 0; }
+
+/* Live app */
+.pd-live { height: 100%; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 10px; }
+.pd-browser { min-height: 420px; display: grid; grid-template-rows: auto minmax(0, 1fr); border: 1.5px solid color-mix(in srgb, var(--ink) 18%, transparent); border-radius: 18px 7px 20px 8px / 8px 20px 7px 18px; overflow: hidden; background: var(--surface); }
+.pd-bar { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-bottom: 1px solid var(--rule); background: var(--surface-hi); }
+.pd-dots { display: inline-flex; gap: 6px; }
+.pd-dots i { width: 10px; height: 10px; border-radius: 50%; background: color-mix(in srgb, var(--ink) 20%, transparent); }
+.pd-dots i:first-child { background: #ff6b5f; }
+.pd-url { flex: 1; min-width: 0; padding: 5px 12px; border-radius: 999px; background: var(--panel); color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12.5px; }
+.pd-bar-tools { display: flex; align-items: center; gap: 6px; }
+.pd-device { display: inline-flex; padding: 2px; border-radius: 999px; background: var(--panel); }
+.pd-device button { border: 0; background: none; font: inherit; font-size: 12.5px; padding: 4px 10px; border-radius: 999px; color: var(--mute); cursor: pointer; }
+.pd-device button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.pd-icon { width: 30px; height: 30px; display: grid; place-items: center; border: 0; border-radius: 50%; background: var(--panel); color: var(--ink-2); cursor: pointer; }
+.pd-icon svg { width: 16px; height: 16px; }
+.pd-open { font-size: 14px; font-weight: 500; white-space: nowrap; }
+.pd-stage { position: relative; min-height: 0; display: grid; justify-items: center; background: color-mix(in srgb, var(--ink) 4%, var(--surface)); }
+.pd-stage .pd-status { position: absolute; top: 40%; left: 0; right: 0; text-align: center; font-family: var(--hand); font-size: 24px; font-weight: 700; color: var(--accent); }
+.pd-stage iframe { width: 100%; height: 100%; border: 0; background: #fff; opacity: 0; transition: opacity 0.25s ease, width 0.3s ease; }
+.pd-stage iframe.is-loaded { opacity: 1; }
+.pd-stage.device-phone iframe { width: 390px; max-width: 100%; border-inline: 1.5px solid var(--rule); }
+.pd-blocked { align-self: center; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 26px; align-items: center; padding: 28px; max-width: 960px; }
+.pd-blocked img { width: 100%; border-radius: 14px 6px 16px 7px / 7px 16px 6px 14px; box-shadow: var(--shadow); }
+.pd-blocked p { color: var(--ink-2); margin-bottom: 16px; }
+.pd-hint { font-family: var(--hand); font-size: 20px; font-weight: 700; color: var(--mute); }
+
+/* Video */
+.pd-video { aspect-ratio: 16 / 9; max-height: 100%; margin-inline: auto; border-radius: 18px 7px 20px 8px / 8px 20px 7px 18px; overflow: hidden; border: 1.5px solid color-mix(in srgb, var(--ink) 18%, transparent); background: #000; }
+.pd-video iframe, .pd-video video { width: 100%; height: 100%; border: 0; display: block; }
+
+/* Docs */
+.pd-docs { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 30px; align-items: start; }
+.pd-docs:not(:has(.pd-readme)) { grid-template-columns: minmax(0, 720px); }
+.pd-docs-side { display: grid; gap: 22px; min-width: 0; overflow-wrap: anywhere; }
+.pd-h { font-family: var(--hand); font-size: 24px; font-weight: 700; letter-spacing: 0; color: var(--accent); margin-bottom: 6px; }
+.pd-lede { font-size: 18px; line-height: 1.5; color: var(--ink); margin-bottom: 10px; }
+.pd-docs-side p { color: var(--ink-2); line-height: 1.6; margin-bottom: 10px; }
+.pd-docs-side ul:not(.pd-chips):not(.pd-links) { margin: 0 0 10px; padding-left: 20px; color: var(--ink-2); display: grid; gap: 4px; }
+.pd-steps { margin: 0; padding-left: 22px; display: grid; gap: 6px; color: var(--ink-2); }
+.pd-steps .mono { color: var(--mute); margin-left: 6px; }
+.pd-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.pd-chips li { padding: 4px 11px; font-size: 13px; color: var(--ink-2); border: 1.5px dashed color-mix(in srgb, var(--ink) 20%, transparent); border-radius: 14px 5px 15px 6px / 6px 15px 5px 14px; }
+.pd-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.pd-links a { display: flex; justify-content: space-between; gap: 12px; padding: 10px 14px; border: 1.5px solid color-mix(in srgb, var(--ink) 14%, transparent); border-radius: 14px 5px 15px 6px / 6px 15px 5px 14px; color: var(--ink); font-weight: 500; }
+.pd-links a:hover { text-decoration: none; border-color: var(--accent); }
+.pd-links .mono { color: var(--mute); }
+.pd-readme { min-width: 0; border: 1.5px solid color-mix(in srgb, var(--ink) 16%, transparent); border-radius: 20px 8px 22px 9px / 9px 22px 8px 20px; background: var(--bg); }
+.pd-readme-head { display: flex; justify-content: space-between; gap: 12px; padding: 10px 16px; border-bottom: 1.5px dashed color-mix(in srgb, var(--ink) 14%, transparent); font-size: 14px; }
+.pd-readme-head .mono { color: var(--mute); }
+.pd-readme .pd-status, .pd-readme .md { padding: 16px 20px 20px; }
+
+/* README markdown */
+.md { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; font-size: 15px; line-height: 1.65; color: var(--ink-2); min-width: 0; overflow-wrap: anywhere; }
+.md h3 { font-size: 24px; color: var(--ink); margin-top: 4px; }
+.md h4 { font-size: 18px; color: var(--ink); margin-top: 10px; }
+.md h5 { font-size: 15px; color: var(--ink); margin-top: 6px; }
+.md ul, .md ol { margin: 0; padding-left: 22px; display: grid; gap: 4px; }
+.md code { font-family: var(--font-mono), ui-monospace, Consolas, monospace; font-size: 0.86em; padding: 1px 5px; border-radius: 5px; background: var(--surface); }
+.md pre { margin: 0; padding: 12px 14px; border-radius: 10px; background: var(--surface); overflow-x: auto; font-size: 13px; line-height: 1.55; }
+.md pre code { padding: 0; background: none; }
+.md blockquote { margin: 0; padding-left: 14px; border-left: 3px solid var(--accent); color: var(--ink); }
+.md hr { border: 0; border-top: 1.5px dashed var(--rule); width: 100%; }
+.md-table { overflow-x: auto; }
+.md table { border-collapse: collapse; font-size: 14px; min-width: 100%; }
+.md th, .md td { text-align: left; padding: 7px 10px; border-bottom: 1px dashed var(--rule); vertical-align: top; }
+.md th { color: var(--ink); font-weight: 600; }
+
+@media (max-width: 860px) {
+  .pd { width: 100vw; height: 100svh; border-radius: 0; box-shadow: none; }
+  .pd-head { grid-template-columns: minmax(0, 1fr) auto; padding: 14px 16px 10px; }
+  .pd-tabs { grid-column: 1 / -1; grid-row: 2; }
+  .pd-body { padding: 14px 16px 20px; }
+  .pd-docs, .pd-docs:not(:has(.pd-readme)) { grid-template-columns: minmax(0, 1fr); }
+  .pd-blocked { grid-template-columns: 1fr; padding: 18px; }
+  .pd-device { display: none; }
+  .pd-browser { min-height: 60svh; }
+}

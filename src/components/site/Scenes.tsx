@@ -42,10 +42,11 @@ function SceneHead({ section }: { section: Section }) {
 }
 
 function ProjectLinks({ project }: { project: Project }) {
-  const hasAny = project.liveUrl || project.codeUrl || (project.ctaLabel && project.ctaUrl);
-  if (!hasAny) return null;
   return (
     <div className="links">
+      <button type="button" className="more preview-link" data-open-project={project.id}>
+        {project.liveUrl ? "Preview" : "Details"}
+      </button>
       {project.liveUrl && (
         <ExtLink className="more" href={project.liveUrl}>
           Open
@@ -67,13 +68,10 @@ function ProjectLinks({ project }: { project: Project }) {
 
 function Shot({ project }: { project: Project }) {
   if (!project.image) return null;
-  const img = <img src={project.image} alt={`${project.name} screenshot`} loading="lazy" width={640} height={400} />;
-  return project.liveUrl ? (
-    <ExtLink className="shot" href={project.liveUrl}>
-      {img}
-    </ExtLink>
-  ) : (
-    <div className="shot">{img}</div>
+  return (
+    <button type="button" className="shot" data-open-project={project.id} aria-label={`Preview ${project.name}`}>
+      <img src={project.image} alt="" loading="lazy" width={640} height={400} />
+    </button>
   );
 }
 
@@ -167,17 +165,17 @@ export function FeaturedScene({ site, section }: SceneProps) {
     <Scene section={section}>
       <SceneHead section={section} />
       <div className="featured-note">
-        <HandNote arrow="down">live &amp; shipped, click through</HandNote>
+        <HandNote arrow="down">click one to try it live</HandNote>
       </div>
       <div className={`featured reveal${pair ? " pair" : ""}`}>
         {projects.map((project) =>
           pair ? (
-            <article key={project.id} className="tile deep">
+            <article key={project.id} className="tile deep" data-project-card={project.id}>
               <ProjectCopy project={project} />
               <Shot project={project} />
             </article>
           ) : project.steps.length > 0 ? (
-            <article key={project.id} className="tile deep">
+            <article key={project.id} className="tile deep" data-project-card={project.id}>
               <ProjectCopy project={project} />
               <ol className="flow" aria-label={`How ${project.name} works`}>
                 {project.steps.map((step) => (
@@ -188,7 +186,7 @@ export function FeaturedScene({ site, section }: SceneProps) {
               </ol>
             </article>
           ) : (
-            <article key={project.id} className="tile wide deep">
+            <article key={project.id} className="tile wide deep" data-project-card={project.id}>
               <ProjectCopy project={project} />
               <Shot project={project} />
             </article>
@@ -207,7 +205,7 @@ export function ProductsScene({ site, section }: SceneProps) {
       <SceneHead section={section} />
       <div className="products reveal">
         {projects.map((project) => (
-          <article key={project.id} className="tile">
+          <article key={project.id} className="tile" data-project-card={project.id}>
             <ProjectCopy project={project} />
             <Shot project={project} />
           </article>
@@ -226,7 +224,7 @@ export function MoreScene({ site, section }: SceneProps) {
       {projects.length > 0 && (
         <div className="compact reveal">
           {projects.map((project) => (
-            <article key={project.id} className="tile">
+            <article key={project.id} className="tile" data-project-card={project.id}>
               <ProjectCopy project={project} />
             </article>
           ))}

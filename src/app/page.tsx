@@ -1,6 +1,7 @@
 import type { SectionId, Site, Section } from "@/lib/schema";
 import { site } from "@/lib/content";
 import { Header } from "@/components/site/Header";
+import { ProjectDialog } from "@/components/site/ProjectDialog";
 import { ScrollStage } from "@/components/site/ScrollStage";
 import {
   ContactScene,
@@ -55,6 +56,7 @@ export default function Home() {
           return <SceneComponent key={section.id} site={site} section={section} />;
         })}
       </main>
+      <ProjectDialog projects={site.projects.filter((p) => p.visible)} />
     </div>
   );
 }

@@ -104,6 +104,10 @@ const projectFields: FieldSpec[] = [
   { key: "codeUrl", label: "Code link", type: "url" },
   { key: "ctaLabel", label: "Extra button text", type: "text", placeholder: "Book a demo" },
   { key: "ctaUrl", label: "Extra button link", type: "url" },
+  { key: "videoUrl", label: "Walkthrough video", type: "url", hint: "YouTube, Vimeo, Loom or a direct .mp4 link. Adds a Video tab to the project dialog." },
+  { key: "docsUrl", label: "Docs link", type: "url", hint: "A GitHub repo's README is shown in the Docs tab. If empty, the Code link's README is used." },
+  { key: "stack", label: "Built with", type: "text", placeholder: "Next.js, Postgres, OpenAI", hint: "Comma-separated." },
+  { key: "details", label: "Write-up", type: "textarea", hint: "Shown in the Docs tab. Blank lines start new paragraphs; lines starting with - become bullets." },
   { key: "id", label: "ID", type: "text", hint: "Lowercase letters, numbers and dashes. Must be unique." },
 ];
 const stepFields: FieldSpec[] = [
@@ -475,7 +479,7 @@ export function Editor({ initial, mode }: { initial: Site; mode: StorageMode }) 
                 isHidden={(p) => !p.visible}
                 makeNew={(): Project => {
                   const n = draft.projects.length + 1;
-                  return { id: `project-${n}-${Date.now().toString(36).slice(-4)}`, name: "New project", label: "", tagline: "", placement: "grid", image: "", liveUrl: "", codeUrl: "", ctaLabel: "", ctaUrl: "", steps: [], visible: true };
+                  return { id: `project-${n}-${Date.now().toString(36).slice(-4)}`, name: "New project", label: "", tagline: "", placement: "grid", image: "", liveUrl: "", codeUrl: "", ctaLabel: "", ctaUrl: "", videoUrl: "", docsUrl: "", stack: "", details: "", steps: [], visible: true };
                 }}
                 addLabel="Add a project"
                 errors={errors}

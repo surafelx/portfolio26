@@ -65,6 +65,10 @@
       "codeUrl": "",
       "ctaLabel": "",
       "ctaUrl": "",
+      "videoUrl": "",
+      "docsUrl": "https://github.com/surafelx/budera",
+      "stack": "Next.js, React, TypeScript, Postgres, Drizzle ORM, OpenAI-compatible LLMs, Stripe, Shopify, Google Analytics, Vitest",
+      "details": "Budera is an AI business partner for founders. Five built-in agents study a company, its market and its competitors, and owners build their own agents for anything else. Every agent returns a short brief and tasks that land in one list.\n\n- A provider-neutral agent engine that runs on any OpenAI-compatible model, with its own research tool loop and validated structured output\n- Live web search and a safe page reader, so research agents cite real sources\n- Stripe, Shopify and Google Analytics connections with encrypted secrets, so reports use real revenue, orders and traffic\n- Owner-built agents with templates, tools and daily or weekly schedules\n- Several companies per account, and a live demo workspace with sample data",
       "steps": [],
       "visible": true
     },
