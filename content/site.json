@@ -124,9 +124,9 @@
       "id": "websites",
       "visible": true,
       "nav": "Websites",
-      "eyebrow": "Websites",
-      "title": "Sites for companies and causes.",
-      "intro": "A company site, a nonprofit I run, and a studio that ships websites in three days."
+      "eyebrow": "Websites + CMS",
+      "title": "Sites clients run themselves.",
+      "intro": "Company and studio sites with a CMS behind them, and the site for a nonprofit I run."
     },
     {
       "id": "art",
@@ -474,11 +474,11 @@
       "placement": "websites"
     },
     {
-      "label": "Web studio",
-      "tagline": "Professional websites for Ethiopian businesses at a fixed price, built in three days.",
-      "image": "/projects/asun-digitals.jpg",
-      "liveUrl": "https://asun-digitals.vercel.app",
-      "codeUrl": "https://github.com/surafelx/asun-digitals",
+      "label": "Client · Website + CMS",
+      "tagline": "Film, commercials, documentaries and music videos from Ethiopia to the world, with a portfolio and gallery the studio updates itself.",
+      "image": "/projects/ruby-pictures.jpg",
+      "liveUrl": "https://www.rubypicture.com",
+      "codeUrl": "",
       "ctaLabel": "",
       "ctaUrl": "",
       "videoUrl": "",
@@ -487,8 +487,8 @@
       "details": "",
       "steps": [],
       "visible": true,
-      "id": "asun-digitals",
-      "name": "Asun Digitals",
+      "id": "ruby-pictures",
+      "name": "Ruby Pictures",
       "placement": "websites"
     },
     {
