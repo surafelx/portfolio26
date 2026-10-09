@@ -66,3 +66,14 @@ src/app/admin/               settings page
 src/components/admin/        editor and reusable form fields
 src/app/api/admin/           login, logout, save, image upload
 ```
+
+## Live numbers
+
+The header shows a visitor count and the Right now panel shows visitors today, GitHub activity from the last 30 days, and the latest note. Each can be switched off on the Stats and status tab of `/admin`.
+
+- Visitors are counted once per browser session by `POST /api/visits`. Crawlers are skipped and nothing about the visitor is stored. On your own machine the count lives in `data/visits.json`. On Vercel, add an Upstash Redis store (`UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`) so the count survives deploys; without it, the count starts again on each deploy.
+- GitHub activity comes from `GET /api/github`. With `GITHUB_TOKEN` set it counts commits through the GraphQL API, private repositories included (their names stay hidden). Without a token it counts public pushes from the events feed. Cached for ten minutes.
+
+## Tailored pages
+
+`content/pitches/<slug>.json` becomes a page at `/for/<slug>`, written for one reader, such as a hiring team, and kept out of search engines. It maps what they're hiring for onto projects from `site.json` by project id, then a first-week plan, honest gaps, and the stack. See `content/pitches/healthcare-fde.json` for the shape.

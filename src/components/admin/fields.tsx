@@ -5,7 +5,7 @@ import { useId, useRef, useState } from "react";
 export type FieldSpec = {
   key: string;
   label: string;
-  type: "text" | "textarea" | "url" | "select" | "toggle" | "color" | "range" | "image";
+  type: "text" | "textarea" | "url" | "select" | "toggle" | "color" | "range" | "image" | "number";
   hint?: string;
   placeholder?: string;
   options?: { value: string; label: string }[];
@@ -69,6 +69,20 @@ export function FieldInput({ spec, value, onChange, error }: { spec: FieldSpec; 
           <input id={id} type="range" min={spec.min ?? 0} max={spec.max ?? 100} value={Number(value ?? 0)} aria-describedby={describedBy} onChange={(e) => onChange(Number(e.target.value))} />
           <output htmlFor={id}>{Number(value ?? 0)}</output>
         </div>
+      );
+      break;
+    case "number":
+      control = (
+        <input
+          id={id}
+          type="number"
+          min={spec.min ?? 0}
+          max={spec.max}
+          step={1}
+          value={Number(value ?? 0)}
+          aria-describedby={describedBy}
+          onChange={(e) => onChange(Math.max(spec.min ?? 0, Math.floor(Number(e.target.value) || 0)))}
+        />
       );
       break;
     case "image":

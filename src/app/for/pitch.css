@@ -1,0 +1,50 @@
+/* Tailored pages at /for/<slug>: one long, readable column instead of full-screen scenes. */
+.pitch { min-height: 100vh; display: flex; flex-direction: column; }
+.pitch .header .spacer { display: block; flex: 1; }
+.pitch-main { flex: 1; padding: 64px 0 40px; display: grid; gap: 72px; max-width: 880px; }
+.pitch-hero h1 { font-size: clamp(34px, 5.2vw, 58px); line-height: 1.04; letter-spacing: -0.035em; margin: 14px 0 20px; font-weight: 600; }
+.pitch-hero h1 span { color: var(--mute); font-weight: 500; }
+.pitch-hero .lede { font-size: 19px; line-height: 1.55; max-width: 68ch; margin: 0 0 24px; }
+.pitch-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; font-size: 14px; }
+.pitch-meta .avail { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); font-weight: 500; }
+.pitch-meta .avail i { width: 8px; height: 8px; border-radius: 50%; background: var(--live); }
+.pitch-links { display: inline-flex; flex-wrap: wrap; gap: 18px; }
+.pitch-links a { color: var(--mute); }
+.pitch-links a:hover { color: var(--accent); }
+
+.pitch-block h2 { font-size: clamp(24px, 3vw, 32px); letter-spacing: -0.025em; line-height: 1.15; margin: 0 0 28px; font-weight: 600; }
+
+.fit { list-style: none; margin: 0; padding: 0; display: grid; counter-reset: fit; border-top: 1px solid var(--rule); }
+.fit li { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 10px 40px; padding: 26px 0; border-bottom: 1px solid var(--rule); counter-increment: fit; }
+.fit h3 { font-size: 17px; line-height: 1.35; margin: 0; font-weight: 600; letter-spacing: -0.01em; }
+.fit h3::before { content: counter(fit, decimal-leading-zero); display: block; font-family: var(--font-mono); font-size: 12px; color: var(--mute); margin-bottom: 8px; letter-spacing: 0.04em; }
+.fit p { margin: 0; line-height: 1.6; font-size: 16px; }
+.fit .chips { grid-column: 2; display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: 13px; padding: 5px 11px; border-radius: 999px; border: 1px solid var(--rule); color: var(--ink); }
+.chip:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+.week { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+.week li { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 24px; align-items: baseline; }
+.week .mono { color: var(--mute); font-size: 13px; }
+.week p { margin: 0; line-height: 1.6; font-size: 16px; }
+
+.gaps { margin: 0; display: grid; gap: 20px; }
+.gaps > div { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 8px 40px; }
+.gaps dt { font-weight: 600; font-size: 16px; }
+.gaps dd { margin: 0; line-height: 1.6; font-size: 16px; }
+
+.pitch-skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px 32px; }
+
+.pitch-cta { padding: 40px; border-radius: 22px; outline: 1px solid var(--rule); }
+.pitch-cta h2 { margin-bottom: 10px; }
+.pitch-cta p { margin: 0 0 24px; color: var(--mute); font-size: 16px; }
+.pitch-cta .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.pitch-foot { padding: 20px 0 32px; }
+
+@media (max-width: 720px) {
+  .pitch-main { padding-top: 40px; gap: 56px; }
+  .fit li, .gaps > div { grid-template-columns: 1fr; gap: 10px; }
+  .fit .chips { grid-column: 1; }
+  .week li { grid-template-columns: 1fr; gap: 6px; }
+  .pitch-cta { padding: 28px 22px; }
+}

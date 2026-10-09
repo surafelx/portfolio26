@@ -18,6 +18,7 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/admin": ["./content/**"],
     "/api/admin/content": ["./content/**"],
+    "/for/[slug]": ["./content/pitches/**"],
   },
 };
 

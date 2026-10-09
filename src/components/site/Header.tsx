@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import type { Site } from "@/lib/schema";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { VisitorStat } from "./VisitorStat";
 
 export function Header({ site }: { site: Site }) {
   const bar = useRef<HTMLDivElement>(null);
@@ -37,7 +38,7 @@ export function Header({ site }: { site: Site }) {
           <span className="dot" aria-hidden="true" />
           {profile.shortName}
         </a>
-        {headerStats.length > 0 && (
+        {(headerStats.length > 0 || site.live.visitors) && (
           <ul className="hstats" aria-label="At a glance">
             {headerStats.map((s) => (
               <li key={`${s.value}-${s.label}`}>
@@ -45,6 +46,7 @@ export function Header({ site }: { site: Site }) {
                 <span>{s.label}</span>
               </li>
             ))}
+            {site.live.visitors && <VisitorStat />}
           </ul>
         )}
         <span className="spacer" />

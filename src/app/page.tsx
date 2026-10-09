@@ -15,6 +15,7 @@ import {
   HeroScene,
   MoreScene,
   ProductsScene,
+  RolesScene,
   TestimonialsScene,
   WebsitesScene,
   WritingScene,
@@ -23,6 +24,7 @@ import {
 const scenes: Record<SectionId, (props: { site: Site; section: Section }) => React.ReactNode> = {
   hero: HeroScene,
   featured: FeaturedScene,
+  roles: RolesScene,
   ai: AiScene,
   products: ProductsScene,
   ecommerce: EcommerceScene,
@@ -51,6 +53,8 @@ function hasContent(section: Section): boolean {
       return site.projects.some((p) => p.visible && p.placement === section.id);
     case "more":
       return site.projects.some((p) => p.visible && p.placement === "compact") || site.highlights.length > 0;
+    case "roles":
+      return site.roles.length > 0;
     case "writing":
       return site.posts.length > 0;
     case "events":

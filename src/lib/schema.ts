@@ -9,7 +9,7 @@ const hex = z.string().regex(/^#[0-9a-fA-F]{6}$/, "Use a 6-digit hex colour like
 const text = (max: number) => z.string().trim().max(max);
 const link = z.string().trim().max(500);
 
-export const SECTION_IDS = ["hero", "featured", "ai", "products", "ecommerce", "erp", "websites", "art", "events", "more", "experience", "testimonials", "writing", "contact"] as const;
+export const SECTION_IDS = ["hero", "featured", "roles", "ai", "products", "ecommerce", "erp", "websites", "art", "events", "more", "experience", "testimonials", "writing", "contact"] as const;
 
 /** Project groups that render as a showcase: screenshot cards first, then text-only cards. */
 export const SHOWCASE_PLACEMENTS = ["ai", "ecommerce", "erp", "websites", "art"] as const;
@@ -24,6 +24,33 @@ export const roleSchema = z.object({
   title: text(60).min(1, "Add a title"),
   org: text(80).min(1, "Add an organisation"),
   place: text(60).default(""),
+});
+
+/** One app that reports its user count to the live counter. */
+export const usageSourceSchema = z.object({
+  name: text(60).min(1, "Name the app"),
+  // A public JSON endpoint on the app, such as https://app.example.com/api/public-stats
+  url: link.default(""),
+  // Where the number is in that JSON, as a dotted path. Defaults to "users".
+  field: text(60).default("users"),
+  // Used when there's no endpoint yet, or when it can't be reached.
+  count: z.number().int().min(0).max(100_000_000).default(0),
+});
+
+/** The live numbers: visitors to this site, GitHub activity, and the latest note. */
+export const liveSchema = z.object({
+  visitors: z.boolean().default(true),
+  github: z.boolean().default(true),
+  // Leave empty to use the GitHub link in the profile.
+  githubUser: text(40).default(""),
+  latestPost: z.boolean().default(true),
+});
+
+/** One kind of role Surafel is a fit for, on the Roles screen. */
+export const roleFitSchema = z.object({
+  title: text(60).min(1, "Name the role"),
+  note: text(260).default(""),
+  url: link.default(""),
 });
 
 export const stepSchema = z.object({
@@ -47,7 +74,7 @@ export const projectSchema = z.object({
   videoUrl: link.default(""),
   docsUrl: link.default(""),
   stack: text(200).default(""),
-  details: text(3000).default(""),
+  details: text(6000).default(""),
   steps: z.array(stepSchema).max(6).default([]),
   visible: z.boolean().default(true),
 });
@@ -114,6 +141,10 @@ export const siteSchema = z
       cvUrl: link.default(""),
       githubUrl: link.default(""),
       linkedinUrl: link.default(""),
+      // The intro video in the hero: a YouTube, Vimeo or Loom link, or a direct .mp4. The slot keeps its space until one is added.
+      videoUrl: link.default(""),
+      videoCaption: text(120).default(""),
+      videoSlot: z.boolean().default(true),
       seoTitle: text(70).default(""),
       seoDescription: text(170).default(""),
     }),
@@ -133,11 +164,20 @@ export const siteSchema = z
     sections: z.array(sectionSchema),
     projects: z.array(projectSchema),
     jobs: z.array(jobSchema),
+    roles: z.array(roleFitSchema).max(8).default([]),
     skills: z.array(skillSchema).max(6),
     education: text(200).default(""),
     posts: z.array(postSchema).max(9),
     testimonials: z.array(testimonialSchema).max(6).default([]),
     events: z.array(eventSchema).max(9).default([]),
+    usage: z
+      .object({
+        visible: z.boolean().default(true),
+        label: text(80).default("people using software I built"),
+        sources: z.array(usageSourceSchema).max(30).default([]),
+      })
+      .default({ visible: true, label: "people using software I built", sources: [] }),
+    live: liveSchema.default({ visitors: true, github: true, githubUser: "", latestPost: true }),
     contact: z.object({
       note: text(140).default(""),
       footerNote: text(160).default(""),
@@ -167,5 +207,7 @@ export type Site = z.infer<typeof siteSchema>;
 export type Project = Site["projects"][number];
 export type Section = Site["sections"][number];
 export type Stat = Site["headerStats"][number];
+export type UsageSource = z.infer<typeof usageSourceSchema>;
 export type Testimonial = Site["testimonials"][number];
 export type EventItem = Site["events"][number];
+export type RoleFit = Site["roles"][number];

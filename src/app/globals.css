@@ -213,17 +213,50 @@ html[data-motion="on"].reveal-ready .scene .reveal:nth-child(3) { transition-del
 .intro h1 span { color: var(--mute); }
 .intro .lede { font-size: 19px; color: var(--ink-2); max-width: 33em; margin-top: 24px; line-height: 1.5; }
 .intro .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
-.now { background: var(--panel); border: 1px solid var(--rule); border-radius: var(--radius); padding: 26px; display: grid; gap: 20px; box-shadow: var(--shadow); }
+.hero-side { display: grid; gap: 18px; align-content: center; min-width: 0; }
+.hero-video { margin: 0; }
+.hero-video .frame { position: relative; aspect-ratio: 16 / 9; border-radius: var(--radius); overflow: hidden; background: var(--panel); border: 1px solid var(--rule); box-shadow: var(--shadow); }
+.hero-video iframe, .hero-video video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; background: #000; }
+.hero-video .placeholder { position: absolute; inset: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; color: var(--mute); border: 2px dashed var(--rule); border-radius: calc(var(--radius) - 8px); text-decoration: none; font-size: 15px; }
+.hero-video a.placeholder:hover { color: var(--accent); border-color: var(--accent); }
+.hero-video .play { width: 54px; height: 54px; border-radius: 50%; border: 2px solid currentColor; display: grid; place-items: center; }
+.hero-video .play::after { content: ""; border-left: 16px solid currentColor; border-top: 10px solid transparent; border-bottom: 10px solid transparent; margin-left: 4px; }
+.hero-video .hand { font-family: var(--font-hand); font-size: 22px; }
+.hero-video .caption { margin-top: 10px; font-size: 14px; color: var(--mute); }
+.roles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.roles .tile { padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+.roles h3 { font-size: 19px; line-height: 1.25; }
+.roles p { color: var(--ink-2); font-size: 15px; line-height: 1.5; margin: 0; }
+.roles .more { margin-top: auto; padding-top: 6px; }
+@media (max-width: 1023px) { .roles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 639px) { .roles { grid-template-columns: 1fr; } }
+.now { background: var(--panel); border: 1px solid var(--rule); border-radius: var(--radius); padding: 18px 20px; display: grid; gap: 14px; box-shadow: var(--shadow); }
 .now .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .now .avail { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-2); }
 .now .avail i { width: 7px; height: 7px; border-radius: 50%; background: var(--live); }
-.now ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
-.now li { display: grid; grid-template-columns: 3px 1fr; gap: 14px; }
+.now ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.now li { display: grid; grid-template-columns: 3px 1fr; gap: 12px; }
 .now li::before { content: ""; border-radius: 3px; background: var(--rule); }
 .now li:first-child::before { background: var(--accent); }
-.now li b { display: block; font-weight: 600; }
-.now li span { color: var(--mute); font-size: 14px; }
-.now .clock { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--rule); padding-top: 16px; color: var(--mute); font-size: 14px; }
+.now li b { display: block; font-weight: 600; font-size: 15px; line-height: 1.3; }
+.now li span { color: var(--mute); font-size: 13px; }
+.now .usage { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; border-top: 1px solid var(--rule); padding-top: 16px; }
+.now .usage b { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1; }
+.now .usage > span:last-child { color: var(--mute); font-size: 14px; }
+.now .usage .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--mute); align-self: center; }
+.now .usage .pulse.on { background: var(--live); box-shadow: 0 0 0 0 color-mix(in srgb, var(--live) 60%, transparent); animation: usage-pulse 2s ease-out infinite; }
+@keyframes usage-pulse { to { box-shadow: 0 0 0 8px transparent; } }
+@media (prefers-reduced-motion: reduce) { .now .usage .pulse.on { animation: none; } }
+.now .live { list-style: none; margin: 0; padding: 12px 0 0; border-top: 1px solid var(--rule); display: grid; gap: 6px; }
+.now .live li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; font-size: 13px; min-width: 0; }
+.now .live b { font-weight: 600; font-variant-numeric: tabular-nums; display: flex; align-items: center; gap: 8px; }
+.now .live span { color: var(--mute); overflow-wrap: anywhere; }
+.now .live a { color: var(--ink); font-weight: 500; }
+.now .live a:hover { text-decoration: underline; }
+.now .live .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--live); box-shadow: 0 0 0 0 color-mix(in srgb, var(--live) 60%, transparent); animation: usage-pulse 2s ease-out infinite; }
+@media (prefers-reduced-motion: reduce) { .now .live .pulse { animation: none; } }
+.hstats li.live b::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--live); margin-right: 7px; vertical-align: 2px; }
+.now .clock { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--rule); padding-top: 12px; color: var(--mute); font-size: 13px; }
 .now .clock time { color: var(--ink); font-variant-numeric: tabular-nums; font-weight: 500; }
 .scroll-cue { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); color: var(--mute); display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .scroll-cue i { width: 1px; height: 28px; background: linear-gradient(var(--mute), transparent); }
@@ -382,7 +415,7 @@ html[data-motion="on"].reveal-ready .scene .reveal:nth-child(3) { transition-del
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1180px) {
-  .hstats li:nth-child(n + 4) { display: none; }
+  .hstats li:nth-child(n + 4):not(.live) { display: none; }
 }
 @media (max-width: 1023px) {
   :root { --header-h: 104px; }

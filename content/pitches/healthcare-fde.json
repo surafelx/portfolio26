@@ -1,0 +1,173 @@
+{
+  "title": "Surafel Yimam for the AI Forward-Deployed Engineer role",
+  "eyebrow": "For a physician-owned healthcare group",
+  "headline": "The layer underneath the prototypes.",
+  "headlineMuted": "Where data lands, how it gets there, who can see it, and how it keeps running when nobody is watching.",
+  "intro": "You have working prototypes that stop at pasted exports, nine QuickBooks entities, HubSpot, an EMR, SharePoint, and eight to ten brands about to launch. I've spent nine years building that kind of plumbing: integrations, queues, databases and agents that keep running on their own, with a person approving anything before it is sent, spent or published. I also trained as a biomedical engineer and have worked inside hospitals, so the practices you're buying are a familiar place, not a foreign one.",
+  "hours": "Addis Ababa is UTC+3. I work US Eastern hours, through 5 PM ET.",
+  "fitTitle": "What you're hiring for, and what I've already built",
+  "fit": [
+    {
+      "need": "A diligence data room with a checklist, and a notification when it's complete or stalling",
+      "built": "Autopilot texts every new lead within seconds, notices the ones who go quiet and calls them. Pipe runs scrapers on job queues and publishes results to Telegram, with a dashboard showing what's done and what's stuck. Same shape: a checklist of required items, a rule for complete-or-stalling, and a message to the right person.",
+      "projects": [
+        "autopilot",
+        "pipe"
+      ]
+    },
+    {
+      "need": "A target-analysis tool that turns a practice's financials into the deal team's summary",
+      "built": "Budera AI Legion's agents work from a business's real Stripe, Shopify and analytics data to produce summaries and next actions. The OpenClaw client-report agent pulls each client's analytics, rankings and reviews every month into a branded PDF. The summary the deal team reads is the same pipeline with a P&L at the front.",
+      "projects": [
+        "budera",
+        "openclaw"
+      ]
+    },
+    {
+      "need": "Target identification: which practice owners are worth approaching",
+      "built": "The OpenClaw legal lead finder audits law firms' blogs, Google Business profiles, mobile sites and ads, scores them, fills a lead sheet and drafts the outreach. Reputation repair does the same for restaurants, one city a week. Swap law firms for practices and the scoring criteria for yours.",
+      "projects": [
+        "openclaw"
+      ]
+    },
+    {
+      "need": "A priority tracker fed by meeting transcripts, with a human approval step",
+      "built": "My always-on assistant transcribes voice notes with Whisper into stand-ups and project tracking. Conducting OS tracks tasks, SOPs and the phase of every function, with a Bot API that agents push work into. In every agent setup I ship, nothing is added, sent or spent until a person approves it.",
+      "projects": [
+        "openclaw",
+        "conducting-os",
+        "agent-setup"
+      ]
+    },
+    {
+      "need": "A brand rollout tracker for eight to ten brands, with an owner, a status and a blocker per item",
+      "built": "Conducting OS tracks business units, people, stages and what is blocking each function across an organisation. Celerus Pay runs payroll for multi-branch organisations, each under its own name. I've shipped three client websites with their own CMS, so the rollout checklist is one I've lived.",
+      "projects": [
+        "conducting-os",
+        "celerus-pay",
+        "ruby-pictures"
+      ]
+    },
+    {
+      "need": "A brand asset engine that produces creative at volume, with approval before anything is published",
+      "built": "Content Cannon writes three articles every morning, publishes to WordPress, drafts the social posts and logs everything to a sheet. The real-estate agent turns new listings into posts and Instagram scripts. Client reports render as branded PDFs. Each runs on a schedule and hands a person drafts, not published work.",
+      "projects": [
+        "openclaw"
+      ]
+    },
+    {
+      "need": "REST integrations with OAuth2, pagination, rate limits, retries and idempotency",
+      "built": "Stripe, Shopify, Twilio, Retell, ElevenLabs, Google Workspace, SearchAtlas and GitHub's contents API, which this very site saves itself through. At Homewise I run lead enrichment, qualification and CRM sync in production, where a retried webhook must not text a customer twice.",
+      "projects": [
+        "autopilot",
+        "budera"
+      ]
+    },
+    {
+      "need": "SQL, Postgres, and reconciling two sources that disagree",
+      "built": "Postgres with Drizzle ORM on Budera and Autopilot. Celerus Pay's payroll engine enters, calculates, checks and closes each period across every branch, with tax bands and pension built in, and a reconciliation step before anything reaches the bank.",
+      "projects": [
+        "celerus-pay",
+        "autopilot"
+      ]
+    },
+    {
+      "need": "LLM APIs in production: structured JSON against a schema, tool calling, retrieval, prompt versioning",
+      "built": "Every model output I ship is validated against a schema before anything trusts it; this site validates its own content the same way. Chimera builds research agents from a written spec with tests and CI from day one. Automaton Auditor runs LangGraph agents in parallel over a codebase. I build MCP servers that give agents scoped access to a company's docs, CRM, tickets and calendar.",
+      "projects": [
+        "chimera",
+        "automaton-auditor",
+        "agent-setup"
+      ]
+    },
+    {
+      "need": "Secrets, least-privilege service accounts, and knowing what must not be logged",
+      "built": "Separate keys per agent, read-only access by default, approval before anything is sent or spent, and a log of what each agent did. MindBridge keeps mood data encrypted. The admin on this site writes through a token scoped to one repository.",
+      "projects": [
+        "agent-setup",
+        "mindbridge"
+      ]
+    },
+    {
+      "need": "Healthcare: the people, the departments and the data",
+      "built": "I hold a BSc in Biomedical Engineering (University of Gondar, cum laude). From late 2022 to late 2023 I worked with Infinity Advanced Technology Solutions, Ethiopia's largest medical-equipment distributor and service company (GE Healthcare and Karl Storz partner, 2,000+ installations across 500+ health facilities), which put me inside hospitals and their imaging and other equipment for months at a stretch, and I've built several systems for hospitals and healthcare facilities since. As an independent contractor I was brought in by DHCS to work out how their system should be designed. I also co-founded Ethiopian Medical Hub, a marketplace for equipment, engineers, tenders and training, and built Dimtse, a free eye-gaze talk board for children with cerebral palsy.",
+      "projects": [
+        "medical-hub",
+        "dimtse",
+        "mindbridge"
+      ]
+    },
+    {
+      "need": "Explaining decisions to a CFO in plain language, and shipping in the first week",
+      "built": "Two CTO roles, a product manager role and a Chief Agent Officer role, all of them spent translating between the people who own a problem and the system that solves it. Every project note on this site is written for that reader. The plan below is what week one looks like.",
+      "projects": []
+    }
+  ],
+  "weekTitle": "The first week",
+  "week": [
+    {
+      "when": "Day 1 and 2",
+      "what": "Sit with the M&A lead, the marketing lead and the IT provider. Agree the one Entra app registration and the smallest Graph scopes that reach one SharePoint library. Write down what may not be logged before writing any code."
+    },
+    {
+      "when": "Day 3",
+      "what": "The data-room checklist as a table, uploads landing in SharePoint, and one notification when a required item has been missing for three days. Small, deployed, and in the hands of the M&A team."
+    },
+    {
+      "when": "Day 4 and 5",
+      "what": "Target analysis, version zero: one practice's financial statements in, structured fields out against a schema, and a one-page summary the deal team can tear apart. Prompts versioned in git, tests running in CI before anything ships."
+    },
+    {
+      "when": "End of week",
+      "what": "A ten-minute demo for the COO and CFO in plain language, and a short list of where the written spec turned out to be wrong."
+    }
+  ],
+  "gapsTitle": "What I haven't done yet, and how I'd close it",
+  "gaps": [
+    {
+      "need": "Microsoft 365 as a platform",
+      "note": "My production integrations are on Google Workspace APIs (OAuth2, Docs, Sheets, Gmail drafts) rather than Graph. Graph, SharePoint document libraries, Entra app registrations and Power Automate are the first things I'd set up, in week one, with your IT provider."
+    },
+    {
+      "need": "Azure",
+      "note": "I deploy to AWS, Vercel and Docker with GitHub Actions. App Service, Functions, Azure SQL and Key Vault map onto what I run today. I'd treat Azure as the second thing to learn, not the tenth."
+    },
+    {
+      "need": "US EMR systems and the HIPAA boundary",
+      "note": "I haven't worked with eClinicalWorks, Epic or Athena, or inside a US HIPAA boundary. I have worked inside hospitals and with their equipment and systems in Ethiopia, so clinical data, the departments and the people who own them are familiar. The US compliance frame is what I'd learn from your IT provider, before touching any patient data."
+    },
+    {
+      "need": "Financial statements at volume",
+      "note": "I've extracted structured data from web pages, screenshots (the OpenClaw browser layer reads the screen with OCR) and Stripe, and produced PDFs. Parsing P&Ls and balance sheets at volume is the first pipeline I'd build for the target-analysis tool."
+    },
+    {
+      "need": "Nine QuickBooks entities and intercompany reconciliation",
+      "note": "Multi-branch payroll with Ethiopian tax rules is the closest I've done. Nine-entity QuickBooks and the FP&A platform would be new ground, which is why I'd want them after the M&A and marketing work, as your plan already says."
+    }
+  ],
+  "stackTitle": "What I work in",
+  "stack": [
+    {
+      "group": "Languages and apps",
+      "items": "TypeScript, Python, React, Next.js, Node.js, FastAPI"
+    },
+    {
+      "group": "Data",
+      "items": "PostgreSQL, SQLite, MongoDB, Redis, Drizzle ORM, zod schemas"
+    },
+    {
+      "group": "AI",
+      "items": "Claude and OpenAI APIs, LangGraph, MCP servers, RAG, Whisper, OpenCV"
+    },
+    {
+      "group": "Integrations",
+      "items": "Stripe, Shopify, Twilio, Retell, ElevenLabs, Google Workspace APIs, WordPress, Playwright"
+    },
+    {
+      "group": "Shipping",
+      "items": "Docker, GitHub Actions, AWS, Vercel, scheduled jobs and queues"
+    }
+  ],
+  "ctaTitle": "Twenty minutes is enough to see whether this fits.",
+  "ctaNote": "I'll bring one of the agents above and walk through it live."
+}

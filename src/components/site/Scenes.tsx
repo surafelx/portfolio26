@@ -1,4 +1,7 @@
 import type { Project, Section, Site } from "@/lib/schema";
+import { UsageCounter } from "./UsageCounter";
+import { LiveNow } from "./LiveNow";
+import { HeroVideo } from "./HeroVideo";
 import type { SHOWCASE_PLACEMENTS } from "@/lib/schema";
 import { HandNote } from "./HandNote";
 import { LocalTime } from "./LocalTime";
@@ -116,6 +119,8 @@ export function HeroScene({ site, section }: SceneProps) {
           </div>
         </div>
 
+        <div className="hero-side">
+          <HeroVideo profile={profile} />
         <aside className="now reveal" aria-label="What I'm doing now">
           <div className="top">
             <span className="label">Right now</span>
@@ -141,6 +146,10 @@ export function HeroScene({ site, section }: SceneProps) {
               ))}
             </ul>
           )}
+          {site.usage.visible && <UsageCounter />}
+          {(site.live.visitors || site.live.github || site.live.latestPost) && (
+            <LiveNow visitors={site.live.visitors} github={site.live.github} post={site.live.latestPost ? (site.posts[0] ?? null) : null} />
+          )}
           {profile.location && (
             <div className="clock">
               <span>{profile.location}</span>
@@ -148,6 +157,7 @@ export function HeroScene({ site, section }: SceneProps) {
             </div>
           )}
         </aside>
+        </div>
       </div>
       <div className="scroll-cue label" aria-hidden="true">
         Scroll
@@ -304,6 +314,28 @@ export function EventsScene({ site, section }: SceneProps) {
           );
         })}
       </ol>
+    </Scene>
+  );
+}
+
+export function RolesScene({ site, section }: SceneProps) {
+  if (site.roles.length === 0) return null;
+  return (
+    <Scene section={section} className="scene-roles">
+      <SceneHead section={section} />
+      <div className="roles reveal">
+        {site.roles.map((role) => (
+          <article key={role.title} className="tile">
+            <h3>{role.title}</h3>
+            {role.note && <p>{role.note}</p>}
+            {role.url && (
+              <ExtLink className="more" href={role.url}>
+                {role.url.startsWith("/for/") ? "Read the pitch" : "See the work"}
+              </ExtLink>
+            )}
+          </article>
+        ))}
+      </div>
     </Scene>
   );
 }

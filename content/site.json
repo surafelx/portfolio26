@@ -5,8 +5,8 @@
     "greeting": "Hi, I'm Surafel.",
     "headline": "I build AI agents",
     "headlineMuted": "that actually ship.",
-    "intro": "Software engineer in Addis Ababa with nine years of building products. I design multi-agent systems and sales automation, and I do the full-stack work that keeps them running in production.",
-    "availability": "Open to senior remote roles",
+    "intro": "Software engineer in Addis Ababa with nine years of building products, trained as a biomedical engineer. I design multi-agent systems and the layer underneath them: where data lands, how it gets there, who can see it, and how it keeps running when nobody is watching.",
+    "availability": "Open to forward-deployed roles · US Eastern hours",
     "location": "Addis Ababa, Ethiopia",
     "timeZone": "Africa/Addis_Ababa",
     "email": "workwithsurafel@gmail.com",
@@ -15,7 +15,10 @@
     "githubUrl": "https://github.com/surafelx",
     "linkedinUrl": "https://www.linkedin.com/in/surafelykebede",
     "seoTitle": "Surafel Yimam · AI and full-stack engineer",
-    "seoDescription": "Surafel Yimam builds AI agent systems and full-stack products for teams in the US, Australia and Ethiopia."
+    "seoDescription": "Surafel Yimam builds AI agent systems and full-stack products for teams in the US, Australia and Ethiopia.",
+    "videoUrl": "",
+    "videoCaption": "Three minutes on what I build and how I work.",
+    "videoSlot": false
   },
   "settings": {
     "defaultTheme": "system",
@@ -33,8 +36,16 @@
       "label": "building software"
     },
     {
-      "value": "3×",
+      "value": "6×",
       "label": "executive roles"
+    },
+    {
+      "value": "$M+",
+      "label": "transacted"
+    },
+    {
+      "value": "1,000s",
+      "label": "of users"
     },
     {
       "value": "20+",
@@ -43,13 +54,23 @@
   ],
   "now": [
     {
+      "title": "Dimtse, an eye-gaze talk board",
+      "org": "for children with cerebral palsy, with Happy Lucky Chacho",
+      "place": ""
+    },
+    {
       "title": "AI and SDR automation",
       "org": "Homewise",
       "place": "North Carolina"
     },
     {
-      "title": "Co-founder",
-      "org": "Celerus.io",
+      "title": "Autopilot, an AI agent CRM",
+      "org": "texts, calls and books leads",
+      "place": ""
+    },
+    {
+      "title": "Fifteen OpenClaw agents",
+      "org": "research, audits and outreach on a schedule",
       "place": ""
     }
   ],
@@ -89,12 +110,20 @@
       "intro": "Two AI products I built end to end: a business partner for founders, and a CRM whose agent texts, calls and books leads."
     },
     {
+      "id": "roles",
+      "visible": true,
+      "nav": "Roles",
+      "eyebrow": "Where I fit",
+      "title": "The roles I'm built for.",
+      "intro": "Remote, contract or full-time, overlapping US Eastern hours. Pick the one closest to what you're hiring for."
+    },
+    {
       "id": "ai",
       "visible": true,
       "nav": "AI & agents",
       "eyebrow": "AI & agents",
       "title": "Agents that do the work.",
-      "intro": "Voice and SMS agents, multi-agent systems, and open-source agent tooling I've shipped."
+      "intro": "Voice and SMS agents, multi-agent systems, open-source agent tooling, and Claude Code, Codex and Grok set up inside teams' own systems."
     },
     {
       "id": "products",
@@ -116,9 +145,9 @@
       "id": "erp",
       "visible": true,
       "nav": "ERP",
-      "eyebrow": "ERP modules",
+      "eyebrow": "Celerus suite",
       "title": "Modules that run the back office.",
-      "intro": "Payroll and inventory, built for how organisations in Ethiopia actually work."
+      "intro": "Payroll, inventory and CRM on one template, each in its own colour, built to connect to each other. Made for how organisations in Ethiopia actually work."
     },
     {
       "id": "websites",
@@ -304,6 +333,60 @@
       "visible": true
     },
     {
+      "id": "dimtse",
+      "name": "Dimtse · ድምፄ",
+      "label": "Nonprofit · Assistive tech",
+      "tagline": "A free talk board for non-verbal children, driven by their eyes or head through a webcam or phone. Amharic and English, built for children with cerebral palsy in Ethiopia.",
+      "placement": "grid",
+      "image": "/projects/dimtse.jpg",
+      "liveUrl": "https://dimtse.happyluckychacho.org",
+      "codeUrl": "",
+      "ctaLabel": "",
+      "ctaUrl": "",
+      "videoUrl": "",
+      "docsUrl": "",
+      "stack": "MediaPipe face landmarker in the browser, ridge-regression calibration, vanilla JS, Python server, Docker, GitHub Actions, edge-tts",
+      "details": "Commercial eye-gaze communication devices cost thousands of dollars and don't speak Amharic. Dimtse runs on hardware a family already owns and costs nothing. By Happy Lucky Chacho, Bahir Dar.\n\n- **Three big choices at a time.** Look at one and hold your gaze; it fills up, then speaks. Fourteen pages that wrap around, so there is never a dead end, plus story time and a spelling keyboard that never shows more than six things\n- **Eyes, head, or both.** Head pose is measured far more precisely than eye direction, so a child who can't hold their eyes steady can point with their head. Each mode has its own calibration, and the board stops guessing when tracking can't be trusted\n- **Every child has their own board.** A carer puts a photo of the real person or thing on a tile, records each phrase in their own voice (almost no device has an Amharic voice), adds pages, and writes follow-up questions: \"It hurts\" leads to *Where?*\n- **Tracking runs in the browser.** Google's MediaPipe face landmarker, vendored so nothing leaves the device. The server only serves files and stores boards, so the board works offline and can be added to a phone's home screen\n- **The guide is part of the app.** A plain-language guide for the person sitting next to the child: light, first sessions built on delight, modelling, waiting, and a first-month plan\n\nStatus: a working prototype, not yet trialled with children. Nearly every design decision came from measuring a failure, and the code comments record which.",
+      "steps": [],
+      "visible": true
+    },
+    {
+      "id": "agent-setup",
+      "name": "Agent setups for teams",
+      "label": "Service · Claude Code, Codex, Grok",
+      "tagline": "I set up Claude Code, Codex and Grok bots inside a team's own systems: their repos, docs, CRM and chat, with the access and guardrails each one needs.",
+      "placement": "ai",
+      "image": "",
+      "liveUrl": "",
+      "codeUrl": "",
+      "ctaLabel": "Book a setup call",
+      "ctaUrl": "https://cal.com/surafelx",
+      "videoUrl": "",
+      "docsUrl": "",
+      "stack": "Claude Code, OpenAI Codex, Grok, MCP, GitHub, Slack, Telegram",
+      "details": "Most teams already pay for an AI model. What they're missing is the wiring that lets it do real work inside their own tools. I do that wiring.\n\n- **Claude Code and Codex** in a team's repositories, with project instructions, custom agents and slash commands, hooks, and CI checks, so the coding agent follows the team's rules\n- **MCP servers** that give agents safe, scoped access to the company's database, docs, CRM, tickets and calendars\n- **Grok and other chat bots** in Telegram, Slack and WhatsApp, answering from company knowledge and handing off to a person when they should\n- **Scheduled agents** for reports, research, lead lists and follow-ups, running on a server rather than someone's laptop\n- **Guardrails**: separate keys per agent, read-only access by default, approval before anything is sent or spent, and logs of what each agent did\n- **Handover**: a short written runbook and a session with the team, so they can change the setup themselves\n\nI've done this for my own companies and for clients in the US, Australia and Ethiopia.",
+      "steps": [],
+      "visible": true
+    },
+    {
+      "id": "openclaw",
+      "name": "OpenClaw agents",
+      "label": "Private · 15 agents",
+      "tagline": "Fifteen agents on OpenClaw that research, audit, write and draft outreach. Many drive a real Chrome window the way a person would.",
+      "placement": "ai",
+      "image": "",
+      "liveUrl": "",
+      "codeUrl": "",
+      "ctaLabel": "Book a demo",
+      "ctaUrl": "https://cal.com/surafelx",
+      "videoUrl": "",
+      "docsUrl": "",
+      "stack": "OpenClaw, Python, Playwright, PyAutoGUI, OpenCV, Google Workspace APIs, Stripe, WordPress, ReportLab, Whisper, Ollama",
+      "details": "OpenClaw runs my personal agent workspace. On top of it I built a browser layer, \"agent as human\" mode: it drives a real Chrome window with screenshots, OCR and on-screen matching, so an agent can use sites that have no API. Most of the agents below run on a schedule and deliver to Google Docs, Sheets, Gmail drafts, WordPress or Telegram.\n\n1. **SEO audit**: audits a site and writes a 15-page PDF report, sent to Telegram\n2. **Reputation repair**: finds restaurants with weak reviews, makes a report card for each, and drafts the pitch email. Runs weekly, one city at a time\n3. **Content Cannon**: writes three SEO articles every morning, publishes them to WordPress, drafts the social posts and logs everything to a sheet\n4. **Amazon product research**: reads best-seller lists and turns the findings into an article in Google Docs\n5. **Ad spy**: checks which local service businesses run Google Ads and how their landing pages hold up\n6. **Legal lead finder**: checks law firms' blogs, Google Business profiles, mobile sites and ads, then fills a lead sheet and drafts emails. Runs weekly\n7. **Store spy**: finds Shopify stores in a niche, reads their products and compares AliExpress prices for a margin report\n8. **Real estate content**: turns new listings into blog posts and Instagram scripts, posted to WordPress\n9. **Course marketing**: reads a course's sales page, studies competing courses and writes the full launch package\n10. **YouTube research**: studies what's trending in a niche and why, and emails a weekly PDF\n11. **Churn preventer**: reads Stripe, flags customers likely to cancel, and drafts personal retention emails in Gmail\n12. **Expired domains**: finds and ranks expired domains in a niche, with a PDF valuation\n13. **Podcast guest booker**: finds mid-size podcasts, reads recent episodes, finds the host and drafts a pitch\n14. **Client reports**: pulls each client's analytics, rankings, social and reviews every month, and sends a branded PDF\n15. **Personal assistant**: calendar, voice-note transcription, daily stand-ups and project tracking, with local models through Ollama\n\nThe repository is private. I can walk you through it on a call.",
+      "steps": [],
+      "visible": true
+    },
+    {
       "id": "conducting-os",
       "name": "Conducting OS",
       "label": "Celerus.io",
@@ -343,7 +426,9 @@
       "ctaLabel": "",
       "ctaUrl": "",
       "steps": [],
-      "visible": true
+      "visible": true,
+      "stack": "Next.js, PostgreSQL, Prisma, Stripe, email automation",
+      "details": "A B2B marketplace connecting Ethiopian healthcare suppliers, biomedical engineers and tenders with the hospitals and clinics that need them. I set the product vision and revenue model and built the platform.\n\n- Supplier and engineer profiles, equipment listings and tender notices in one place\n- Stripe billing and email automation for enquiries and follow-ups\n- Built from the inside: I trained as a biomedical engineer and worked in Ethiopian hospitals before building for them"
     },
     {
       "id": "kebele-zero",
@@ -384,8 +469,8 @@
       "tagline": "Find a home in Ethiopia. Listings, CRM and a full Amharic interface.",
       "placement": "ecommerce",
       "image": "/projects/nibret.jpg",
-      "liveUrl": "https://nibret-home-finder-ethiopia.vercel.app",
-      "codeUrl": "https://github.com/surafelx/nibret-home-finder-ethiopia",
+      "liveUrl": "",
+      "codeUrl": "",
       "ctaLabel": "",
       "ctaUrl": "",
       "steps": [],
@@ -406,7 +491,7 @@
       "visible": true
     },
     {
-      "label": "ERP module · Payroll",
+      "label": "Celerus suite · Payroll",
       "tagline": "Payroll for multi-branch organisations: employees, monthly transactions, income tax and pension in one place, with reports ready for the bank.",
       "image": "/projects/celerus-pay.jpg",
       "liveUrl": "",
@@ -424,16 +509,38 @@
       "placement": "erp"
     },
     {
-      "id": "agri-sun",
-      "name": "Agri-Sun Stock Smart",
-      "label": "ERP module · Inventory",
-      "tagline": "Inventory, customers and installations for AgriSun Ethiopia, a solar-agriculture company.",
+      "id": "celerus-inventory",
+      "name": "Celerus Inventory",
+      "label": "Celerus suite · Inventory",
+      "tagline": "Items, stock balances and cost sheets, where quantity and cost come only from a ledger of transactions. Running at AgriSun Ethiopia.",
       "placement": "erp",
       "image": "/projects/agrisun.jpg",
       "liveUrl": "https://agrisun-inventory.vercel.app",
       "codeUrl": "https://github.com/surafelx/agri-sun-stock-smart",
       "ctaLabel": "",
       "ctaUrl": "",
+      "steps": [],
+      "visible": true,
+      "stack": "React, TypeScript, Express, PostgreSQL",
+      "details": "The inventory module of the Celerus suite, first built for AgriSun Ethiopia, a solar-agriculture company, and running there today.\n\n- A stock ledger: every quantity and cost is derived from transactions, never typed in\n- Items, stock balances, cost sheets and printable transactions\n- Bulk import from spreadsheets\n- The same template as Celerus Pay and Celerus CRM, in its own colour, with an assistant built in",
+      "videoUrl": "",
+      "docsUrl": ""
+    },
+    {
+      "id": "celerus-crm",
+      "name": "Celerus CRM",
+      "label": "Celerus suite · CRM",
+      "tagline": "Customers, equipment, installations and reports in one place, first built as AgriSun Ethiopia's CRM.",
+      "placement": "erp",
+      "image": "",
+      "liveUrl": "",
+      "codeUrl": "",
+      "ctaLabel": "Book a demo",
+      "ctaUrl": "https://cal.com/surafelx",
+      "videoUrl": "",
+      "docsUrl": "",
+      "stack": "React, TypeScript, Express, PostgreSQL",
+      "details": "The CRM module of the Celerus suite, first built as AgriSun Ethiopia's CRM for its solar pumps and backup power customers.\n\n- Customers, the equipment each one owns, and every installation\n- Reports for the team and for management\n- Users and roles per organisation\n- The same template as Celerus Pay and Celerus Inventory, in its own colour, built to share customers and equipment with Inventory",
       "steps": [],
       "visible": true
     },
@@ -620,11 +727,25 @@
       "visible": true
     },
     {
+      "when": "Late 2022 – late 2023",
+      "title": "Biomedical Engineer",
+      "org": "Infinity Advanced Technology Solutions",
+      "summary": "GE Healthcare and Karl Storz partner with 2,000+ installations in 500+ Ethiopian health facilities. Hospital-side work on imaging equipment.",
+      "visible": true
+    },
+    {
       "when": "Jun 2020 – Sep 2023",
       "title": "Full-Stack Engineer",
       "org": "ITIO, California",
       "summary": "Website testing tool, a social platform and solar monitoring.",
       "visible": true
+    },
+    {
+      "when": "Dates to confirm",
+      "title": "Independent Contractor",
+      "org": "DHCS",
+      "summary": "Brought in to work out how their system should be designed.",
+      "visible": false
     },
     {
       "when": "2016 – 2024",
@@ -646,6 +767,10 @@
     {
       "group": "Shipping",
       "items": "Docker, GitHub Actions, AWS, Vercel, Stripe"
+    },
+    {
+      "group": "Healthcare",
+      "items": "Biomedical engineering, hospital equipment and systems with Infinity (Ethiopia), systems for hospitals and healthcare facilities, medical supply chain, assistive tech"
     }
   ],
   "education": "BSc Biomedical Engineering, University of Gondar, 2023, cum laude.",
@@ -687,7 +812,7 @@
     }
   ],
   "contact": {
-    "note": "Addis Ababa · UTC+3 · overlaps US mornings and Australian afternoons",
+    "note": "Addis Ababa · UTC+3 · I work US Eastern hours, through 5 PM ET",
     "footerNote": "AI and full-stack engineer in Addis Ababa, working with teams around the world."
   },
   "events": [
@@ -708,6 +833,49 @@
       "summary": "Taught live coding music, then performed a live-coded set.",
       "url": "",
       "image": ""
+    }
+  ],
+  "usage": {
+    "visible": true,
+    "label": "people using software I built",
+    "sources": []
+  },
+  "live": {
+    "visitors": true,
+    "github": false,
+    "githubUser": "surafelx",
+    "latestPost": true
+  },
+  "roles": [
+    {
+      "title": "Forward Deployed AI Engineer",
+      "note": "Sit with the people who own the problem and build the layer under their prototypes: integrations, data, approvals, deploys. The healthcare M&A pitch shows how I'd do it.",
+      "url": "/for/healthcare-fde"
+    },
+    {
+      "title": "Senior Full-Stack AI Engineer",
+      "note": "Products with agents inside them, end to end: Next.js, TypeScript, Postgres, LLM APIs, Stripe. Budera and Autopilot are the proof.",
+      "url": "#featured"
+    },
+    {
+      "title": "AI Automation and Integration Engineer",
+      "note": "Lead enrichment, CRM sync, scheduled agents, and browser automation where there is no API. Homewise and the fifteen OpenClaw agents.",
+      "url": "#ai"
+    },
+    {
+      "title": "Agent Systems Engineer",
+      "note": "Multi-agent orchestration, MCP servers, LangGraph, evaluation and guardrails. Conducting OS, Chimera and Automaton Auditor.",
+      "url": "#ai"
+    },
+    {
+      "title": "Business Systems and ERP Automation",
+      "note": "Payroll, inventory, CRM and back-office modules for multi-branch organisations. The Celerus suite: Pay, Inventory and CRM on one template.",
+      "url": "#erp"
+    },
+    {
+      "title": "Healthcare Technology Engineer",
+      "note": "A biomedical engineering degree, a year inside Ethiopian hospitals with Infinity, and systems built for healthcare facilities. Medical Hub and Dimtse.",
+      "url": "#products"
     }
   ]
 }

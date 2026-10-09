@@ -35,6 +35,9 @@ const profileFields: FieldSpec[] = [
   { key: "cvUrl", label: "CV link", type: "url", hint: "Put the PDF in the public folder and use /file-name.pdf." },
   { key: "githubUrl", label: "GitHub", type: "url" },
   { key: "linkedinUrl", label: "LinkedIn", type: "url" },
+  { key: "videoUrl", label: "Intro video", type: "url", hint: "A YouTube, Vimeo or Loom link, or a direct .mp4. Shown in the first screen.", wide: true },
+  { key: "videoCaption", label: "Caption under the video", type: "text" },
+  { key: "videoSlot", label: "Keep the video's space with a placeholder until there is one", type: "toggle" },
   { key: "seoTitle", label: "Search and share title", type: "text", hint: "What Google and link previews show. Up to 70 characters." },
   { key: "seoDescription", label: "Search and share description", type: "textarea" },
 ];
@@ -71,6 +74,12 @@ const ACCENT_PRESETS = [
 const statFields: FieldSpec[] = [
   { key: "value", label: "Value", type: "text", placeholder: "9 yrs" },
   { key: "label", label: "Label", type: "text", placeholder: "building software" },
+];
+const usageFields: FieldSpec[] = [
+  { key: "name", label: "App", type: "text", placeholder: "Budera" },
+  { key: "count", label: "Users now", type: "number", hint: "Used until the endpoint below answers, or if it can't be reached." },
+  { key: "url", label: "Live count endpoint", type: "url", placeholder: "https://app.example.com/api/public-stats", hint: "Optional. A public https address that returns JSON with the user count.", wide: true },
+  { key: "field", label: "Field in that JSON", type: "text", placeholder: "users", hint: "A dotted path such as users or data.activeUsers." },
 ];
 const roleFields: FieldSpec[] = [
   { key: "title", label: "Role", type: "text" },
@@ -125,6 +134,11 @@ const jobFields: FieldSpec[] = [
   { key: "org", label: "Organisation and place", type: "text", wide: true },
   { key: "summary", label: "One-line summary", type: "textarea" },
   { key: "visible", label: "Show on the site", type: "toggle" },
+];
+const roleFitFields: FieldSpec[] = [
+  { key: "title", label: "Role", type: "text", placeholder: "Forward Deployed AI Engineer" },
+  { key: "note", label: "Why it fits", type: "textarea", hint: "One or two sentences, naming the projects that prove it." },
+  { key: "url", label: "Link", type: "url", hint: "A section of this site such as #featured, or a tailored page such as /for/healthcare-fde." },
 ];
 const skillFields: FieldSpec[] = [
   { key: "group", label: "Group", type: "text" },
@@ -215,7 +229,7 @@ export function Editor({ initial, mode }: { initial: Site; mode: StorageMode }) 
         setNotice({ tone: "error", text: body.issues?.length ? `${body.error} ${describeIssue(body.issues[0])}` : body.error ?? "Saving failed." });
         if (body.issues?.[0]) {
           const first = body.issues[0].path.split(".")[0];
-          const map: Record<string, TabId> = { profile: "profile", settings: "appearance", headerStats: "header", now: "header", highlights: "header", sections: "sections", projects: "projects", jobs: "experience", skills: "experience", education: "experience", posts: "writing", testimonials: "writing", contact: "contact" };
+          const map: Record<string, TabId> = { profile: "profile", settings: "appearance", headerStats: "header", now: "header", highlights: "header", usage: "header", live: "header", sections: "sections", projects: "projects", jobs: "experience", roles: "experience", skills: "experience", education: "experience", posts: "writing", testimonials: "writing", contact: "contact" };
           if (map[first]) setTab(map[first]);
         }
         return;
@@ -270,10 +284,10 @@ export function Editor({ initial, mode }: { initial: Site; mode: StorageMode }) 
     const roots: Record<TabId, string[]> = {
       profile: ["profile"],
       appearance: ["settings"],
-      header: ["headerStats", "now", "highlights"],
+      header: ["headerStats", "now", "highlights", "usage", "live"],
       sections: ["sections"],
       projects: ["projects"],
-      experience: ["jobs", "skills", "education"],
+      experience: ["jobs", "roles", "skills", "education"],
       writing: ["posts", "testimonials"],
       contact: ["contact"],
     };
@@ -447,6 +461,55 @@ export function Editor({ initial, mode }: { initial: Site; mode: StorageMode }) 
                 />
               </section>
               <section className="card">
+                <h2>Live numbers</h2>
+                <p className="card-note">Visitors to this site, your GitHub activity and your latest note. The visitor count shows in the header; all three show in the Right now panel. They update on their own.</p>
+                <label className="switch">
+                  <input type="checkbox" checked={draft.live.visitors} onChange={(e) => set("live", { ...draft.live, visitors: e.target.checked })} />
+                  <span className="track" aria-hidden="true" />
+                  <span className="switch-label">Count and show visitors</span>
+                </label>
+                <label className="switch">
+                  <input type="checkbox" checked={draft.live.github} onChange={(e) => set("live", { ...draft.live, github: e.target.checked })} />
+                  <span className="track" aria-hidden="true" />
+                  <span className="switch-label">Show GitHub activity from the last 30 days</span>
+                </label>
+                <label className="switch">
+                  <input type="checkbox" checked={draft.live.latestPost} onChange={(e) => set("live", { ...draft.live, latestPost: e.target.checked })} />
+                  <span className="track" aria-hidden="true" />
+                  <span className="switch-label">Show the latest note</span>
+                </label>
+                <div className="field">
+                  <label htmlFor="live-github-user">GitHub username</label>
+                  <input id="live-github-user" type="text" value={draft.live.githubUser} placeholder="surafelx" onChange={(e) => set("live", { ...draft.live, githubUser: e.target.value })} />
+                  <p className="hint">Leave empty to use the GitHub link on the Profile tab. With GITHUB_TOKEN set on the server, private commits are counted too; their repo names stay hidden.</p>
+                </div>
+              </section>
+              <section className="card">
+                <h2>Live user counter</h2>
+                <p className="card-note">Adds up how many people use each app and shows the total in the Right now panel. It refreshes every minute and stays hidden while the total is zero.</p>
+                <label className="switch">
+                  <input type="checkbox" checked={draft.usage.visible} onChange={(e) => set("usage", { ...draft.usage, visible: e.target.checked })} />
+                  <span className="track" aria-hidden="true" />
+                  <span className="switch-label">Show the counter</span>
+                </label>
+                <div className="field wide">
+                  <label htmlFor="usage-label">Text after the number</label>
+                  <input id="usage-label" type="text" value={draft.usage.label} onChange={(e) => set("usage", { ...draft.usage, label: e.target.value })} />
+                </div>
+                <ListEditor
+                  items={draft.usage.sources}
+                  onChange={(v) => set("usage", { ...draft.usage, sources: v })}
+                  fields={usageFields}
+                  titleOf={(s) => s.name || "New app"}
+                  subtitleOf={(s) => `${s.count.toLocaleString("en-US")} users${s.url ? " · live" : ""}`}
+                  makeNew={() => ({ name: "", url: "", field: "users", count: 0 })}
+                  addLabel="Add an app"
+                  max={30}
+                  errors={errors}
+                  errorPrefix="usage.sources"
+                />
+              </section>
+              <section className="card">
                 <h2>Big numbers</h2>
                 <p className="card-note">The four figures on the Also built screen.</p>
                 <ListEditor
@@ -541,6 +604,22 @@ export function Editor({ initial, mode }: { initial: Site; mode: StorageMode }) 
                   addLabel="Add a job"
                   errors={errors}
                   errorPrefix="jobs"
+                />
+              </section>
+              <section className="card">
+                <h2>Roles I'm a fit for</h2>
+                <p className="card-note">The Roles screen: the kinds of jobs to hire me for, each with the work that proves it.</p>
+                <ListEditor
+                  items={draft.roles}
+                  onChange={(v) => set("roles", v)}
+                  fields={roleFitFields}
+                  titleOf={(r) => r.title || "New role"}
+                  subtitleOf={(r) => r.note.slice(0, 60)}
+                  makeNew={() => ({ title: "", note: "", url: "" })}
+                  addLabel="Add a role"
+                  max={8}
+                  errors={errors}
+                  errorPrefix="roles"
                 />
               </section>
               <section className="card">

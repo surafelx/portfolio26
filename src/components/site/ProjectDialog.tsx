@@ -100,6 +100,7 @@ function LivePanel({ project }: { project: Project }) {
           )}
           {embed === "ok" && (
             <>
+              {!loaded && project.image && <img className="pd-poster" src={project.image} alt="" aria-hidden="true" />}
               {!loaded && <p className="pd-status">Loading {hostOf(project.liveUrl)}…</p>}
               <iframe
                 key={reload}
@@ -108,7 +109,7 @@ function LivePanel({ project }: { project: Project }) {
                 onLoad={() => setLoaded(true)}
                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
                 referrerPolicy="strict-origin-when-cross-origin"
-                allow="fullscreen; clipboard-write"
+                allow={/webcam|camera|eye-gaze/i.test(`${project.tagline} ${project.stack}`) ? "fullscreen; clipboard-write; camera" : "fullscreen; clipboard-write"}
                 className={loaded ? "is-loaded" : ""}
               />
             </>
