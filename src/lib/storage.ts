@@ -81,6 +81,32 @@ export async function writeContent(data: unknown): Promise<StorageMode> {
   return mode;
 }
 
+/** Read any JSON file in the repo (GitHub when configured, else the local folder). */
+export async function readJsonFile<T>(relative: string, fallback: T): Promise<T> {
+  const g = github();
+  try {
+    if (g) {
+      const file = await ghRead(g, relative);
+      return file ? (JSON.parse(Buffer.from(file.content, "base64").toString("utf8")) as T) : fallback;
+    }
+    return JSON.parse(await fs.readFile(path.join(process.cwd(), relative), "utf8")) as T;
+  } catch {
+    return fallback;
+  }
+}
+
+/** Write any file in the repo: a commit in "github" mode, a local write in "local" mode. */
+export async function writeRepoFile(relative: string, bytes: Buffer, message: string): Promise<StorageMode> {
+  const mode = storageMode();
+  if (mode === "github") await ghWrite(github()!, relative, bytes.toString("base64"), message);
+  else if (mode === "local") {
+    const full = path.join(process.cwd(), relative);
+    await fs.mkdir(path.dirname(full), { recursive: true });
+    await fs.writeFile(full, bytes);
+  } else throw new Error("Saving is off on this deployment. Add GITHUB_TOKEN and GITHUB_REPO in your Vercel project settings, then redeploy.");
+  return mode;
+}
+
 export async function writeUpload(fileName: string, bytes: Buffer): Promise<{ mode: StorageMode; url: string }> {
   const mode = storageMode();
   const relative = `public/uploads/${fileName}`;
