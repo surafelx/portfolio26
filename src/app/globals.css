@@ -558,6 +558,39 @@ a.room:hover .num { transform: rotate(-12deg) scale(1.25); }
 .card .kicker { transition: color 0.2s; }
 a.card:hover .kicker { color: var(--pen); }
 
+/* ---------- Tailored pitch pages at /for/<slug>: one long, readable column ---------- */
+.pitch { max-width: 900px; padding-top: clamp(40px, 8vh, 88px); padding-bottom: 72px; display: grid; gap: 64px; }
+.pitch-hero h1 { font-size: clamp(36px, 5.4vw, 62px); }
+.pitch-hero h1 .muted { font-weight: 500; }
+.pitch-hero .lede { font-size: clamp(18px, 2vw, 20px); line-height: 1.55; color: var(--ink-2); max-width: 64ch; margin-top: 22px; }
+.pitch-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-top: 22px; font-size: 14.5px; }
+.pitch-meta .status { margin-left: 0; }
+.pitch-links { display: inline-flex; flex-wrap: wrap; gap: 18px; }
+.pitch-links a { color: var(--pen); text-decoration: none; font-weight: 600; }
+.pitch-links a:hover { text-decoration: underline; }
+.fit { list-style: none; margin: 0; padding: 0; counter-reset: fit; border-top: 1px dashed var(--pencil-soft); }
+.fit li { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 10px 40px; padding: 24px 0; border-bottom: 1px dashed var(--pencil-soft); counter-increment: fit; }
+.fit h3 { font-size: 18px; line-height: 1.35; }
+.fit h3::before { content: counter(fit, decimal-leading-zero); display: block; font-family: var(--hand); font-size: 22px; color: var(--pen); margin-bottom: 4px; }
+.fit p { line-height: 1.6; font-size: 16px; color: var(--ink-2); }
+.pitch-chips { grid-column: 2; display: flex; flex-wrap: wrap; gap: 8px; }
+.pitch .chip { text-decoration: none; font-size: 13.5px; }
+.week { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+.week li { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 24px; align-items: baseline; }
+.week .when { font-family: var(--mono); font-size: 13px; color: var(--mute); }
+.week p { line-height: 1.6; font-size: 16px; color: var(--ink-2); }
+.gaps { margin: 0; display: grid; gap: 18px; }
+.gaps > div { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 8px 40px; }
+.gaps dt { font-weight: 650; }
+.gaps dd { margin: 0; line-height: 1.6; color: var(--ink-2); }
+.pitch-skills { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px 32px; }
+@media (max-width: 720px) {
+  .pitch { gap: 48px; }
+  .fit li, .gaps > div { grid-template-columns: minmax(0, 1fr); }
+  .pitch-chips { grid-column: 1; }
+  .week li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+}
+
 /* ---------- Mini map on the home page ---------- */
 .map-panel { padding: 18px 18px 14px; }
 .map-panel-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }

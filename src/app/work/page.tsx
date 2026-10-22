@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Entries } from "@/components/Entries";
+import { abroLearning, abroProjects } from "@/content/abro-entries";
 import { education, jobs, profile, projects, skills, testimonials, work } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -8,6 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default function WorkPage() {
+  // Projects and skills Abro has published sit alongside the hand-written ones
+  const learning = abroLearning();
+  const allSkills = learning ? [...skills, { group: "Currently learning", items: learning }] : skills;
   return (
     <>
       <header className="page-head">
@@ -40,7 +44,7 @@ export default function WorkPage() {
         ))}
       </section>
 
-      <Entries heading="Selected work" items={projects} />
+      <Entries heading="Selected work" items={[...projects, ...abroProjects()]} />
 
       <section className="wrap two-col">
         <div>
@@ -61,7 +65,7 @@ export default function WorkPage() {
         <div>
           <h2 className="section-title">Skills</h2>
           <dl className="skills">
-            {skills.map((s) => (
+            {allSkills.map((s) => (
               <div key={s.group}>
                 <dt>{s.group}</dt>
                 <dd>{s.items}</dd>

@@ -43,7 +43,8 @@ export const profile = {
   /** Said wherever availability comes up: hours are not a constraint. */
   hours: "I work in any time zone, and have worked on US, Australian, Chinese and Singapore hours.",
   bookingUrl: "https://cal.com/surafelx",
-  cvUrl: "/Surafel-Yimam-Kebede-CV.pdf",
+  /** Redirects to Abro's latest resume once it has published one (next.config.ts). */
+  cvUrl: "/cv",
   githubUrl: "https://github.com/surafelx",
   linkedinUrl: "https://www.linkedin.com/in/surafelykebede",
   siteUrl: "https://surafelyimam.com",
