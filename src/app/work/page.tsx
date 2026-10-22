@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { NextRoom } from "@/components/NextRoom";
 import { Entries } from "@/components/Entries";
 import { abroLearning, abroProjects } from "@/content/abro-entries";
 import { education, jobs, profile, projects, skills, testimonials, work } from "@/content/site";
@@ -84,6 +85,7 @@ export default function WorkPage() {
           </figure>
         ))}
       </section>
+      <NextRoom from="work" />
     </>
   );
 }

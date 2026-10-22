@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { NextRoom } from "@/components/NextRoom";
 import Link from "next/link";
 import { Entries, PageHead } from "@/components/Entries";
 import { ethiopia, pillars } from "@/content/site";
@@ -18,6 +19,7 @@ export default function EthiopiaPage() {
           <Link href="/writing/building-in-ethiopia">What building in Ethiopia taught me</Link>.
         </p>
       </section>
+      <NextRoom from="ethiopia" />
     </>
   );
 }

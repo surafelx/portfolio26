@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { NextRoom } from "@/components/NextRoom";
 import Link from "next/link";
 import { Entries, PageHead } from "@/components/Entries";
 import { articles } from "@/content/articles";
@@ -40,6 +41,7 @@ export default function WritingPage() {
       </section>
       <Entries heading="Ideas still growing" items={ideas} />
       <Entries heading="Teaching what I know" items={teaching} />
+      <NextRoom from="writing" />
     </>
   );
 }

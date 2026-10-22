@@ -51,9 +51,25 @@ export default async function ArticlePage({ params }: { params: Promise<{ id: st
           }
         })}
       </div>
-      <p className="essay-back">
-        <Link href="/writing">← All writing</Link>
-      </p>
+      <aside className="keep-reading" aria-labelledby="keep-reading">
+        <p id="keep-reading" className="label">Keep reading</p>
+        <ul className="essay-list">
+          {articles
+            .filter((a) => a.id !== article.id)
+            .map((a) => (
+              <li key={a.id}>
+                <Link href={`/writing/${a.id}`}>
+                  <span className="essay-date">{formatDate(a.publishedAt)}</span>
+                  <span className="essay-title">{a.title}</span>
+                  <span className="essay-excerpt">{a.excerpt}</span>
+                </Link>
+              </li>
+            ))}
+        </ul>
+        <p className="essay-back">
+          <Link href="/writing">← All writing</Link>
+        </p>
+      </aside>
     </article>
   );
 }

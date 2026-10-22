@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { NextRoom } from "@/components/NextRoom";
 import { Entries, PageHead } from "@/components/Entries";
 import { Playground } from "@/components/playground/Playground";
 import { music, pillars } from "@/content/site";
@@ -25,6 +26,7 @@ export default function MusicPage() {
         <Playground />
       </section>
       <Entries items={music} />
+      <NextRoom from="music" />
     </>
   );
 }

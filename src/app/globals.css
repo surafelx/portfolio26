@@ -150,7 +150,7 @@ body:has(.map-section) .backdrop-map { display: none; }
   -webkit-mask: var(--mark-squiggle) left center / 100% 100% no-repeat;
   mask: var(--mark-squiggle) left center / 100% 100% no-repeat;
 }
-.circled { position: relative; display: inline-block; }
+.circled { position: relative; display: inline-block; margin: 0 0.28em; }
 .circled::after {
   content: "";
   position: absolute;
@@ -220,9 +220,18 @@ a.card:hover { transform: rotate(calc(var(--tilt) * -0.6deg)) translateY(-4px); 
 .card .shot { margin: 18px 18px 0; border-radius: 14px 6px 10px 8px / 10px 8px 14px 6px; overflow: hidden; outline: 1px solid var(--rule); background: color-mix(in srgb, var(--ink) 6%, transparent); }
 .card .shot img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; transition: transform 0.6s ease, filter 0.4s ease; filter: saturate(calc(1 - var(--fade) * 0.5)) contrast(calc(1 + var(--fade) * 0.15)); }
 a.card:hover .shot img { transform: scale(1.04); }
-.card .shot.blank { aspect-ratio: 16 / 10; display: grid; place-items: center; background:
-  repeating-linear-gradient(-35deg, transparent 0 9px, color-mix(in srgb, var(--pen) 22%, transparent) 9px 10px); }
-.card .shot.blank span { font-family: var(--hand); font-size: 30px; font-weight: 700; color: var(--pen); transform: rotate(-4deg); background: var(--card); padding: 2px 12px; border-radius: var(--wobble-md); }
+/* No screenshot: a pen drawing of what it is, with the name written across it */
+.card .shot.drawn { aspect-ratio: 16 / 10; position: relative; display: grid; place-items: center; color: var(--pen); background: color-mix(in srgb, var(--pen) 6%, var(--card)); }
+.card .shot.drawn .doodle { width: 72%; height: auto; opacity: 0.75; }
+.card .shot.drawn span { position: absolute; left: 50%; bottom: 12%; max-width: 92%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--hand); font-size: clamp(20px, 2.1vw, 28px); font-weight: 700; color: var(--pen); transform: translateX(-50%) rotate(-4deg); background: var(--card); padding: 0 12px; border-radius: var(--wobble-md); }
+.doodle { display: block; color: var(--pen); }
+
+/* Things without a screenshot, gathered under the pictured ones as smaller note cards */
+.notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px 24px; }
+.notes.after-grid { margin-top: 30px; }
+.card.note { padding-top: 18px; }
+.card.note .note-doodle { width: 112px; height: 56px; margin: 4px 22px 0; opacity: 0.8; }
+.card.note .copy { padding-top: 10px; }
 .card .copy { padding: 18px 22px 22px; display: grid; gap: 6px; align-content: start; }
 .card .kicker { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--mute); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .card h3 { font-size: 22px; }
@@ -293,6 +302,7 @@ a.card:hover .shot img { transform: scale(1.04); }
 
 .about-block { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 48px; align-items: start; }
 .about-block p { font-size: clamp(19px, 2vw, 23px); line-height: 1.5; color: var(--ink-2); }
+.about-block h2 { font-size: clamp(32px, 4vw, 46px); }
 
 /* Ask */
 .ask { display: grid; gap: 12px; }
@@ -691,7 +701,30 @@ a.card:hover .kicker { color: var(--pen); }
 @media (max-width: 680px) { .gaze-bar { bottom: 10px; font-size: 11px; gap: 6px; } .gaze-bar > span:not(.gaze-live) { display: none; } }
 
 /* ---------- Footer ---------- */
+/* Room on the right for the floating Ask button, so it never sits on a footer link */
 .footer { position: relative; z-index: 1; border-top: 1px dashed var(--pencil-soft); padding: 32px 0 28px; font-size: 15px; }
+@media (min-width: 681px) { .footer-grid { padding-right: 170px; } }
+@media (max-width: 680px) { .footer { padding-bottom: 88px; } }
+
+/* ---------- Endings: the next room, more essays, and the 404 ---------- */
+.next-room { padding-top: 24px; padding-bottom: 72px; display: grid; justify-items: start; gap: 14px; }
+.next-door { width: min(560px, 100%); padding: 24px 26px; display: grid; gap: 4px; position: relative; --tilt: -0.8; }
+.next-door .label { margin-bottom: 0; font-size: 22px; }
+.next-name { font-size: clamp(34px, 4vw, 48px); font-weight: 650; letter-spacing: -0.03em; line-height: 1.05; }
+.next-line { color: var(--ink-2); font-size: 15.5px; }
+.next-arrow { position: absolute; right: 26px; top: 50%; translate: 0 -50%; font-size: 34px; color: var(--pen); transition: transform 0.25s cubic-bezier(.3,1.6,.5,1); }
+a.next-door:hover .next-arrow { transform: translateX(8px); }
+.next-map { font-family: var(--hand); font-size: 21px; font-weight: 700; color: var(--pen); text-decoration: none; transform: rotate(-1.5deg); }
+.next-map:hover { text-decoration: underline; }
+.keep-reading { margin-top: 64px; }
+.keep-reading .essay-list a { grid-template-columns: 140px minmax(0, 1fr); }
+.lost { padding-top: clamp(48px, 10vh, 110px); padding-bottom: 80px; display: grid; gap: 22px; }
+.lost h1 { font-size: clamp(42px, 6.5vw, 80px); }
+.lost .lede { font-size: clamp(18px, 2vw, 21px); color: var(--ink-2); max-width: 36em; }
+.lost .rooms { margin-top: 18px; }
+.lost-links { display: flex; gap: 22px; font-family: var(--hand); font-size: 22px; font-weight: 700; }
+.lost-links a { color: var(--pen); text-decoration: none; }
+.lost-links a:hover { text-decoration: underline; }
 .footer-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; align-items: end; }
 .footer-name { font-weight: 650; }
 .footer-name .am { font-family: var(--ethiopic); font-weight: 400; color: var(--pen); margin-left: 8px; }
@@ -762,6 +795,7 @@ a.card:hover .kicker { color: var(--pen); }
   .hero { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-top: 64px; }
   .notch-note { display: none; }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .notes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .rooms { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .rooms .room:first-child { grid-column: 1 / -1; }
   .about-block, .contact, .two-col { grid-template-columns: minmax(0, 1fr); gap: 28px; }
@@ -773,7 +807,8 @@ a.card:hover .kicker { color: var(--pen); }
   .nav-bar { height: auto; padding-top: 10px; padding-bottom: 8px; flex-direction: column; align-items: flex-start; gap: 4px; }
   .nav ul { margin-left: -11px; flex-wrap: wrap; }
   .nav ul a { padding: 4px 11px; font-size: 14px; }
-  .grid, .entries .grid, .quotes { grid-template-columns: minmax(0, 1fr); }
+  .grid, .entries .grid, .quotes, .notes { grid-template-columns: minmax(0, 1fr); }
+  .keep-reading .essay-list a { grid-template-columns: minmax(0, 1fr); }
   .rooms { grid-template-columns: minmax(0, 1fr); }
   .status { margin: 12px 0 0; }
   .essay-list a { grid-template-columns: minmax(0, 1fr); }

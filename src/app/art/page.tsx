@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { NextRoom } from "@/components/NextRoom";
 import { Entries, PageHead } from "@/components/Entries";
 import { art, pillars } from "@/content/site";
 
@@ -11,6 +12,7 @@ export default function ArtPage() {
     <>
       <PageHead pillar={pillar} />
       <Entries items={art} />
+      <NextRoom from="art" />
     </>
   );
 }

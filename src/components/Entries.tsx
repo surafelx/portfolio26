@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Entry, Pillar } from "@/content/site";
 import { visible } from "@/content/site";
+import { Doodle } from "./Doodle";
 
 export function PageHead({ pillar }: { pillar: Pillar }) {
   return (
@@ -14,6 +15,7 @@ export function PageHead({ pillar }: { pillar: Pillar }) {
   );
 }
 
+/** A screenshot, or for things without one, a pen drawing of what it is with the name written across it. */
 function Shot({ entry }: { entry: Entry }) {
   return entry.image ? (
     <div className="shot">
@@ -22,7 +24,8 @@ function Shot({ entry }: { entry: Entry }) {
       <img src={entry.image} alt="" loading="lazy" />
     </div>
   ) : (
-    <div className="shot blank" aria-hidden="true">
+    <div className="shot drawn" aria-hidden="true">
+      <Doodle text={`${entry.title} ${entry.kicker} ${entry.body}`} />
       <span>{entry.title}</span>
     </div>
   );
@@ -61,20 +64,38 @@ export function CardLink({ entry, href, className = "" }: { entry: Entry; href: 
   );
 }
 
+/**
+ * A room's list of things. Entries with a screenshot get a full card; the ones without get a compact
+ * note card with a small drawing, gathered underneath, so a page never fills up with empty boxes.
+ */
 export function Entries({ items, heading }: { items: (Entry & { stack?: string })[]; heading?: string }) {
   const shown = visible(items);
   if (!shown.length) return null;
+  const pictured = shown.filter((e) => e.image);
+  const notes = shown.filter((e) => !e.image);
   return (
     <section className="wrap entries">
       {heading && <h2 className="section-title">{heading}</h2>}
-      <div className="grid">
-        {shown.map((e) => (
-          <article key={e.title} className="card">
-            <Shot entry={e} />
-            <Copy entry={e} withLinks />
-          </article>
-        ))}
-      </div>
+      {pictured.length > 0 && (
+        <div className="grid">
+          {pictured.map((e) => (
+            <article key={e.title} className="card">
+              <Shot entry={e} />
+              <Copy entry={e} withLinks />
+            </article>
+          ))}
+        </div>
+      )}
+      {notes.length > 0 && (
+        <div className={`notes${pictured.length ? " after-grid" : ""}`}>
+          {notes.map((e) => (
+            <article key={e.title} className="card note">
+              <Doodle text={`${e.title} ${e.kicker} ${e.body}`} className="note-doodle" />
+              <Copy entry={e} withLinks />
+            </article>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

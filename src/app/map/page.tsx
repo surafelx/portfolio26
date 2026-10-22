@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { NextRoom } from "@/components/NextRoom";
 import Link from "next/link";
 import { LifeMap } from "@/components/LifeMap";
 import { kinds, links, nodes, type Kind } from "@/content/map";
@@ -58,6 +59,7 @@ export default function MapPage() {
           ))}
         </div>
       </section>
+      <NextRoom from="map" />
     </>
   );
 }
